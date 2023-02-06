@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -182,9 +183,11 @@ public ScrollPane pannel;
                 }catch(SQLException | IOException e){throw new RuntimeException(e);}
 
 
-                pannel.setContent(gridPane);                                                                             // imposto la griglia come contenuto dello scroll pane
+                pannel.setContent(gridPane);// imposto la griglia come contenuto dello scroll pane
 
         }
 }
+
+
 
 

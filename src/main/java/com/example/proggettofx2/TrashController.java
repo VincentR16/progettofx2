@@ -97,7 +97,6 @@ public class TrashController implements Initializable
     {
         MainController Home = MainController.getInstance();
 
-
         ResultSet rs;                                                                                                                     //query gestita dal controller principale che prende tutte le foto dell'utente loggato
 
         try {
@@ -110,7 +109,6 @@ public class TrashController implements Initializable
         GridPane gridPane =new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-
 
         try
         {

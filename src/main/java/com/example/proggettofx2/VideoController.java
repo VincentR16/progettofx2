@@ -161,7 +161,7 @@ public class VideoController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        MainController main =  MainController.getInstance();
+     /*   MainController main =  MainController.getInstance();
 
         ResultSet rs;
 
@@ -210,6 +210,6 @@ public class VideoController implements Initializable
         labesoggetto.setText(soggetti.get(0));
 
         animazione();
-
+*/
     }
 }

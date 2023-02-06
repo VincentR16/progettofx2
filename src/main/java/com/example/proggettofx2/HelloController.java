@@ -15,14 +15,11 @@ import java.util.Optional;
 
 public class HelloController  {
 
-
     @FXML
     private PasswordField assfield1;
 
     @FXML
     private TextField txtFIELD;
-
-
 
     @FXML
     void BottonAccedi(ActionEvent event) throws IOException {
@@ -65,12 +62,10 @@ public class HelloController  {
                         controllo2=false;
                         Utente.getUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
 
-                        MainController.getInstance().getStage().close();
-                        MainController.getInstance().CreateStage("HOME_page.fxml");
+                        C.getStage().close();
+                        C.CreateStage("HOME_page.fxml");
 
-                        Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                        thisStage.close();
+                       // Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     }
 
                 }
@@ -87,13 +82,7 @@ public class HelloController  {
 
 
             }catch(SQLException e){throw new RuntimeException(e);}
-
-
         }
-
-
-
-
 
     }
 
@@ -120,11 +109,11 @@ public class HelloController  {
 
                 if (Pass.get().equals(rs.getString("password")))
                 {
-                    MainController.getInstance().getStage().close();
-                    MainController.getInstance().CreateStage("Adminpage.fxml");
+                    C.getStage().close();
+                    C.CreateStage("Adminpage.fxml");
 
-                    MainController.getInstance().getStage().setHeight(570);
-                    MainController.getInstance().getStage().setWidth(600);
+                    C.getStage().setHeight(570);
+                    C.getStage().setWidth(600);
 
 
                 } else
@@ -147,19 +136,15 @@ public class HelloController  {
     @FXML
     void BottonR(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
+        MainController main= MainController.getInstance();
 
-       MainController.getInstance().getStage().close();
-       MainController.getInstance().CreateStage("Second page.fxml");
+        main.getStage().close();
+        main.CreateStage("Second page.fxml");
 
-        MainController.getInstance().getStage().setTitle("Welcome");
-        MainController.getInstance().getStage().setResizable(false);
+        main.getStage().setTitle("Welcome");
+        main.getStage().setResizable(false);
 
-        MainController.getInstance().getStage().setWidth(700);
-        MainController.getInstance().getStage().setHeight(500);
-        MainController.getInstance().getStage().show();
-
+        main.getStage().setWidth(700);
+        main.getStage().setHeight(500);
     }
-
-
-
 }

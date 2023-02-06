@@ -17,10 +17,6 @@ import java.util.ResourceBundle;
 
 public class ProfiloController implements Initializable
 {
-
-
-
-
     @FXML
     private TextField Cognome;
 
@@ -40,8 +36,7 @@ public class ProfiloController implements Initializable
     @FXML
     void Baggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();          //todo sostituire tutto con profilo e page e trovare metodo per foto!!;
-                                                    //TODO magari scrivere el posto di la mia collezione semplicemente Torna a home page !;
+        MainController.getInstance().getStage().close();
         MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
         MainController.getInstance().getStage().setWidth(920);
         MainController.getInstance().getStage().setHeight(630);

@@ -107,7 +107,7 @@ public class AddController implements Initializable
 
             pst.execute();
             pst.close();
-            C.CloseCon();
+            C.Closeall();
 
 
 

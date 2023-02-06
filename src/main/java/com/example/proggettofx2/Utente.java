@@ -35,24 +35,17 @@ public class Utente {
 
     public  void setdefault() {istanza=null;}
 
-
-
     public void Modifica(String N,String C,String Na,String E,String P)throws SQLException
     {
-        Nome=N;
-        Cognome=C;
-        Nazionalita=Na;
-        Email=E;
-        Password=P;
 
         MainController Main= MainController.getInstance();
         PreparedStatement pst= Main.DoPrepared("update utente set nome= ?,cognome= ?,email= ?,nazionalità= ?,password= ? where id_utente= ?");
 
-        pst.setString(1,Nome);
-        pst.setString(2,Cognome);
-        pst.setString(3,Email);
-        pst.setString(4,Nazionalita);
-        pst.setString(5,Password);
+        pst.setString(1,N);
+        pst.setString(2,C);
+        pst.setString(3,E);
+        pst.setString(4,Na);
+        pst.setString(5,P);
         pst.setInt(6,idutente);
 
         pst.execute();

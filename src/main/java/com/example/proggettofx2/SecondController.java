@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
-
 import java.io.IOException;
 import java.sql.*;
 
@@ -111,7 +110,7 @@ public class SecondController {
 
 
                 if(controllo)
-            {
+                {
                 int id_utente;
 
                 CallableStatement cst=C.Callprocedure("{?=call recupera_id_utente(?)}");

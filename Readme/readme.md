@@ -1,22 +1,133 @@
 #    README
 
 Progetto 2023,  
-OOBD_T2G02  traccia numero 2.
+OOBD_T2G02 traccia numero 2.
 
 ## Descrizione generale 
 
 Progettazione e Implementazione di un sistema software dedito alla archiviazione e alla gestione 
-di foto.    
+di foto.  
 Il software si avvale di un database locale, creato e gestito tramite PostgreSQL.       
 
 ### Scelta del linguaggio
 
-Il software è stato programmato tramite javafx e non java-swing.
-In modo tale da poter approfondire e implementare al meglio la rappresentazione grafica del progetto.
-Javafx propone numerosi strumenti per la gestione dell' output di immagini, facilitando cosi la gestione delle immagini.
+Il software è stato programmato tramite javafx e non java-swing, in modo tale da poter approfondire e implementare al meglio la rappresentazione grafica del progetto.
+Javafx propone numerosi strumenti per la gestione dell' output d' immagini, facilitando così la gestione delle foto.
 
 
-### Composizione del software 
+## Composizione del software
+Il software è composto da diverse [pagine](src/main/resources/com/example/proggettofx2) create mediante [SceneBuilder](https://gluonhq.com/products/scene-builder/).
+Le pagine sono tradotte automaticamente in [xml](https://it.wikipedia.org/wiki/XML).   
+Abbiamo progettato personalmente tutte le pagine, cercando di dare un' identità univoca a quest'ultime e provando, per quanto non sia nelle nostre competenze,
+a mantenere un design semplice e intuitivo così da risultare **user friendly**.
+
+### Il Modello 
+
+Il software è suddiviso in classi, delle quali solo due non sono accompagnate dalla scritta di *Controller*.
+La scelta d'inserire all'interno dei nomi questa *qualifica* è dovuta al fatto che questi file non si possono definire,
+in termini stretti, come delle semplici classi in java.
+I controller infatti sono dei veri e propri punti d' ingresso rispetto alle azioni che l'utente svolge
+in quello **specifico momento**.
+
+Il software è stato originariamente pensato sul modello *BCE*, ci si è però imbattuti in diverse difficoltà, la principale
+è stata la sovrabbondaza di file ridondanti.  
+Ciò poichè, se in java-swing il file della classe del corrispettivo *stage* aggiunge informazioni essenziali riguardanti
+la composizione stessa,
+in javafx tutte le informazioni necessarie sono contenunte all'interno dei *file.xml*, il quale comunica per costruzione
+solamente con il corrispettivo *Controller*.
+Inoltre in FX le componenti, come ad esempio 
+ 
+    @FXML
+    private TextField textfiled;
+sono legate all 'url stesso della pagina, per questo se si prova a definirli in una classe diversa dal proprio
+*controller*, la componente stessa perde di significato, non comparendo a schermo e risultando spoglia rispetto alle modifiche 
+fatte tramite SceneBuilder.
+
+
+In precedenza, il modello del progetto su base *BCE* era organizzato in questo modo ***file.xml --> Controller_del_file--> Classe_entità***.
+
+Questo sistema però non era adatto a Javafx, e dopo un'attenta documentazione, è stato deciso, di semplificare il codice adattandolo a questo modello ***file.xml--> Controller_del_file_--> ClasseController_principale***. 
+
+In particolar modo abbiamo deciso di eliminare tutte le singole classi *entità*, che si riferivano al rispettivo controller, e di aggiungere, un'unica 
+classe chiamata *MainController* che svolge tutte le operazioni di calcolo principali, e tutte le operazioni identiche nei controller.
+
+Il modello finale del progetto è ispirato al modello *MVC*
+
+### Il Codice 
+
+Se da una parte lavorare con **Javafx** ha semplificato la gestione delle foto, dall' altra è risultato notevolmente 
+difficile dover imparare un nuovo linguaggio, così simile, ma allo stesso tempo così differente da java-swing. 
+Infatti nonostante provengano entrambi da java, non sono in nessun modo compatibili (se non con librerie esterne, o metodi molto articolati).          
+Risulta per questo quasi impossibile inserire un componente swing in uno **stage** di FX o viceversa.
+É stata necessaria, una fase preliminare volta alla comprensione del linguaggio.
+Durante questo processo il gruppo si è avvalso sia delle nozioni presenti sul libro di corso(in particolare dei capitoli scaricabili), sia delle nozioni presenti 
+on-line su siti [ufficiali](https://fxdocs.github.io/docs/html5/) e [video-corsi](https://www.youtube.com/watch?v=_7OM-cMYWbQ&list=PLZPZq0r_RZOM-8vJA3NQFZB7JroDcMwev).
+
+Nonostante la mole d'informazioni a disposizione, è stato necessario e stimolante confrontarsi con
+altri programmatori tramite [StackOverflow](https://stackoverflow.com/).
+
+Il codice è stato rimaneggiato molteplici volte, talvolta del tutto stravolto.
+Ciò è dovuto sicuramente all'inesperienza, infatti in molti casi l' approccio principale ai problemi era sicuramente
+poco fluido.
+Abbiamo cercato quindi, ogniqualvolta la nostra esperienza progrediva, di rivedere il lavoro svolto **semplificando e snellendo il codice**.
+
+### Librerie esterne e gestione delle foto
+
+Il codice si avvale di due **librerie** sotto forma di file.jar. Per entrambe è stato necessario dover modificare le dipendenze
+del codice nel file [module-info.java](src/main/java/module-info.java), solo per la seconda si è dovuto
+anche modificare le dipendenze del file [maven](pom.xml).
+
+La prima libreria è quella del diver ***JDBC***, che viene utilizzata per mettere in collegamento il database e Intelij.    
+La seconda si chiama **SwingFXUtils**
+
+    requires javafx.swing;
+
+e viene utilizzata per mettere in collegamento Javafx con Java, in particolare per poter trasformare una buffered image (sottoclasse di java.awt.Image) in un' immagine writable
+sottoclasse di image(javafx.scene.Image).
+Ovvero,in altre parole, la classe Image di javafx è completamente differente dalla classe Image di Java 'classico'.  
+Per quanto possa risultare anomalo le due classi, non solo sono incompatibili, ma hanno anche sottoclassi ben differenti e con scopi assolutamente non sovrapponibili.
+
+A tal proposito e a causa della necessità di trasformare dei dati **bytea** in immagini,è risultato obbligatorio aggiungere questa libreria esterna.    
+I dati sono stati elaborati in questo modo:
+
+
+        InputStream in = new ByteArrayInputStream(binaryData);                                                                  
+        BufferedImage Bimage = ImageIO.read(in);
+
+        ImageView imageView= new ImageView();
+        imageView.setUserData(id_foto)
+
+        imageView.setImage( SwingFXUtils.toFXImage(Bimage,null));  
+
+
+
+Nella prima riga i dati **binaryData**  ricevuti dal database vengono trasformati in **InputStream**.
+Successivamente, grazie al metodo *read* di *ImageIo*, i dati vegono letti e inseriti all' interno di una **BufferedImage**.
+
+Quest'ultima viene convertita in una ***WritableImage*** tramite il metodo *SwingFXUtils.toFXImage* e inserite all' interno di una *ImageView*.
+Il processo viene eseguito per ogni foto.   
+Inoltre si necessitava far corrispondere ogni foto al proprio id; per semplicità si è voluto evitare l'utilizzo di
+una lista **ID** da far scorrere, e le si è preferito un piccolo stratagemma, ovvero utilizzare *setUsersData* per immagazzinare i dati
+e *getUsersData* per riceverli.
+
+### Output delle foto
+
+La gestione dell'output delle foto si sviluppa su più livelli.
+In primo luogo si è avuta l'esigenza di trovare una componente in javafx adatta.
+Le componenti Javafx, vengono considerate come dei nodi in un albero, e di conseguenza, strettamente collegate tra di
+loro; non conoscendo *xml* l'unico modo per interagire con quest'ultimi è tramite **SceneBuilder**.
+Da qui deriva la principale difficoltà; ovvero come si possono inserire **N Imageview** in modo ordinato, senza poter in alcun
+modo modificare la posizione dei nodi.
+L'idea iniziale era quella di racchiudere tutte le Imageview in un' altra componente. È stato deciso di utilizzare un **Tilepane** all' interno di uno **Scrollpane**.
+Grazie all'uso dello **Scrollpane** si è potuto creare una *scene* dinamica, che si allarga e si restringe all'occorrenza.
+L'utilizzo del *Tilepane* risultò però confusionario e poco ordinato, è stato per questo sostituito con un *Gridpane*, grazie al quale si è potuto impostare lo spazio tra una foto e l 'altra.
+
+Infine dopo alcune prove si è visto che inserendo il *Gridpane* attraverso *SceneBuilder* quest'ultimo risultava solamente
+sovrapposto allo **Scrollpane** e non contenuto in esso, si è quindi optato per aggiungerlo manualmente nel codice, tramite il 
+metodo *setContent*.
+
+
+  
 
 
 

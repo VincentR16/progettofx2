@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MainController {
 
-    private final List<String>  list=new ArrayList<String>();
+    private final List<String>  list=new ArrayList<>();
     private static MainController istanza = null;
     private  Stage stage;
     private Connection con=null;
@@ -58,7 +58,6 @@ public class MainController {
             stage.setWidth(920);
             stage.setHeight(620);
 
-
             stage.show();
 
             return stage;
@@ -77,10 +76,9 @@ public class MainController {
             Class.forName("org.postgresql.Driver");
 
             String url="jdbc:postgresql://localhost:5432/GALLERIA_PROGGETTO";
-            Connection con=DriverManager.getConnection(url,"postgres","biscotti");
+            return DriverManager.getConnection(url,"postgres","biscotti");
 
             //System.out.println("CONNESSIONE RIUSCITA CON SUCCESSO");
-            return  con;
 
         } catch (ClassNotFoundException e)
        {
@@ -103,9 +101,9 @@ public class MainController {
         try {
 
             st= con.createStatement();
-            ResultSet rs= st.executeQuery(S);
+            return st.executeQuery(S);
 
-            return rs;
+
 
         }catch (SQLException e){throw new RuntimeException(e);}
 
@@ -186,8 +184,6 @@ public class MainController {
     public ImageView setImageview(byte [] binaryData,int id_foto) throws IOException
     {
                                                                                                                                 //metto la foto in un array di byte
-
-
         InputStream in = new ByteArrayInputStream(binaryData);                                                                  // trasformo i bite in uno stream di dati per poter utilizzarlo come buffered
         BufferedImage Bimage = ImageIO.read(in);
 
@@ -196,8 +192,6 @@ public class MainController {
         imageView.setUserData(id_foto);                                                                                         // sotto classe di image di javafx.
                                                                                                                                       // infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
                                                                                                                                       // e quindi di conseguenza non compatibile con le componenti di javafx
-
-
         imageView.setImage( SwingFXUtils.toFXImage(Bimage,null));                                                         // funziona perche writableimg estende img
 
         imageView.setFitHeight(135);                                                                                                 // imposto la grandezza dell'imagine
@@ -208,7 +202,7 @@ public class MainController {
           return imageView;
     }
 
-    public ListView<String> listView(ListView<String> VistaUtente)
+    public void listView(ListView<String> VistaUtente)
     {
 
         ArrayList<String> lista = new ArrayList<>();
@@ -229,9 +223,6 @@ public class MainController {
 
 
         VistaUtente.getItems().addAll(lista);
-
-
-       return VistaUtente;
     }
 }
 
