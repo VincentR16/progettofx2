@@ -28,8 +28,10 @@ di mantenere un design semplice e intuitivo cosi da risultare **user friendly**.
 
 Il codice è stato originariamente pensato sul modello *BCE*, ci siamo però imbattuti in diverse difficoltà, la principale
 è stata la sovrabbondaza di file ridondanti.  
-Infatti ogni pagina di output corrispondeva rispettivamente a ***file.xml --> Controller_del_file--> Classe_identità***
+Infatti ogni pagina di output corrispondeva rispettivamente a ***file.xml --> Controller_del_file--> Classe_identità*** 
+![](https://user-images.githubusercontent.com/119407465/216968160-ebc5bf2f-0439-47dc-90b0-edb1f6f9908c.png | )
 
+![](https://user-images.githubusercontent.com/119407465/216968167-d7613bf8-e673-4e3b-a916-e8f324cf909d.png | )
 
 
 
