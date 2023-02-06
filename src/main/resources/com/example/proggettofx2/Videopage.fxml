@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proggettofx2.VideoController">
+   <children>
+      <Pane layoutY="-3.0" prefHeight="595.0" prefWidth="167.0" style="-fx-background-color: #183669;">
+         <children>
+            <ImageView fitHeight="134.0" fitWidth="111.0" layoutX="28.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/icons8-galleria-di-immagini-96.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutX="-14.0" layoutY="197.0" mnemonicParsing="false" onAction="#BProfile" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="PROFILO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="8.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/witusrs.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutX="-13.0" layoutY="231.0" mnemonicParsing="false" onAction="#BCollezioni" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="COLLEZIONI" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="29.0" layoutX="8.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/gallery.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-14.0" layoutY="268.0" mnemonicParsing="false" onAction="#BAggiungifoto" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="      AGGIUNGI FOTO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="8.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/plus.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutX="-14.0" layoutY="304.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #0C1538;" text="VIDEO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="8.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/video2.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-14.0" layoutY="340.0" mnemonicParsing="false" onAction="#BCestino" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="CESTINO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="30.0" layoutX="8.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/trash.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutY="535.0" mnemonicParsing="false" onAction="#Bexit" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="23.0" prefWidth="166.0" style="-fx-background-color: #183669;" text="ESCI" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="20.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/exit.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-16.0" layoutY="378.0" mnemonicParsing="false" onAction="#BbackToHome" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="187.0" style="-fx-background-color: #183669;" text="TORNA INDIETRO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutX="20.0" layoutY="110.0" prefHeight="30.0" prefWidth="150.0" text="ProjectGallery" textFill="WHITE">
+               <font>
+                  <Font name="Bodoni MT Poster Compressed" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="166.0" prefHeight="589.0" prefWidth="6.0" style="-fx-background-color: #73829c;" />
+      <Pane layoutX="227.0" layoutY="29.0" prefHeight="346.0" prefWidth="650.0" style="-fx-background-color: #73829c;">
+         <children>
+            <ImageView fx:id="videoview" fitHeight="265.0" fitWidth="391.0" layoutX="130.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="51.0" fitWidth="59.0" layoutX="14.0" layoutY="290.0" onMouseClicked="#Playbutton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/play.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="51.0" fitWidth="51.0" layoutX="87.0" layoutY="290.0" onMouseClicked="#Stopbutton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/pause.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="161.0" layoutY="309.0" prefHeight="14.0" prefWidth="68.0" text="DISPOSITIVO:" textFill="WHITE">
+               <font>
+                  <Font name="Eras Light ITC" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="325.0" layoutY="309.0" text="LUOGO:" textFill="WHITE">
+               <font>
+                  <Font name="Eras Light ITC" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="labeluog" layoutX="370.0" layoutY="309.0" prefHeight="14.0" prefWidth="92.0" textFill="WHITE">
+               <font>
+                  <Font name="Eras Light ITC" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="labeldisp" layoutX="229.0" layoutY="309.0" prefHeight="14.0" prefWidth="92.0" textFill="WHITE">
+               <font>
+                  <Font name="Eras Light ITC" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="462.0" layoutY="309.0" prefHeight="14.0" prefWidth="68.0" text="Soggetto:" textFill="WHITE">
+               <font>
+                  <Font name="Eras Light ITC" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="labesoggetto" layoutX="510.0" layoutY="309.0" prefHeight="14.0" prefWidth="92.0" textFill="WHITE">
+               <font>
+                  <Font name="Eras Light ITC" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

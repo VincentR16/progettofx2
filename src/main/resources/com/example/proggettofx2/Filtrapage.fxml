@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proggettofx2.FiltraController">
+   <children>
+      <Pane layoutY="-3.0" prefHeight="595.0" prefWidth="166.0" style="-fx-background-color: #183669;">
+         <children>
+            <ImageView fitHeight="134.0" fitWidth="111.0" layoutX="28.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/icons8-galleria-di-immagini-96.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutX="-14.0" layoutY="197.0" mnemonicParsing="false" onAction="#BProfile" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="PROFILO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="8.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/witusrs.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutX="-13.0" layoutY="231.0" mnemonicParsing="false" onAction="#BCollezioni" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="COLLEZIONI" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="29.0" layoutX="8.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/gallery.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-14.0" layoutY="268.0" mnemonicParsing="false" onAction="#BAggiungifoto" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="      AGGIUNGI FOTO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="8.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/plus.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutX="-14.0" layoutY="304.0" mnemonicParsing="false" onAction="#Bvideo" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="VIDEO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="8.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/video2.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-14.0" layoutY="340.0" mnemonicParsing="false" onAction="#BCestino" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="37.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="CESTINO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="30.0" layoutX="8.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/trash.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" layoutY="535.0" mnemonicParsing="false" onAction="#Bexit" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="23.0" prefWidth="166.0" style="-fx-background-color: #183669;" text="ESCI" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="20.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/exit.png" />
+               </image>
+            </ImageView>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-16.0" layoutY="378.0" mnemonicParsing="false" onAction="#BbackToHome" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="189.0" style="-fx-background-color: #183669;" text="TORNA INDIETRO" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="11.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutX="14.0" layoutY="110.0" prefHeight="30.0" prefWidth="157.0" text="ProjectGallery" textFill="WHITE">
+               <font>
+                  <Font name="Bodoni MT Poster Compressed" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="166.0" prefHeight="589.0" prefWidth="6.0" style="-fx-background-color: #73829c;" />
+      <ScrollPane fx:id="pannel" layoutX="172.0" layoutY="71.0" prefHeight="391.0" prefWidth="735.0">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="390.0" prefWidth="735.0" />
+         </content>
+      </ScrollPane>
+      <ComboBox fx:id="combobox" layoutX="191.0" layoutY="39.0" prefWidth="150.0" />
+      <TextField fx:id="textfiled" layoutX="402.0" layoutY="39.0" prefHeight="25.0" prefWidth="311.0">
+         <effect>
+            <DropShadow height="12.26" radius="8.18" spread="0.08" width="22.46" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></TextField>
+      <Label layoutX="454.0" layoutY="469.0" text="Top 3 Luoghi immortalati">
+         <font>
+            <Font name="Eras Light ITC" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="454.0" layoutY="503.0" text="Primo:" />
+      <Label layoutX="454.0" layoutY="533.0" text="Secondo:" />
+      <Label layoutX="454.0" layoutY="561.0" text="Terzo:" />
+      <Button layoutX="750.0" layoutY="39.0" mnemonicParsing="false" onAction="#Bcerca" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #183669;" text="Cerca" textFill="WHITE" />
+      <Label fx:id="labelprimo" layoutX="526.0" layoutY="503.0" />
+      <Label fx:id="labelsec" layoutX="526.0" layoutY="533.0" />
+      <Label fx:id="labelterz" layoutX="526.0" layoutY="561.0" />
+      <ImageView fitHeight="23.0" fitWidth="24.0" layoutX="761.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

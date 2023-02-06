@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proggettofx2.AdminController">
+   <children>
+      <Pane prefHeight="525.0" prefWidth="600.0">
+         <children>
+            <ListView fx:id="VistaUtente" layoutX="111.0" layoutY="163.0" prefHeight="348.0" prefWidth="406.0" />
+            <Label layoutX="111.0" layoutY="146.0" prefHeight="17.0" prefWidth="220.0" text="Scegli utente da eliminare" />
+            <Label layoutX="111.0" layoutY="34.0" prefHeight="17.0" prefWidth="112.0" text="numreo totale utenti" />
+            <Label fx:id="Labelutenti" layoutX="300.0" layoutY="34.0" text="Label" />
+            <Label layoutX="111.0" layoutY="71.0" text="numero totale fotografie" />
+            <Label fx:id="labelfoto" layoutX="300.0" layoutY="71.0" prefHeight="17.0" prefWidth="28.0" text="Label" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
