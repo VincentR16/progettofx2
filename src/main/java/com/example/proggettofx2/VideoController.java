@@ -11,8 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class VideoController implements Initializable
 {
+    boolean controllo=true;
     private final List<Image> images= new ArrayList<>();
     private final List<String>dispositivo= new ArrayList<>();
     private final List<String>city= new ArrayList<>();
@@ -64,9 +63,9 @@ public class VideoController implements Initializable
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-
         MainController C =MainController.getInstance();
+
+        C.getStage().close();
 
         C.CreateStage("Firstpage.fxml");
         C.getStage().setHeight(450);
@@ -107,17 +106,18 @@ public class VideoController implements Initializable
 
 
     @FXML
-    void Playbutton(@SuppressWarnings("UnusedParameters")MouseEvent event)
-    {
+    void Playbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) throws SQLException, IOException {
+        if(controllo)
+        {
+            MainController.getInstance().setVideo(images, dispositivo, city, soggetti);
+            controllo=false;
+        }
         animationTimer.start();
     }
 
 
     @FXML
-    void Stopbutton(@SuppressWarnings("UnusedParameters")MouseEvent event)
-    {
-        animationTimer.stop();
-    }
+    void Stopbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) {animationTimer.stop();}
 
     public void animazione()
     {
@@ -148,68 +148,11 @@ public class VideoController implements Initializable
 
                     inizio[0] =tempocorrente;
                 }
-
             }
         };
-
     }
-
-
-
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-     /*   MainController main =  MainController.getInstance();
-
-        ResultSet rs;
-
-        try {
-            rs=main.getInstance().GetImage(0);
-
-            while(rs.next())
-            {
-                ImageView imageView=main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-                images.add(imageView.getImage());
-
-
-                PreparedStatement pst= MainController.getInstance().DoPrepared("select dispositivo,città from fotografia where id_foto=?");
-                pst.setInt(1,(int)imageView.getUserData());
-
-                ResultSet rs1 = pst.executeQuery();
-                rs1.next();
-
-                dispositivo.add(rs1.getString("dispositivo"));
-                city.add(rs1.getString("città"));
-
-                rs1.close();
-                pst.close();
-
-
-                PreparedStatement ps=main.DoPrepared("Select * from recupera_soggetti_foto(?)");
-                ps.setInt(1,(int)imageView.getUserData());
-
-                ResultSet rs2=ps.executeQuery();
-                rs2.next();
-
-                soggetti.add(rs2.getString(2));
-
-                ps.close();
-                rs2.close();
-            }
-
-            rs.close();
-            main.Closeall();
-
-        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
-
-        videoview.setImage(images.get(0));
-        labeldisp.setText(dispositivo.get(0));
-        labeluog.setText(city.get(0));
-        labesoggetto.setText(soggetti.get(0));
-
-        animazione();
-*/
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) {animazione();}
 }

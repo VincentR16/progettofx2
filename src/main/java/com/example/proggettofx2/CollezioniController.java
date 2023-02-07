@@ -135,6 +135,9 @@ public class CollezioniController implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        combobox.setPromptText("Scegli la libreria");
+
         MainController main = MainController.getInstance();
 
         try {

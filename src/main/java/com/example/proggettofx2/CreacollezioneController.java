@@ -159,7 +159,6 @@ public class CreacollezioneController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
        MainController.getInstance().listView(VistaUtente);
 
 

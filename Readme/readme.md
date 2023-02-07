@@ -127,6 +127,73 @@ sovrapposto allo **Scrollpane** e non contenuto in esso, si è quindi optato per
 metodo *setContent*.
 
 
+### Video
+
+La creazione del video presente nell' applicazione si è svolta in più passaggi.
+Inizialmente si è avuto un processo di progettazione, le idee fondamentalmente erano due, la prima quella di utilizzare
+una librerie esterna chiamata *Mediaplayer*, che desse la possibilità all'utente di creare dei video con sottofondi musicali.
+La seconda ipotesi era quella di far scorrere delle foto al passare del tempo.  
+Si è scelta la seconda per semplicità. 
+Per realizzarla si è dovuto inserire in **SceneBuilder** una *imageview*, e si è
+dovuto creare un piccola animazione.
+
+
+    final long[] inizio = {System.currentTimeMillis()};
+    final int[] indice = {0};
+
+        animationTimer = new AnimationTimer()
+        {
+            @Override
+            public void handle(long l)
+            {
+                long tempocorrente= System.currentTimeMillis();
+
+                if(tempocorrente- inizio[0] >= 4000)
+                {
+                    if(indice[0] <images.size()){videoview.setImage(images.get(indice[0]));}
+                    else {indice[0]=-1;}
+
+                    indice[0]++;
+
+                    inizio[0] =tempocorrente;
+                }
+            }
+        };
+
+Il primo passo è quello d'inserire all'interno di un **array** il tempo corrente. Successivamente si va a definire
+***animationTimer*** specificando sia le istruzioni sia la condizione per essere eseguita.
+In questo specifico caso ***l'animazione*** si avvia ogni ***4 secondi***.
+Infatti a tener conto del tempo passato è la differenza tra *tempocorrente* e *inzio*.
+Inoltre grazie alle seguenti istruzioni:
+
+        if(indice[0] <images.size())
+            else {indice[0]=-1;}
+
+una volta terminate tutte le foto, l'animazione riparte da capo, in modo tale che sia solo *l'utente* a poter scegliere 
+di far fermare il video.
+
+In altre parole questa piccola animazione, si comporta come un **listner** e tramite il metodo **handle(l)**tiene conto di ogni 
+cambiamento della variabile **tempocorrente** svolgendo il codice solo quando le condizioni create sono rispettate.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
 

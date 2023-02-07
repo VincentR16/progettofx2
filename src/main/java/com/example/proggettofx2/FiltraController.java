@@ -173,6 +173,8 @@ public class FiltraController implements Initializable
         combobox.getItems().add("Luogo");
         combobox.getItems().add("Soggetto");
 
+        combobox.setPromptText("Scegliere qui");
+
 
         MainController main = MainController.getInstance();
 

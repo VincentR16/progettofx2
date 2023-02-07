@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -223,6 +224,53 @@ public class MainController {
 
 
         VistaUtente.getItems().addAll(lista);
+    }
+
+
+
+
+    void setVideo(List<Image> images,List<String>dispositivo, List<String>city,List<String>soggetti) throws SQLException, IOException {
+        MainController main =  MainController.getInstance();
+
+        ResultSet rs;
+
+
+            rs=main.getInstance().GetImage(0);
+
+            while(rs.next())
+            {
+                ImageView imageView=main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+                images.add(imageView.getImage());
+
+
+                PreparedStatement pst= MainController.getInstance().DoPrepared("select dispositivo,città from fotografia where id_foto=?");
+                pst.setInt(1,(int)imageView.getUserData());
+
+                ResultSet rs1 = pst.executeQuery();
+                rs1.next();
+
+                dispositivo.add(rs1.getString("dispositivo"));
+                city.add(rs1.getString("città"));
+
+                rs1.close();
+                pst.close();
+
+
+                PreparedStatement ps=main.DoPrepared("Select * from recupera_soggetti_foto(?)");
+                ps.setInt(1,(int)imageView.getUserData());
+
+                ResultSet rs2=ps.executeQuery();
+                rs2.next();
+
+                soggetti.add(rs2.getString(2));
+
+                ps.close();
+                rs2.close();
+            }
+
+            rs.close();
+            main.Closeall();
+
     }
 }
 
