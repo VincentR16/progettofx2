@@ -30,7 +30,7 @@ public class AddtocollectionController implements Initializable
     void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
         MainController.getInstance().getStage().close();
-        MainController.getInstance().getInstance().CreateStage("Aggiungifotopage.fxml");
+        MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
         MainController.getInstance().getStage().setWidth(920);
         MainController.getInstance().getStage().setHeight(620);
     }
@@ -150,7 +150,7 @@ public class AddtocollectionController implements Initializable
 
                     if (result.get() == ButtonType.OK)
                     {
-                        PreparedStatement ps1= null;
+                        PreparedStatement ps1;
 
                         try {
                             ps1 = Home.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");

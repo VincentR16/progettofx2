@@ -90,7 +90,6 @@ public class HelloController  {
     void BottonAd(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException {
 
 
-
         TextInputDialog Dialog =new TextInputDialog("AMMINISTRATORE");
         Dialog.setTitle("ACCEDI COME AMMINISTRATORE");
         Dialog.setContentText("INSERISCI LA TUA PASSWORD");
@@ -100,14 +99,10 @@ public class HelloController  {
 
 
         MainController C= MainController.getInstance();
-        ResultSet rs =C.find_Admin();
 
         try {
 
-           rs.next();
-
-
-                if (Pass.get().equals(rs.getString("password")))
+                if (Pass.get().equals(C.find_Admin().getString("password")))
                 {
                     C.getStage().close();
                     C.CreateStage("Adminpage.fxml");
@@ -125,13 +120,9 @@ public class HelloController  {
                     alert.show();
                 }
 
-                rs.close();
-
-
         }catch (SQLException e){throw  new RuntimeException(e);}
-
-
     }
+
 
     @FXML
     void BottonR(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException

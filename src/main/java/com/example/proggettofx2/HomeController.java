@@ -31,7 +31,6 @@ public ScrollPane pannel;
 
 
 
-
         @FXML
         void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
         {
@@ -86,8 +85,6 @@ public ScrollPane pannel;
 
         }
 
-
-
         @FXML
         void MouseEntered(MouseEvent event)
         {
@@ -114,10 +111,16 @@ public ScrollPane pannel;
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle)
         {
+
+
                 MainController Home = MainController.getInstance();
 
+                GridPane gridPane =new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
+                gridPane.setHgap(10);
+                gridPane.setVgap(10);
 
-                ResultSet rs;                                                                                                                     //query gestita dal controller principale che prende tutte le foto dell'utente loggato
+
+                ResultSet rs;//query gestita dal controller principale che prende tutte le foto dell'utente loggato
 
                 try {
                         rs = Home.GetImage(0);
@@ -125,11 +128,6 @@ public ScrollPane pannel;
                 } catch (SQLException e) {
                         throw new RuntimeException(e);
                 }
-
-                GridPane gridPane =new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
-                gridPane.setHgap(10);
-                gridPane.setVgap(10);
-
 
                 try
                 {
@@ -184,8 +182,8 @@ public ScrollPane pannel;
 
 
                 pannel.setContent(gridPane);// imposto la griglia come contenuto dello scroll pane
-
         }
+
 }
 
 

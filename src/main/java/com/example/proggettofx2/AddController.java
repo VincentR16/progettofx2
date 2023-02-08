@@ -18,18 +18,17 @@ public class AddController implements Initializable
 {
     @FXML
     private ListView<String> VistaUtente;
-
     @FXML
     private TextField CityField;
-
     @FXML
     private TextField DeviceField;
-
     @FXML
     private TextField Pathfield;
-
     @FXML
     private ComboBox<String> Subjectbox;
+    private boolean Controllo=true;
+    private List<String> list;
+
 
     @FXML
     void BpickImage(ActionEvent event)
@@ -53,9 +52,6 @@ public class AddController implements Initializable
     @FXML
     void Baggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException {
 
-        boolean Controllo=true;
-
-        List<String> list= MainController.getInstance().getList();
 
         if(CityField.getText().equals(""))
             {
@@ -96,69 +92,12 @@ public class AddController implements Initializable
         {
             MainController C = MainController.getInstance();
 
-            PreparedStatement pst;
-            pst= C.DoPrepared("call aggiungi_fotografia(pg_read_binary_file(?),?,?,?)");
+            C.addPhoto(Pathfield.getText(),DeviceField.getText(),CityField.getText(),Subjectbox.getSelectionModel().getSelectedItem(),list);
 
-
-            pst.setString(1,Pathfield.getText());
-            pst.setString(2,DeviceField.getText());
-            pst.setString(3,CityField.getText());
-            pst.setInt(4,Utente.getUtente().getIdutente());
-
-            pst.execute();
-            pst.close();
-            C.Closeall();
-
-
-
-            CallableStatement cst= C.Callprocedure("{?=call recupera_id_foto()}");
-            cst.registerOutParameter(1, Types.INTEGER);
-
-            cst.execute();
-            int id_foto = cst.getInt(1);
-
-            cst.close();
-
-            pst=MainController.getInstance().DoPrepared("call inserisci_in_foto_raffigura_soggetto(?,?)");
-            pst.setInt(1, id_foto);
-            pst.setString(2,Subjectbox.getSelectionModel().getSelectedItem());
-
-            pst.execute();
-
-            pst.close();
-
-
-            Iterator<String> it= list.listIterator();
-
-
-            pst=MainController.getInstance().DoPrepared("call inserisci_in_foto_raffigura_utente(?,?)");
-
-            while (it.hasNext())
-            {
-                Object object=it.next();
-
-                pst.setInt(1, id_foto);
-                pst.setString(2,object.toString());
-
-                pst.execute();
-            }
-
-            pst.close();
-            C.Closeall();
-
-
-
-
-           MainController.getInstance().getStage().close();
-           MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
-
-           Alert alert=new Alert (Alert.AlertType.CONFIRMATION);
-           alert.setTitle("FOTO Aggiunta");
-           alert.setContentText("Premi torna indietro per visualizzarla");
+            C.getStage().close();
+            C.CreateStage("Aggiungifotopage.fxml");
         }
     }
-
-
 
 
 
@@ -185,9 +124,10 @@ public class AddController implements Initializable
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
 
         MainController C = MainController.getInstance();
+
+        C.getStage().close();
 
         C.CreateStage("Firstpage.fxml");
         C.getStage().setHeight(450);
@@ -232,6 +172,8 @@ public class AddController implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
 
+        list=new ArrayList<>();
+
        MainController main = MainController.getInstance();
 
             ResultSet rs= main.DoQuery("select categoria from soggetto");
@@ -247,7 +189,9 @@ public class AddController implements Initializable
             }catch (SQLException e){}
 
 
+
         main.listView(VistaUtente);
+
 
         VistaUtente.setOnMouseClicked(event ->
         {
@@ -263,7 +207,7 @@ public class AddController implements Initializable
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK)
                 {
-                    main.SetList(item);
+                    list.add(item);
                     VistaUtente.getItems().remove(item);
                 }
             }
