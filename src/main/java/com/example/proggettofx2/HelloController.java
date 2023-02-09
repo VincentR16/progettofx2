@@ -49,8 +49,8 @@ public class HelloController  {
             String E=txtFIELD.getText();
             String P=assfield1.getText();
 
-            MainController C= MainController.getInstance();
-            ResultSet rs =C.find_users();
+            MainController main= MainController.getInstance();
+            ResultSet rs =main.find_users();
 
             try {
 
@@ -62,15 +62,15 @@ public class HelloController  {
                         controllo2=false;
                         Utente.getUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
 
-                        C.getStage().close();
-                        C.CreateStage("HOME_page.fxml");
+                        main.getStage().close();
+                        main.CreateStage("HOME_page.fxml");
 
                        // Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     }
 
                 }
                 rs.close();
-                C.Closeall();
+                main.Closeall();
 
                 if(controllo2)
                 {
@@ -98,17 +98,17 @@ public class HelloController  {
 
 
 
-        MainController C= MainController.getInstance();
+        MainController main= MainController.getInstance();
 
         try {
 
-                if (Pass.get().equals(C.find_Admin().getString("password")))
+                if (Pass.get().equals(main.find_Admin().getString("password")))
                 {
-                    C.getStage().close();
-                    C.CreateStage("Adminpage.fxml");
+                    main.getStage().close();
+                    main.CreateStage("Adminpage.fxml");
 
-                    C.getStage().setHeight(570);
-                    C.getStage().setWidth(600);
+                    main.getStage().setHeight(570);
+                    main.getStage().setWidth(600);
 
 
                 } else

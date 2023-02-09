@@ -19,54 +19,49 @@ public class ProfiloController implements Initializable
 {
     @FXML
     private TextField Cognome;
-
     @FXML
     private TextField Email;
-
     @FXML
     private TextField Nazionalita;
-
     @FXML
     private TextField Nome;
-
     @FXML
     private TextField Password;
+    private MainController Main;
 
 
     @FXML
     void Baggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
-        MainController.getInstance().getStage().setWidth(920);
-        MainController.getInstance().getStage().setHeight(630);
+        Main.getStage().close();
+        Main.CreateStage("Aggiungifotopage.fxml");
+        Main.getStage().setWidth(920);
+        Main.getStage().setHeight(630);
     }
 
     @FXML
     void Bcestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Trashpage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Trashpage.fxml");
     }
 
     @FXML
     void Bcollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Collezionipage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Collezionipage.fxml");
     }
 
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
+        Main.getStage().close();
 
-        MainController C =MainController.getInstance();
-
-        C.CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
+        Main.getStage().setResizable(false);
 
         Utente.getUtente().setdefault();
     }
@@ -81,8 +76,8 @@ public class ProfiloController implements Initializable
     @FXML
     void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Videopage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Videopage.fxml");
     }
 
 
@@ -103,8 +98,8 @@ public class ProfiloController implements Initializable
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("HOME_page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("HOME_page.fxml");
     }
 
 
@@ -113,6 +108,9 @@ public class ProfiloController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+
+        Main=MainController.getInstance();
+
         Nome.setText(Utente.getUtente().getNome());
         Cognome.setText(Utente.getUtente().getCognome());
         Nazionalita.setText(Utente.getUtente().getNazionalita());

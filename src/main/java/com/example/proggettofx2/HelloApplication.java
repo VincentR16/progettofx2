@@ -9,12 +9,12 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        MainController C =MainController.getInstance();
+        MainController Main =MainController.getInstance();
 
-        C.getInstance().CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
+        Main.getStage().setResizable(false);
 
     }
 

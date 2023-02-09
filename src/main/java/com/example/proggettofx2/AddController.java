@@ -29,6 +29,8 @@ public class AddController implements Initializable
     private boolean Controllo=true;
     private List<String> list;
 
+    private MainController Main;
+
 
     @FXML
     void BpickImage(ActionEvent event)
@@ -90,12 +92,11 @@ public class AddController implements Initializable
 
         if(Controllo)
         {
-            MainController C = MainController.getInstance();
 
-            C.addPhoto(Pathfield.getText(),DeviceField.getText(),CityField.getText(),Subjectbox.getSelectionModel().getSelectedItem(),list);
+            Main.addPhoto(Pathfield.getText(),DeviceField.getText(),CityField.getText(),Subjectbox.getSelectionModel().getSelectedItem(),list);
 
-            C.getStage().close();
-            C.CreateStage("Aggiungifotopage.fxml");
+            Main.getStage().close();
+            Main.CreateStage("Aggiungifotopage.fxml");
         }
     }
 
@@ -103,36 +104,32 @@ public class AddController implements Initializable
 
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("HOME_page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("HOME_page.fxml");
     }
 
     @FXML
     void Bcestino(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Trashpage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Trashpage.fxml");
     }
 
     @FXML
     void Bcollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Collezionipage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Collezionipage.fxml");
     }
 
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
+        Main.getStage().close();
 
-        MainController C = MainController.getInstance();
-
-        C.getStage().close();
-
-        C.CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
 
         Utente.getUtente().setdefault();
     }
@@ -140,15 +137,15 @@ public class AddController implements Initializable
     @FXML
     void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Profile-page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Profile-page.fxml");
     }
 
     @FXML
     void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Videopage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Videopage.fxml");
     }
 
     @FXML
@@ -171,12 +168,11 @@ public class AddController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
         list=new ArrayList<>();
 
-       MainController main = MainController.getInstance();
+        Main = MainController.getInstance();
 
-            ResultSet rs= main.DoQuery("select categoria from soggetto");
+            ResultSet rs= Main.DoQuery("select categoria from soggetto");
 
             try {
                 while (rs.next())
@@ -184,13 +180,13 @@ public class AddController implements Initializable
                     Subjectbox.getItems().add(rs.getString("categoria"));
                 }
                 rs.close();
-                main.Closeall();
+                Main.Closeall();
 
             }catch (SQLException e){}
 
 
 
-        main.listView(VistaUtente);
+        Main.listView(VistaUtente);
 
 
         VistaUtente.setOnMouseClicked(event ->

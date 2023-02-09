@@ -24,42 +24,41 @@ public class TrashController implements Initializable
 {
     @FXML
     public ScrollPane pannel;
+    private MainController Main;
 
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
-        MainController.getInstance().getStage().setWidth(920);
-        MainController.getInstance().getStage().setHeight(620);
+        Main.getStage().close();
+        Main.CreateStage("Aggiungifotopage.fxml");
+        Main.getStage().setWidth(920);
+        Main.getStage().setHeight(620);
     }
 
     @FXML
     void BCollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Collezionipage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Collezionipage.fxml");
     }
 
     @FXML
     void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Profile-page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Profile-page.fxml");
     }
 
 
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
+        Main.getStage().close();
 
-        MainController C =MainController.getInstance();
-
-        C.CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
+        Main.getStage().setResizable(false);
 
         Utente.getUtente().setdefault();
     }
@@ -67,15 +66,15 @@ public class TrashController implements Initializable
     @FXML
     void Bvideo(@SuppressWarnings("UnusedParameters") ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Videopage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Videopage.fxml");
     }
 
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("HOME_page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("HOME_page.fxml");
     }
 
     @FXML
@@ -95,16 +94,14 @@ public class TrashController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        MainController Home = MainController.getInstance();
+        Main = MainController.getInstance();
 
         ResultSet rs;                                                                                                                     //query gestita dal controller principale che prende tutte le foto dell'utente loggato
 
         try {
-            rs = Home.GetImage(1);
+            rs = Main.GetImage(1);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {throw new RuntimeException(e);}
 
         GridPane gridPane =new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
         gridPane.setHgap(10);
@@ -118,7 +115,7 @@ public class TrashController implements Initializable
             while (rs.next())
             {
 
-                ImageView imageView =Home.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+                ImageView imageView =Main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
 
 
                 gridPane.add(imageView,j,i);
@@ -140,7 +137,7 @@ public class TrashController implements Initializable
                     if (result.get() == ButtonType.OK)
                     {
                         try {
-                            PreparedStatement pst=MainController.getInstance().DoPrepared("call elimina_fotografia(?,?)");
+                            PreparedStatement pst=Main.DoPrepared("call elimina_fotografia(?,?)");
 
                             int value = (int) ((Node)e.getSource()).getUserData();
 
@@ -149,7 +146,7 @@ public class TrashController implements Initializable
 
                             pst.execute();
                             pst.close();
-                            MainController.getInstance().Closeall();
+                            Main.Closeall();
 
                         } catch (SQLException ex) {throw new RuntimeException(ex);}
 
@@ -169,9 +166,10 @@ public class TrashController implements Initializable
 
         pannel.setContent(gridPane);                                                                             // imposto la griglia come contenuto dello scroll pane
 
+
         try
         {
-            Home.getCon().close();
+            Main.getCon().close();
 
         } catch (SQLException e) {throw new RuntimeException(e);}
 

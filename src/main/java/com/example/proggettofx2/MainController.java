@@ -25,7 +25,6 @@ import java.util.List;
 
 public class MainController {
 
-    private final List<String> list = new ArrayList<>();
     private static MainController istanza = null;
     private Stage stage;
     private Connection con = null;
@@ -59,14 +58,6 @@ public class MainController {
         this.Closest();
         this.Closeprepared();
         this.CloseCallable();
-    }
-
-    public void SetList(String string) {
-        list.add(string);
-    }
-
-    public List<String> getList() {
-        return list;
     }
 
 

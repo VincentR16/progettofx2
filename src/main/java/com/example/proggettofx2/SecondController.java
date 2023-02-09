@@ -22,12 +22,11 @@ public class SecondController {
     private TextField EField;
     @FXML
     private TextField PassField;
+    private boolean controllo=true;
 
 
     @FXML
     void Clickcrea(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException, SQLException {
-
-        boolean controllo=true;
 
 
         if(NomeField.getText().equals(""))
@@ -77,11 +76,11 @@ public class SecondController {
 
         if(controllo)
         {
-                MainController C  =MainController.getInstance();
+                MainController mainController  =MainController.getInstance();
             try
             {
                 PreparedStatement stmt;
-                stmt=C.DoPrepared("call crea_utente(?,?,?,?,?)");
+                stmt=mainController.DoPrepared("call crea_utente(?,?,?,?,?)");
 
                 stmt.setString(1,NomeField.getText());
                 stmt.setString(2,CognomeField.getText());
@@ -91,7 +90,7 @@ public class SecondController {
 
                 stmt.execute();
 
-                C.Closeall();
+                mainController.Closeall();
             }
             catch (SQLException e)
             {
@@ -113,7 +112,7 @@ public class SecondController {
                 {
                 int id_utente;
 
-                CallableStatement cst=C.Callprocedure("{?=call recupera_id_utente(?)}");
+                CallableStatement cst=mainController.Callprocedure("{?=call recupera_id_utente(?)}");
                 cst.registerOutParameter(1, Types.INTEGER);
                 cst.setString(2,EField.getText());
 
@@ -126,9 +125,9 @@ public class SecondController {
 
 
 
-                C.Closeall();
-                C.getStage().close();
-                C.CreateStage("HOME_page.fxml");
+                mainController.Closeall();
+                mainController.getStage().close();
+                mainController.CreateStage("HOME_page.fxml");
             }
         }
     }

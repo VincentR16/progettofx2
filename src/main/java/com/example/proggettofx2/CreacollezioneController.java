@@ -20,41 +20,40 @@ public class CreacollezioneController implements Initializable
     private boolean controllo= true;
     private String utente;
 
+    private MainController Main;
     @FXML
     private TextField label;
-
     @FXML
     private ListView<String> VistaUtente;
+
 
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
-        MainController.getInstance().getStage().setWidth(920);
-        MainController.getInstance().getStage().setHeight(620);
+        Main.getStage().close();
+        Main.CreateStage("Aggiungifotopage.fxml");
+        Main.getStage().setWidth(920);
+        Main.getStage().setHeight(620);
     }
 
 
     @FXML
     void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Profile-page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Profile-page.fxml");
     }
 
 
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
+        Main.getStage().close();
 
-        MainController C =MainController.getInstance();
-
-        C.CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
+        Main.getStage().setResizable(false);
 
         Utente.getUtente().setdefault();
 
@@ -63,22 +62,22 @@ public class CreacollezioneController implements Initializable
     @FXML
     void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Videopage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Videopage.fxml");
     }
     @FXML
     void BCestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Trashpage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Trashpage.fxml");
     }
 
 
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("HOME_page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("HOME_page.fxml");
     }
 
     @FXML
@@ -94,6 +93,8 @@ public class CreacollezioneController implements Initializable
         javafx.scene.control.Button button=(Button) (event.getSource());
         button.setStyle("-fx-background-color:  #183669 ");
     }
+
+
     @FXML
     void BnewCollection(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException, SQLException {
 
@@ -115,17 +116,17 @@ public class CreacollezioneController implements Initializable
                 alert.setContentText("Scegliere il nome della collezione");
             }else{
 
-                MainController main = MainController.getInstance();
+                Main = MainController.getInstance();
 
 
-                PreparedStatement pst = main.DoPrepared("call crea_collezione_condivisa(?,?,?)");
+                PreparedStatement pst = Main.DoPrepared("call crea_collezione_condivisa(?,?,?)");
                 pst.setInt(1,Utente.getUtente().getIdutente());
                 pst.setString(2,utente);
                 pst.setString(3,nomecollezione);
 
                 pst.execute();
 
-                main.Closeall();
+                Main.Closeall();
                 pst.close();
 
 
@@ -139,27 +140,34 @@ public class CreacollezioneController implements Initializable
 
                 if(result.get()==ButtonType.OK)
                 {
-                    PreparedStatement pst1 = main.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
+                    PreparedStatement pst1 = Main.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
                     pst1.setInt(1,Utente.getUtente().getIdutente());
                     pst1.setString(2,utente);
 
                     pst1.execute();
 
-                    main.Closeall();
+                    Main.Closeall();
                     pst1.close();
                 }
 
 
-                MainController.getInstance().getStage().close();
-                MainController.getInstance().CreateStage("Collezionipage.fxml");
+                Main.getStage().close();
+                Main.CreateStage("Collezionipage.fxml");
             }
         }
     }
 
+
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-       MainController.getInstance().listView(VistaUtente);
+
+        Main=MainController.getInstance();
+
+        Main.listView(VistaUtente);
 
 
         VistaUtente.setOnMouseClicked(event ->

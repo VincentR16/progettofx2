@@ -25,36 +25,35 @@ public class AddtocollectionController implements Initializable
 {
     @FXML
     public ScrollPane pannel;
+    private MainController Main;
 
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
-        MainController.getInstance().getStage().setWidth(920);
-        MainController.getInstance().getStage().setHeight(620);
+        Main.getStage().close();
+        Main.CreateStage("Aggiungifotopage.fxml");
+        Main.getStage().setWidth(920);
+        Main.getStage().setHeight(620);
     }
 
 
     @FXML
     void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Profile-page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Profile-page.fxml");
     }
 
 
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
+        Main.getStage().close();
 
-        MainController C =MainController.getInstance();
-
-        C.CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
+        Main.getStage().setResizable(false);
 
         Utente.getUtente().setdefault();
     }
@@ -62,22 +61,22 @@ public class AddtocollectionController implements Initializable
     @FXML
     void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Videopage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Videopage.fxml");
     }
     @FXML
     void BCestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Trashpage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Trashpage.fxml");
     }
 
 
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("HOME_page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("HOME_page.fxml");
     }
 
     @FXML
@@ -97,22 +96,22 @@ public class AddtocollectionController implements Initializable
     @FXML
     void Back(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException {
 
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Collezionipage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Collezionipage.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        MainController Home = MainController.getInstance();
+        Main = MainController.getInstance();
 
         PreparedStatement ps;
         ResultSet rs;                                                                                                                     //query gestita dal controller principale che prende tutte le foto dell'utente loggato
 
         try {
-            ps= Home.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
+            ps= Main.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
             ps.setInt(1,Utente.getUtente().getIdutente());
-            ps.setString(2, Home.getScelta());
+            ps.setString(2, Main.getScelta());
 
             rs = ps.executeQuery();
 
@@ -130,7 +129,7 @@ public class AddtocollectionController implements Initializable
 
             while (rs.next())
             {
-                ImageView imageView = Home.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));
+                ImageView imageView = Main.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));
 
                 gridPane.add(imageView, j, i);
 
@@ -153,11 +152,11 @@ public class AddtocollectionController implements Initializable
                         PreparedStatement ps1;
 
                         try {
-                            ps1 = Home.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");
+                            ps1 = Main.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");
 
                             int value = (int) ((Node)e.getSource()).getUserData();
                             ps1.setInt(1,value);
-                            ps1.setString(2, Home.getScelta());
+                            ps1.setString(2, Main.getScelta());
 
                             ps1.execute();
                             ps1.close();
@@ -171,7 +170,7 @@ public class AddtocollectionController implements Initializable
             }
                 ps.close();
                 rs.close();
-                Home.getCon().close();
+                Main.getCon().close();
 
         } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 

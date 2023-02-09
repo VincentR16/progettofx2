@@ -24,11 +24,13 @@ public class AdminController implements Initializable
     @FXML
     private Label labelfoto;
 
+    private MainController Main;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        MainController Main =MainController.getInstance();
+        Main =MainController.getInstance();
 
         Main.listView(VistaUtente);
 

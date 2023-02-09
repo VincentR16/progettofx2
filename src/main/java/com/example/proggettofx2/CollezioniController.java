@@ -24,35 +24,35 @@ public class CollezioniController implements Initializable
     @FXML
     private ComboBox<String> combobox;
 
+    private MainController Main;
+
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
-        MainController.getInstance().getStage().setWidth(920);
-        MainController.getInstance().getStage().setHeight(620);
+        Main.getStage().close();
+        Main.CreateStage("Aggiungifotopage.fxml");
+        Main.getStage().setWidth(920);
+        Main.getStage().setHeight(620);
     }
 
 
     @FXML
     void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Profile-page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Profile-page.fxml");
     }
 
 
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
+        Main.getStage().close();
 
-        MainController C =MainController.getInstance();
-
-        C.CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
+        Main.getStage().setResizable(false);
 
         Utente.getUtente().setdefault();
 
@@ -61,22 +61,22 @@ public class CollezioniController implements Initializable
     @FXML
     void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Videopage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Videopage.fxml");
     }
     @FXML
     void BCestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Trashpage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Trashpage.fxml");
     }
 
 
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("HOME_page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("HOME_page.fxml");
     }
 
     @FXML
@@ -95,8 +95,8 @@ public class CollezioniController implements Initializable
     @FXML
     void BnewCollection(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Creacollezionepage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Creacollezionepage.fxml");
     }
     @FXML
     void BaddCollection(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
@@ -110,8 +110,8 @@ public class CollezioniController implements Initializable
             alert.show();
         }else
         {
-            MainController.getInstance().getStage().close();
-            MainController.getInstance().CreateStage("Add2Collectionpage.fxml");
+            Main.getStage().close();
+            Main.CreateStage("Add2Collectionpage.fxml");
         }
     }
 
@@ -127,8 +127,8 @@ public class CollezioniController implements Initializable
             alert.show();
         }else
         {
-            MainController.getInstance().getStage().close();
-            MainController.getInstance().CreateStage("UtenteCollezione.fxml");
+            Main.getStage().close();
+            Main.CreateStage("UtenteCollezione.fxml");
         }
     }
 
@@ -138,11 +138,11 @@ public class CollezioniController implements Initializable
 
         combobox.setPromptText("Scegli la libreria");
 
-        MainController main = MainController.getInstance();
+        Main = MainController.getInstance();
 
         try {
 
-            PreparedStatement pst = main.DoPrepared("select distinct nome from collezione as c, utente_possiede_collezione as u where u.id_utente=? and c.personale=0 and c.id_collezione= u.id_collezione");
+            PreparedStatement pst = Main.DoPrepared("select distinct nome from collezione as c, utente_possiede_collezione as u where u.id_utente=? and c.personale=0 and c.id_collezione= u.id_collezione");
             pst.setInt(1,Utente.getUtente().getIdutente());
 
             ResultSet rs1 = pst.executeQuery();
@@ -152,17 +152,17 @@ public class CollezioniController implements Initializable
                 combobox.getItems().add(rs1.getString("nome"));
             }
 
-            main.Closeall();
+            Main.Closeall();
             rs1.close();
 
             combobox.setOnAction((ActionEvent er)->
             {
-                main.setScelta(combobox.getSelectionModel().getSelectedItem());
+                Main.setScelta(combobox.getSelectionModel().getSelectedItem());
 
                 GridPane gridPane;
                 try {
 
-                    CallableStatement cs1 = main.Callprocedure("{?= call recupera_id_collezione(?)}");
+                    CallableStatement cs1 = Main.Callprocedure("{?= call recupera_id_collezione(?)}");
                     cs1.registerOutParameter(1, Types.INTEGER);
 
                     cs1.setString(2, combobox.getSelectionModel().getSelectedItem());
@@ -170,7 +170,7 @@ public class CollezioniController implements Initializable
                     cs1.execute();
 
 
-                    PreparedStatement st1 = main.DoPrepared("select * from collezione_condivisa(?)");
+                    PreparedStatement st1 = Main.DoPrepared("select * from collezione_condivisa(?)");
 
                     st1.setString(1,combobox.getSelectionModel().getSelectedItem());
                     ResultSet rs= st1.executeQuery();
@@ -186,7 +186,7 @@ public class CollezioniController implements Initializable
                     int j = 0;
 
                     while (rs.next()) {
-                        ImageView imageView = main.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));
+                        ImageView imageView = Main.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));
 
                         gridPane.add(imageView, j, i);
                         // faccio un semplice ciclo per impostare la posizione delle immagevie nella griglia
@@ -210,7 +210,7 @@ public class CollezioniController implements Initializable
                             if (result.get() == ButtonType.OK) {
 
                                 try {
-                                    PreparedStatement ps = main.DoPrepared("call rendi_fotografia_privata_o_pubblica(?,?)");
+                                    PreparedStatement ps = Main.DoPrepared("call rendi_fotografia_privata_o_pubblica(?,?)");
 
                                     int value = (int) ((Node) e.getSource()).getUserData();
                                     Node node =(Node) e.getSource();
@@ -223,7 +223,7 @@ public class CollezioniController implements Initializable
                                     ps.execute();
 
                                     ps.close();
-                                    main.Closeall();
+                                    Main.Closeall();
 
 
                                 } catch (SQLException ex) {
@@ -234,7 +234,7 @@ public class CollezioniController implements Initializable
                     }
 
                     rs.close();
-                    main.getCon().close();
+                    Main.getCon().close();
 
                 } catch (SQLException | IOException e) {
                     throw new RuntimeException(e);

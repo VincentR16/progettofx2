@@ -24,6 +24,7 @@ public class VideoController implements Initializable
     private final List<String>city= new ArrayList<>();
     private final List<String>soggetti= new ArrayList<>();
     private AnimationTimer animationTimer;
+    private MainController Main;
 
 
     @FXML
@@ -38,39 +39,37 @@ public class VideoController implements Initializable
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
-        MainController.getInstance().getStage().setWidth(920);
-        MainController.getInstance().getStage().setHeight(620);
+        Main.getStage().close();
+        Main.CreateStage("Aggiungifotopage.fxml");
+        Main.getStage().setWidth(920);
+        Main.getStage().setHeight(620);
     }
 
     @FXML
     void BCollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Collezionipage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Collezionipage.fxml");
     }
 
 
     @FXML
     void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Profile-page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Profile-page.fxml");
     }
 
 
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        MainController C =MainController.getInstance();
+        Main.getStage().close();
 
-        C.getStage().close();
-
-        C.CreateStage("Firstpage.fxml");
-        C.getStage().setHeight(450);
-        C.getStage().setWidth(655);
-        C.getStage().setResizable(false);
+        Main.CreateStage("Firstpage.fxml");
+        Main.getStage().setHeight(450);
+        Main.getStage().setWidth(655);
+        Main.getStage().setResizable(false);
 
         Utente.getUtente().setdefault();
     }
@@ -78,16 +77,16 @@ public class VideoController implements Initializable
     @FXML
     void BCestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("Trashpage.fxml");
+        Main.getStage().close();
+        Main.CreateStage("Trashpage.fxml");
     }
 
 
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController.getInstance().getStage().close();
-        MainController.getInstance().CreateStage("HOME_page.fxml");
+        Main.getStage().close();
+        Main.CreateStage("HOME_page.fxml");
     }
 
     @FXML
@@ -109,7 +108,7 @@ public class VideoController implements Initializable
     void Playbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) throws SQLException, IOException {
         if(controllo)
         {
-            MainController.getInstance().setVideo(images, dispositivo, city, soggetti);
+            Main.setVideo(images, dispositivo, city, soggetti);
             controllo=false;
         }
         animationTimer.start();
@@ -154,5 +153,5 @@ public class VideoController implements Initializable
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {animazione();}
+    public void initialize(URL url, ResourceBundle resourceBundle) {Main=MainController.getInstance();animazione();}
 }
