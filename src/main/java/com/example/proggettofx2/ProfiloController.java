@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
-public class ProfiloController implements Initializable
+public class ProfiloController extends MenuController implements Initializable
 {
     @FXML
     private TextField Cognome;
@@ -27,44 +27,8 @@ public class ProfiloController implements Initializable
     private TextField Nome;
     @FXML
     private TextField Password;
-    private MainController Main;
 
 
-    @FXML
-    void Baggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Aggiungifotopage.fxml");
-        Main.getStage().setWidth(920);
-        Main.getStage().setHeight(630);
-    }
-
-    @FXML
-    void Bcestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Trashpage.fxml");
-    }
-
-    @FXML
-    void Bcollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Collezionipage.fxml");
-    }
-
-    @FXML
-    void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-
-        Main.CreateStage("Firstpage.fxml");
-        Main.getStage().setHeight(450);
-        Main.getStage().setWidth(655);
-        Main.getStage().setResizable(false);
-
-        Utente.getUtente().setdefault();
-    }
 
     @FXML
     void Bmodifica(@SuppressWarnings("UnusedParameters")ActionEvent event)throws SQLException
@@ -73,43 +37,10 @@ public class ProfiloController implements Initializable
         // todo non va bene fare tanti if e controllare solo i campi usati!
     }
 
-    @FXML
-    void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Videopage.fxml");
-    }
-
-
-    @FXML
-    void MouseEntered(MouseEvent event)
-    {
-        Button button=(Button) (event.getSource());
-        button.setStyle("-fx-background-color:  #0C1538");
-    }
-
-    @FXML
-    void MouseExited(MouseEvent event)
-    {
-        Button button=(Button) (event.getSource());
-        button.setStyle("-fx-background-color:  #183669 ");
-    }
-
-    @FXML
-    void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("HOME_page.fxml");
-    }
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
-        Main=MainController.getInstance();
 
         Nome.setText(Utente.getUtente().getNome());
         Cognome.setText(Utente.getUtente().getCognome());

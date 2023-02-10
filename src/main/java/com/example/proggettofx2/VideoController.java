@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class VideoController implements Initializable
+public class VideoController extends MenuController implements Initializable
 {
     boolean controllo=true;
     private final List<Image> images= new ArrayList<>();
@@ -36,73 +36,6 @@ public class VideoController implements Initializable
     @FXML
     private Label labesoggetto;
 
-    @FXML
-    void BAggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Aggiungifotopage.fxml");
-        Main.getStage().setWidth(920);
-        Main.getStage().setHeight(620);
-    }
-
-    @FXML
-    void BCollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Collezionipage.fxml");
-    }
-
-
-    @FXML
-    void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Profile-page.fxml");
-    }
-
-
-    @FXML
-    void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
-    {
-        Main.getStage().close();
-
-        Main.CreateStage("Firstpage.fxml");
-        Main.getStage().setHeight(450);
-        Main.getStage().setWidth(655);
-        Main.getStage().setResizable(false);
-
-        Utente.getUtente().setdefault();
-    }
-
-    @FXML
-    void BCestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Trashpage.fxml");
-    }
-
-
-    @FXML
-    void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("HOME_page.fxml");
-    }
-
-    @FXML
-    void MouseEntered(MouseEvent event)
-    {
-        javafx.scene.control.Button button=(javafx.scene.control.Button) (event.getSource());
-        button.setStyle("-fx-background-color:  #0C1538");
-    }
-
-    @FXML
-    void MouseExited(MouseEvent event)
-    {
-        javafx.scene.control.Button button=(Button) (event.getSource());
-        button.setStyle("-fx-background-color:  #183669 ");
-    }
-
 
     @FXML
     void Playbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) throws SQLException, IOException {
@@ -114,9 +47,9 @@ public class VideoController implements Initializable
         animationTimer.start();
     }
 
-
     @FXML
     void Stopbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) {animationTimer.stop();}
+
 
     public void animazione()
     {

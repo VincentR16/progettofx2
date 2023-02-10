@@ -14,7 +14,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.*;
 
-public class AddController implements Initializable
+public class AddController extends  MenuController implements Initializable
 {
     @FXML
     private ListView<String> VistaUtente;
@@ -50,9 +50,8 @@ public class AddController implements Initializable
 
     }
 
-
     @FXML
-    void Baggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException {
+    void aggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException {
 
 
         if(CityField.getText().equals(""))
@@ -99,69 +98,6 @@ public class AddController implements Initializable
             Main.CreateStage("Aggiungifotopage.fxml");
         }
     }
-
-
-
-    @FXML
-    void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException {
-        Main.getStage().close();
-        Main.CreateStage("HOME_page.fxml");
-    }
-
-    @FXML
-    void Bcestino(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Trashpage.fxml");
-    }
-
-    @FXML
-    void Bcollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Collezionipage.fxml");
-    }
-
-    @FXML
-    void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-
-        Main.CreateStage("Firstpage.fxml");
-        Main.getStage().setHeight(450);
-        Main.getStage().setWidth(655);
-
-        Utente.getUtente().setdefault();
-    }
-
-    @FXML
-    void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Profile-page.fxml");
-    }
-
-    @FXML
-    void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
-    {
-        Main.getStage().close();
-        Main.CreateStage("Videopage.fxml");
-    }
-
-    @FXML
-    void MouseEntered(MouseEvent event)
-    {
-        javafx.scene.control.Button button = (javafx.scene.control.Button) (event.getSource());
-        button.setStyle("-fx-background-color:  #0C1538");
-    }
-
-    @FXML
-    void MouseExited(MouseEvent event)
-    {
-        javafx.scene.control.Button button = (Button) (event.getSource());
-        button.setStyle("-fx-background-color:  #183669 ");
-    }
-
 
 
 

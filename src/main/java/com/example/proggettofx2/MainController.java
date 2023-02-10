@@ -31,7 +31,7 @@ public class MainController {
     private Statement st = null;
     private CallableStatement stmt = null;
     private PreparedStatement pst = null;
-    private String scelta;
+    private String scelta; // todo levare e trovare metodo migliore
 
 
     private MainController() {

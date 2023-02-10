@@ -51,7 +51,7 @@ Questo sistema però non era adatto a Javafx, e dopo un'attenta documentazione, 
 In particolar modo abbiamo deciso di eliminare tutte le singole classi *entità*, che si riferivano al rispettivo controller, e di aggiungere, un'unica 
 classe chiamata *MainController* che svolge tutte le operazioni di calcolo principali, e tutte le operazioni identiche nei controller.
 
-Il modello finale del progetto è ispirato al modello *MVC*
+Il modello finale del progetto è ispirato al modello *MVC*--->***Model-->View-->Controller***
 
 ### Il Codice 
 

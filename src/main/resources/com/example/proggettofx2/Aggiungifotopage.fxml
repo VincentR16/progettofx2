@@ -21,7 +21,7 @@
                   <Font name="Eras Light ITC" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="399.0" layoutY="526.0" mnemonicParsing="false" onAction="#Baggiungifoto" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="293.0" style="-fx-background-color: #183669;" text="Aggiungi" textFill="WHITE">
+            <Button layoutX="399.0" layoutY="526.0" mnemonicParsing="false" onAction="#aggiungifoto" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="293.0" style="-fx-background-color: #183669;" text="Aggiungi" textFill="WHITE">
                <effect>
                   <DropShadow />
                </effect>
@@ -88,7 +88,7 @@
                   <Image url="@icons/witusrs.png" />
                </image>
             </ImageView>
-            <Button alignment="CENTER" layoutX="-9.0" layoutY="238.0" mnemonicParsing="false" onAction="#Bcollezioni" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="45.0" prefWidth="177.0" style="-fx-background-color: #183669;" text="  COLLEZIONI" textFill="WHITE">
+            <Button alignment="CENTER" layoutX="-9.0" layoutY="238.0" mnemonicParsing="false" onAction="#BCollezioni" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="45.0" prefWidth="177.0" style="-fx-background-color: #183669;" text="  COLLEZIONI" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="11.0" />
                </font>
@@ -98,7 +98,7 @@
                   <Image url="@icons/gallery.png" />
                </image>
             </ImageView>
-            <Button alignment="CENTER" layoutX="-9.0" layoutY="283.0" mnemonicParsing="false" onAction="#Baggiungifoto" prefHeight="45.0" prefWidth="177.0" style="-fx-background-color: #0C1538;" text="      AGGIUNGI FOTO" textFill="WHITE">
+            <Button alignment="CENTER" layoutX="-9.0" layoutY="283.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="177.0" style="-fx-background-color: #0C1538;" text="      AGGIUNGI FOTO" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="11.0" />
                </font>
@@ -118,7 +118,7 @@
                   <Image url="@icons/video2.png" />
                </image>
             </ImageView>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-10.0" layoutY="358.0" mnemonicParsing="false" onAction="#Bcestino" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="45.0" prefWidth="177.0" style="-fx-background-color: #183669;" text="CESTINO" textFill="WHITE">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-10.0" layoutY="358.0" mnemonicParsing="false" onAction="#BCestino" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="45.0" prefWidth="177.0" style="-fx-background-color: #183669;" text="CESTINO" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="11.0" />
                </font>
