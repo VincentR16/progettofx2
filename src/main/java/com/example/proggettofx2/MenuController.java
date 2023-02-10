@@ -7,10 +7,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class MenuController
+public abstract class MenuController
 {
     private final MainController  Main = MainController.getInstance();
-
 
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException
