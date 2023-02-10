@@ -104,6 +104,7 @@ public class AddController extends  MenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+
         list=new ArrayList<>();
 
         Main = MainController.getInstance();
