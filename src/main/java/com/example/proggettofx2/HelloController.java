@@ -2,12 +2,8 @@ package com.example.proggettofx2;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import java.io.IOException;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;

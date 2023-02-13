@@ -17,13 +17,10 @@ public class AdminController implements Initializable
 
     @FXML
     private Label Labelutenti;
-
     @FXML
     private ListView<String> VistaUtente;
-
     @FXML
     private Label labelfoto;
-
     private MainController Main;
 
 

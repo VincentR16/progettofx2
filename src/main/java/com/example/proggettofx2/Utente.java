@@ -41,6 +41,13 @@ public class Utente {
         MainController Main= MainController.getInstance();
         PreparedStatement pst= Main.DoPrepared("update utente set nome= ?,cognome= ?,email= ?,nazionalità= ?,password= ? where id_utente= ?");
 
+        Nome=N;
+        Cognome=C;
+        Nazionalita=Na;
+        Email=E;
+        Password=P;
+
+
         pst.setString(1,N);
         pst.setString(2,C);
         pst.setString(3,E);
@@ -52,7 +59,6 @@ public class Utente {
         pst.close();
 
         Main.Closeall();
-
     }
 
 

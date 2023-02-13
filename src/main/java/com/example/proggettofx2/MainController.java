@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -15,7 +14,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.*;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ public class MainController {
     private Statement st = null;
     private CallableStatement stmt = null;
     private PreparedStatement pst = null;
-    private String scelta; // todo levare e trovare metodo migliore
+    private String scelta;
 
 
     private MainController() {
