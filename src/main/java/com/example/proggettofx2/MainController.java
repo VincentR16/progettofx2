@@ -185,7 +185,7 @@ public class MainController {
         BufferedImage Bimage = ImageIO.read(in);
 
         // uso(SwingFXUtils) una  libreria esterna (aggiunta tramite file .jar) per poter trasformare una
-        ImageView imageView = new ImageView();                                                                                   // buffered image (sottoclasse di image in java classico) in una immagine writable
+        ImageView imageView = new ImageView();                                                                                   // buffered image (sottoclasse d' image in java classico) in una immagine writable
         imageView.setUserData(id_foto);                                                                                         // sotto classe di image di javafx.
         // infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
         // e quindi di conseguenza non compatibile con le componenti di javafx

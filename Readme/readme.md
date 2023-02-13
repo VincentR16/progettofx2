@@ -127,6 +127,14 @@ sovrapposto allo **Scrollpane** e non contenuto in esso, si è quindi optato per
 metodo *setContent*.
 
 
+
+
+### Il menu
+Il menù laterale di ogni pagina è interamente gestito da una sola [classe](src/main/java/com/example/proggettofx2/MenuController.java).
+Questa classe è **astratta** e viene utilizzata per estendere tutte le altre, in questo modo si sono potute evitare parti di codice ripetute in tutte le classi. 
+
+
+
 ### Video
 
 La creazione del video presente nell' applicazione si è svolta in più passaggi.
