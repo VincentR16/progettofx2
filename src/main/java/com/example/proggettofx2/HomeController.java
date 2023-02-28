@@ -23,10 +23,10 @@ import java.util.ResourceBundle;
 
 public class HomeController extends MenuController implements Initializable
 {
+        // gestisce la home page, ovvero dove si visualizzano le proprie foto
 
 @FXML
 public ScrollPane pannel;
-
 private MainController Main;
 
 
@@ -44,16 +44,18 @@ private MainController Main;
 
                 Main = MainController.getInstance();
 
-                GridPane gridPane =new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
+                GridPane gridPane =new GridPane();
+                // creo una griglia e ne imposto il gap in altezza e in orizzontale
                 gridPane.setHgap(10);
                 gridPane.setVgap(10);
 
 
-                ResultSet rs;                   //query gestita dal controller principale che prende tutte le foto dell'utente loggato
+                ResultSet rs;
 
                 try
                 {
                         rs = Main.GetImage(0);
+                        //query gestita dal controller principale che prende tutte le foto dell'utente loggato
 
                 } catch (SQLException e) {throw new RuntimeException(e);}
 
@@ -65,15 +67,20 @@ private MainController Main;
                         while (rs.next())
                         {
                                ImageView imageView =Main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+                               //gli imageview vengono impostati uno alla volta, con le immagini
 
                                 gridPane.add(imageView,j,i);
-                                                                                                                                                        // faccio un semplice ciclo per impostare la posizione delle immagevie nella griglia
-                                j++;                                                                                                                    // rispetto alle matrici qui si mette prima la colonna e poi la riga
+
+                                j++;
                                 if(j>4){j=0;i++;}
+                                //  ciclo per impostare la posizione delle immagini nella griglia
+                                // rispetto alle matrici qui si mette prima la colonna e poi la riga
 
 
-                                imageView.setOnMouseClicked((MouseEvent e) ->                                                                           // creo un semplice listner per poter andare a eliminare le foto ogni qual volta vengano cliccate
-                                {                                                                                                                       // per fare cio uso un alert
+                                imageView.setOnMouseClicked((MouseEvent e) ->
+                                        //  semplice listner per poter andare a eliminare le foto ogni qual volta vengano cliccate
+                                {
+                                        //  alert di conferma
                                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
                                         alert.setTitle("ELIMINA FOTO");
@@ -95,7 +102,9 @@ private MainController Main;
 
                                                         pst.close();
 
-                                                        initialize(url, resourceBundle);                                                                    // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
+                                                        initialize(url, resourceBundle);
+                                                        // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
+
                                                         Main.Closeall();
 
                                                 } catch (SQLException ex) {throw new RuntimeException(ex);}
@@ -109,7 +118,7 @@ private MainController Main;
                 }catch(SQLException | IOException e){throw new RuntimeException(e);}
 
 
-                pannel.setContent(gridPane);// imposto la griglia come contenuto dello scroll pane
+                pannel.setContent(gridPane);// viene impostata la griglia come contenuto dello scroll pane
         }
 
 }

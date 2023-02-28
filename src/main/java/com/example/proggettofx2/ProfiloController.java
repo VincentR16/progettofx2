@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
-public class ProfiloController extends MenuController implements Initializable
-{
+public class ProfiloController extends MenuController implements Initializable {
+    //gestisce la pagina del profilo
     @FXML
     private TextField Cognome;
     @FXML

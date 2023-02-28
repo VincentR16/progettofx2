@@ -10,6 +10,7 @@ import java.util.Optional;
 
 
 public class HelloController  {
+    //gestisce accesso utente
 
     @FXML
     private PasswordField assfield1;
@@ -19,7 +20,9 @@ public class HelloController  {
 
     @FXML
     void BottonAccedi(ActionEvent event) throws IOException {
+
         boolean controllo=true;
+        // serve a verificare che tutti sono stati inseriti
 
         if(txtFIELD.getText().equals(""))
         {
@@ -48,6 +51,8 @@ public class HelloController  {
             MainController main= MainController.getInstance();
             ResultSet rs =main.find_users();
 
+            //find_users prende tutte le email e tutte le password dal database
+
             try {
 
                 while (rs.next())
@@ -56,11 +61,20 @@ public class HelloController  {
                     if (E.equals(rs.getString("email")) && P.equals(rs.getString("password")))
                     {
                         controllo2=false;
+                        // controlla se esiste almeno un utente
+
                         Utente.getUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
 
                         main.getStage().close();
+                        //lo stage utilizzato in questo momento viene chiuso
                         main.CreateStage("HOME_page.fxml");
+                        // viene creato un altro stage
 
+
+
+
+                        // questo è un altro metodo, per avere una variabile con lo stage utilizzato in questo momento
+                        // gli è stato preferito dichiarare e salvare lo stage nel mainController
                        // Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     }
 
@@ -85,13 +99,12 @@ public class HelloController  {
     @FXML
     void BottonAd(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException {
 
-
         TextInputDialog Dialog =new TextInputDialog("AMMINISTRATORE");
         Dialog.setTitle("ACCEDI COME AMMINISTRATORE");
         Dialog.setContentText("INSERISCI LA TUA PASSWORD");
 
         Optional<String> Pass =  Dialog.showAndWait();
-
+        // variabile string che si riferisce alla password inserita dall'utente all' interno dell' alert
 
 
         MainController main= MainController.getInstance();
@@ -99,6 +112,7 @@ public class HelloController  {
         try {
 
                 if (Pass.get().equals(main.find_Admin().getString("password")))
+                //find_admin resituisce la password dell admin, presa dal db
                 {
                     main.getStage().close();
                     main.CreateStage("Adminpage.fxml");
@@ -129,7 +143,6 @@ public class HelloController  {
         main.CreateStage("Second page.fxml");
 
         main.getStage().setTitle("Welcome");
-        main.getStage().setResizable(false);
 
         main.getStage().setWidth(700);
         main.getStage().setHeight(500);

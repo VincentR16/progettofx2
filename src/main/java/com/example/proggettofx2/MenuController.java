@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public abstract class MenuController
 {
+    //gestisce il menu laterale di ogni pagina
     private final MainController  Main = MainController.getInstance();
 
     @FXML

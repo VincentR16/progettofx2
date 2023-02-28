@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UtentecollezioneController extends MenuController implements Initializable {
+    //gestisce lo stage per poter aggiungere altri utenti alla collezione
 
     @FXML
     private ListView<String> VistaUtente;

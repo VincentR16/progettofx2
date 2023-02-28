@@ -23,6 +23,8 @@ import java.util.List;
 
 public class MainController {
 
+    //gestisce il collegamento col db, calcoli ed elaborazione dati, e trasmissione dati tra i diversi controller
+
     private static MainController istanza = null;
     private Stage stage;
     private Connection con = null;
@@ -32,8 +34,7 @@ public class MainController {
     private String scelta;
 
 
-    private MainController() {
-    }
+    private MainController() {}
 
     public Connection getCon() {
         return con;
@@ -51,7 +52,9 @@ public class MainController {
         return stage;
     }
 
-    public void Closeall() throws SQLException {
+    public void Closeall() throws SQLException
+    {
+        //chiude tutte le connessioni col db
         this.CloseCon();
         this.Closest();
         this.Closeprepared();
@@ -60,6 +63,9 @@ public class MainController {
 
 
     public Stage CreateStage(String S) throws IOException {
+        //crea un nuovo stage partendo dal file fxml
+        //riceve come input il nome del file, presente nella cartella resources/com.examples..
+
         Parent root = FXMLLoader.load(getClass().getResource(S));
         stage = new Stage();
 
@@ -70,13 +76,13 @@ public class MainController {
 
         stage.setWidth(920);
         stage.setHeight(620);
-
         stage.show();
 
         return stage;
     }
 
     public static MainController getInstance() {
+        //crea o restituisce istanza maincontroller
         if (istanza == null) {
             istanza = new MainController();
         }
@@ -84,6 +90,11 @@ public class MainController {
     }
 
     public Connection getConnention() {
+
+        //staabilisce connessione col db
+        //si sarebbe potuto creare un ulteriore pagina che prima dell'apertura dell'applicazione, chiede
+        //il nome del db, username e password di postgres
+
         try {
             Class.forName("org.postgresql.Driver");
 
@@ -105,6 +116,7 @@ public class MainController {
     }
 
     public ResultSet DoQuery(String S) {
+        //svolge la query rappresentata dalla stringa S
         con = this.getConnention();
 
         try {
@@ -120,6 +132,7 @@ public class MainController {
     }
 
     public PreparedStatement DoPrepared(String S) throws SQLException {
+        //ritorna una statmentprepared, che vine impostata dalla stringa S
         con = this.getConnention();
         pst = con.prepareStatement(S);
 
@@ -128,9 +141,9 @@ public class MainController {
     }
 
     public CallableStatement Callprocedure(String S) throws SQLException {
-        MainController C = MainController.getInstance();
+        //ritorna uno statement che viene impostato dalla stringa S
 
-        con = C.getConnention();
+        con = this.getConnention();
 
         return stmt = con.prepareCall(S);
     }
@@ -160,16 +173,19 @@ public class MainController {
     }
 
     public ResultSet find_users() {
-        MainController C = MainController.getInstance();
-        return C.DoQuery("Select * from utente");
+        //query per ricevere tutte le informazione di tutti gli utenti
+        return this.DoQuery("Select * from utente");
     }
 
     public ResultSet find_Admin() {
-        MainController C = MainController.getInstance();
-        return C.DoQuery("Select password from amministratore");
+        //query per ricervere la pass dell admin
+        return this.DoQuery("Select password from amministratore");
     }
 
     public ResultSet GetImage(int value) throws SQLException {
+
+        //query per cercare tutte le foto di un utente
+
         PreparedStatement pst = this.DoPrepared("select val_foto,id_foto from fotografia where id_utente=? and eliminata=?");
 
         pst.setInt(1, Utente.getUtente().getIdutente());
@@ -180,19 +196,35 @@ public class MainController {
     }
 
     public ImageView setImageview(byte[] binaryData, int id_foto) throws IOException {
-                                                                                                                                 //metto la foto in un array di byte
-        InputStream in = new ByteArrayInputStream(binaryData);                                                                  // trasformo i bite in uno stream di dati per poter utilizzarlo come buffered
+        //metodo per trasfromare le foto(viene spiegato all'interno del readme)
+
+
+
+        // la foto sotto forma di bytea viene messa in un array di byte
+        InputStream in = new ByteArrayInputStream(binaryData);
+
+        // trasforma i bite in uno stream di dati per poter utilizzarlo come buffered
         BufferedImage Bimage = ImageIO.read(in);
 
-                                                                                                                                      // uso(SwingFXUtils) una  libreria esterna (aggiunta tramite file .jar) per poter trasformare una
-        ImageView imageView = new ImageView();                                                                                   // buffered image (sottoclasse d' image in java classico) in una immagine writable
-        imageView.setUserData(id_foto);                                                                                         // sotto classe di image di javafx.
-                                                                                                                                 // infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
-                                                                                                                                 // e quindi di conseguenza non compatibile con le componenti di javafx
-        imageView.setImage(SwingFXUtils.toFXImage(Bimage, null));                                                         // funziona perche writableimg estende img
 
-        imageView.setFitHeight(135);                                                                                                 // imposto la grandezza dell'imagine
+        // viene usato(SwingFXUtils) una libreria esterna (aggiunta tramite file .jar) per poter trasformare una
+        // buffered image (sottoclasse d' image in java classico) in una immagine writable
+        // sotto classe di image di javafx.
+        // infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
+        // e quindi di conseguenza non compatibile con le componenti di javafx
+        // funziona perche writableimg estende img
+
+        ImageView imageView = new ImageView();
+
+        imageView.setUserData(id_foto);
+
+
+        imageView.setImage(SwingFXUtils.toFXImage(Bimage, null));
+
+        imageView.setFitHeight(135);
         imageView.setFitWidth(135);
+
+        // viene impostata la grandezza dell'imagine
         imageView.setPickOnBounds(true);
 
 
@@ -200,6 +232,8 @@ public class MainController {
     }
 
     public void listView(ListView<String> VistaUtente) {
+
+        //viene creata una listview con tutte le email di tutti gli utenti presenti nel db
 
         ArrayList<String> lista = new ArrayList<>();
 
@@ -224,19 +258,27 @@ public class MainController {
 
 
     void setVideo(List<Image> images, List<String> dispositivo, List<String> city, List<String> soggetti) throws SQLException, IOException {
+       //imposta una lista di images , di dispositivi(string),di citta(string),di soggetti(string)che poi verranno utlizzate all'internon del video
+
         MainController main = MainController.getInstance();
 
         ResultSet rs;
 
 
         rs = main.GetImage(0);
+        //vengono recuperate tutte le foto di un utente
 
         while (rs.next()) {
             ImageView imageView = main.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));
             images.add(imageView.getImage());
 
+            //le foto vengono aggiunte a una lista di image
+            // le foto provengono da main.setimageview, che restituisce imageview, quindi viene usato il metodo getimages
+
+
 
             PreparedStatement pst = MainController.getInstance().DoPrepared("select dispositivo,città from fotografia where id_foto=?");
+            //vegnono recuperati tutti i dispositivi e tutte le citta
             pst.setInt(1, (int) imageView.getUserData());
 
             ResultSet rs1 = pst.executeQuery();
@@ -250,6 +292,7 @@ public class MainController {
 
 
             PreparedStatement ps = main.DoPrepared("Select * from recupera_soggetti_foto(?)");
+            //vegono recuperati tutti i soggetti di una foto
             ps.setInt(1, (int) imageView.getUserData());
 
             ResultSet rs2 = ps.executeQuery();
@@ -269,12 +312,13 @@ public class MainController {
 
     void addPhoto(String path,String device,String city,String subject,List<String>list)throws SQLException
     {
+        //metodo utilizzato per aggiungere la foto all utente
 
         MainController C = MainController.getInstance();
 
         PreparedStatement pst;
         pst= C.DoPrepared("call aggiungi_fotografia(pg_read_binary_file(?),?,?,?)");
-
+        //viene aggiunta la foto
 
         pst.setString(1,path);
         pst.setString(2,device);
@@ -288,13 +332,13 @@ public class MainController {
 
 
         CallableStatement cst= C.Callprocedure("{?=call recupera_id_foto()}");
+        //viene recuperato l'id della foto appena aggiunta
         cst.registerOutParameter(1, Types.INTEGER);
 
         cst.execute();
         int id_foto = cst.getInt(1);
 
         cst.close();
-
 
 
 

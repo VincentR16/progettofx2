@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 public class AdminController implements Initializable
 {
+    //gestisce lo stage dell 'admin
 
     @FXML
     private Label Labelutenti;
@@ -30,6 +31,7 @@ public class AdminController implements Initializable
         Main =MainController.getInstance();
 
         Main.listView(VistaUtente);
+        //imposta vistautente(listview)
 
         ResultSet rs = Main.DoQuery("select * from numero_totale_fotografie_e_utenti");
 
@@ -47,6 +49,7 @@ public class AdminController implements Initializable
 
 
         VistaUtente.setOnMouseClicked(event ->
+                //ad ogni click viene eliminato l' utente dal db
         {
             String item = VistaUtente.getSelectionModel().getSelectedItem();
             if (item != null) {
@@ -60,17 +63,21 @@ public class AdminController implements Initializable
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK)
                 {
+                    //viene eliminato l'utente
 
 
                     try
                     {
                         CallableStatement cst = Main.Callprocedure("{?=call recupera_id_utente(?)}");
+                        //parrtendo dall'email si recupera l'id dell'utente
+
                         cst.registerOutParameter(1, Types.INTEGER);
                         cst.setString(2,item);
 
                         cst.execute();
 
                         PreparedStatement pst = Main.Callprocedure("call elimina_utente(?)");
+                        //eliminazioe utente
                         pst.setInt(1,cst.getInt(1));
 
                         pst.execute();

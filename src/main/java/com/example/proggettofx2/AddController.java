@@ -15,6 +15,7 @@ import java.util.*;
 
 public class AddController extends  MenuController implements Initializable
 {
+    //gestisce la pagine dell aggiunta delle foto
     @FXML
     private ListView<String> VistaUtente;
     @FXML
@@ -27,23 +28,28 @@ public class AddController extends  MenuController implements Initializable
     private ComboBox<String> Subjectbox;
     private boolean Controllo=true;
     private List<String> list;
-
     private MainController Main;
+    private  URL myurl;
+    private ResourceBundle myres;
 
 
     @FXML
     void BpickImage(ActionEvent event)
     {
         FileChooser fileChooser = new FileChooser();
+
         fileChooser.setTitle("Seleziona un'immagine");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.gif"));
 
 
         File file = fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
+        // apre la cartella dell 'utente e gli permette di scegliere le foto
+        //all'interno di showopenadialog si inserisce lo stage corrente
 
         if (file != null)
         {
             String filePath = file.getPath();
+            //viene mostrato il path a schermo
             Pathfield.setText(filePath);
         }
 
@@ -92,9 +98,10 @@ public class AddController extends  MenuController implements Initializable
         {
 
             Main.addPhoto(Pathfield.getText(),DeviceField.getText(),CityField.getText(),Subjectbox.getSelectionModel().getSelectedItem(),list);
-
+            //metodo che aggiunge le foto al db
             Main.getStage().close();
-            Main.CreateStage("Aggiungifotopage.fxml");
+
+            initialize(myurl,myres);
         }
     }
 
@@ -103,12 +110,17 @@ public class AddController extends  MenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        myurl=url;
+        myres=resourceBundle;
+        //servono per poter chimare initialize in un altro metodo
 
         list=new ArrayList<>();
+        //lista che tiene conto di tutti gli utenti presenti nella foto
 
         Main = MainController.getInstance();
 
             ResultSet rs= Main.DoQuery("select categoria from soggetto");
+            //restituisce la categorie e vengono inserite nel Subjectbox
 
             try {
                 while (rs.next())
@@ -123,9 +135,11 @@ public class AddController extends  MenuController implements Initializable
 
 
         Main.listView(VistaUtente);
+            //viene impostata vistautente(listview)
 
 
         VistaUtente.setOnMouseClicked(event ->
+                //ad ogni click sulle email visualizzate, l'utente della rispettiva email, viene aggiunto come presente nella fotografia
         {
             String item = VistaUtente.getSelectionModel().getSelectedItem();
             if (item != null) {

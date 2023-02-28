@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 public class VideoController extends MenuController implements Initializable
 {
+    // gestisce lo stage del video
     boolean controllo=true;
     private final List<Image> images= new ArrayList<>();
     private final List<String>dispositivo= new ArrayList<>();
@@ -51,6 +52,7 @@ public class VideoController extends MenuController implements Initializable
 
     public void animazione()
     {
+        //piccola animazione per scorrere le foto(leggere readme)
         final long[] inizio = {System.currentTimeMillis()};
         final int[] indice = {0};
 

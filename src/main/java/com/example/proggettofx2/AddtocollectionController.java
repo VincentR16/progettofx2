@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class AddtocollectionController extends MenuController implements Initializable
 {
+    //gestisce l'aggiunta della foto nella collezione
     @FXML
     public ScrollPane pannel;
     private MainController Main;
@@ -44,6 +45,8 @@ public class AddtocollectionController extends MenuController implements Initial
 
         try {
             ps= Main.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
+            //prende tutte le foto non presenti nella collezione
+
             ps.setInt(1,Utente.getUtente().getIdutente());
             ps.setString(2, Main.getScelta());
 
@@ -71,7 +74,8 @@ public class AddtocollectionController extends MenuController implements Initial
                 if (j > 4) {j = 0;i++;}
 
 
-                imageView.setOnMouseClicked((MouseEvent e) ->                                                                           // creo un semplice listner per poter andare a eliminare le foto ogni qual volta vengano cliccate
+                imageView.setOnMouseClicked((MouseEvent e) ->
+                        // listner per poter andare ad aggiungere le foto ogni qual volta vengano cliccate
                 {                                                                                                                       // per fare cio uso un alert
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
@@ -87,7 +91,7 @@ public class AddtocollectionController extends MenuController implements Initial
 
                         try {
                             ps1 = Main.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");
-
+                            //le foto vengono aggiiunte alla collezione
                             int value = (int) ((Node)e.getSource()).getUserData();
                             ps1.setInt(1,value);
                             ps1.setString(2, Main.getScelta());

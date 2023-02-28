@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.*;
 
 public class SecondController {
+    //gestisce la registrazione dell'utente
     @FXML
     private TextField NomeField;
 
@@ -22,11 +23,15 @@ public class SecondController {
     private TextField EField;
     @FXML
     private TextField PassField;
-    private boolean controllo=true;
+
+
 
 
     @FXML
     void Clickcrea(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException, SQLException {
+
+         boolean controllo=true;
+         // controlla l'inserimento di tutti i campi
 
 
         if(NomeField.getText().equals(""))
@@ -82,6 +87,8 @@ public class SecondController {
                 PreparedStatement stmt;
                 stmt=mainController.DoPrepared("call crea_utente(?,?,?,?,?)");
 
+                //viene creato un utente all' interno del db
+
                 stmt.setString(1,NomeField.getText());
                 stmt.setString(2,CognomeField.getText());
                 stmt.setString(3,EField.getText());
@@ -94,6 +101,7 @@ public class SecondController {
             }
             catch (SQLException e)
             {
+                // se avviene ciò significa che l' email scelta è gia presente all' interno del db
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("ERRORE");
                 alert.setContentText("CONTROLLARE CHE TUTTI I CAMPI SIANO INSERITI, OPPURE CAMBIARE EMAIL \n POTREBBE ESSERE GIA UTILIZZATA.");
@@ -113,6 +121,8 @@ public class SecondController {
                 int id_utente;
 
                 CallableStatement cst=mainController.Callprocedure("{?=call recupera_id_utente(?)}");
+                // viene recuperato l'id dell 'utente cche si è appena registrato
+
                 cst.registerOutParameter(1, Types.INTEGER);
                 cst.setString(2,EField.getText());
 
@@ -122,7 +132,7 @@ public class SecondController {
 
 
                 Utente.getUtente(NomeField.getText(), CognomeField.getText(),NaField.getText(),EField.getText(),PassField.getText(),id_utente);
-
+                //viene creato un oggetto utente, che è un singleton poichè come in ogni app, si accede solo un utente alla volta per ogni dispositivo
 
 
                 mainController.Closeall();

@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Utente {
+    //classe utente
 
     private static Utente istanza= null;
-
     private final int idutente;
     private String Nome;
     private String Cognome;
@@ -40,6 +40,7 @@ public class Utente {
 
         MainController Main= MainController.getInstance();
         PreparedStatement pst= Main.DoPrepared("update utente set nome= ?,cognome= ?,email= ?,nazionalità= ?,password= ? where id_utente= ?");
+// nel caso di modifica, viene modificato anche il db
 
         Nome=N;
         Cognome=C;

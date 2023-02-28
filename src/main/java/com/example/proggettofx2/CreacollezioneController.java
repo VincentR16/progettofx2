@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 public class CreacollezioneController extends MenuController implements Initializable
 {
+    //gestisce la creazione di nuove collezioni
 
     private boolean controllo= true;
     private String utente;
@@ -67,6 +68,7 @@ public class CreacollezioneController extends MenuController implements Initiali
 
                 alert.setTitle("Aggiungi foto");
                 alert.setContentText("VUOI AGGIUNGERE TUTTE LE TUE FOTO E QUELLE DI " + utente + " ALLA COLLEZIONE CREATA? ");
+                //se l'utente sceglie si, allora  tutte le foto sue e quelle dell'utente scelto, vengono aggiunte alla collezione
 
 
                 Optional<ButtonType> result = alert.showAndWait();
@@ -74,6 +76,7 @@ public class CreacollezioneController extends MenuController implements Initiali
                 if(result.get()==ButtonType.OK)
                 {
                     PreparedStatement pst1 = Main.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
+                    //inserimento di tutte le foto
                     pst1.setInt(1,Utente.getUtente().getIdutente());
                     pst1.setString(2,utente);
 
@@ -101,13 +104,12 @@ public class CreacollezioneController extends MenuController implements Initiali
 
         Main.listView(VistaUtente);
 
-
         VistaUtente.setOnMouseClicked(event ->
         {
             String item = VistaUtente.getSelectionModel().getSelectedItem();
+            //nella creazione di una collezione si puo scegliere solo un utente(item)
             if (item != null && controllo)
             {
-
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Aggiungi utente");

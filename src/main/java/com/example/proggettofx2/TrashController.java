@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 
 public class TrashController extends MenuController implements Initializable
 {
+    //gestisce la pagina del cestino
     @FXML
     public ScrollPane pannel;
     private MainController Main;
@@ -36,6 +37,7 @@ public class TrashController extends MenuController implements Initializable
 
         try {
             rs = Main.GetImage(1);
+            // il valore è 1 poiche cerca tutte le foto eliminate, 0 invece tutte le foto non eliminate
 
         } catch (SQLException e) {throw new RuntimeException(e);}
 
@@ -52,16 +54,14 @@ public class TrashController extends MenuController implements Initializable
             {
 
                 ImageView imageView =Main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-
-
                 gridPane.add(imageView,j,i);
                                                                                                                                         // faccio un semplice ciclo per impostare la posizione delle immagevie nella griglia
                 j++;                                                                                                                    // rispetto alle matrici qui si mette prima la colonna e poi la riga
                 if(j>4){j=0;i++;}
 
 
-                imageView.setOnMouseClicked((MouseEvent e) ->                                                                           // creo un semplice listner per poter andare a eliminare le foto ogni qual volta vengano cliccate
-                {                                                                                                                       // per fare cio uso un alert
+                imageView.setOnMouseClicked((MouseEvent e) ->
+                {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
                     alert.setTitle("ELIMINA FOTO");
@@ -74,6 +74,7 @@ public class TrashController extends MenuController implements Initializable
                     {
                         try {
                             PreparedStatement pst=Main.DoPrepared("call elimina_fotografia(?,?)");
+                            // elimina definitivamente la foto dal db
 
                             int value = (int) ((Node)e.getSource()).getUserData();
 

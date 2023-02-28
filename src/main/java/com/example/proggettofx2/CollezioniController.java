@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class CollezioniController extends MenuController implements Initializable
 {
+    //gestisce lo stage delle collezioni
     @FXML
     public ScrollPane pannel;
 
@@ -74,6 +75,7 @@ public class CollezioniController extends MenuController implements Initializabl
 
         Main = MainController.getInstance();
 
+        //vengono recuperate le foto della collezione dell'utente, ogni qual volta combobox cambia
         try {
 
             PreparedStatement pst = Main.DoPrepared("select distinct nome from collezione as c, utente_possiede_collezione as u where u.id_utente=? and c.personale=0 and c.id_collezione= u.id_collezione");
@@ -97,6 +99,7 @@ public class CollezioniController extends MenuController implements Initializabl
                 try {
 
                     CallableStatement cs1 = Main.Callprocedure("{?= call recupera_id_collezione(?)}");
+                    // partendo dal nome della collezione, viene recupoerato l id della collezione
                     cs1.registerOutParameter(1, Types.INTEGER);
 
                     cs1.setString(2, combobox.getSelectionModel().getSelectedItem());
@@ -105,6 +108,7 @@ public class CollezioniController extends MenuController implements Initializabl
 
 
                     PreparedStatement st1 = Main.DoPrepared("select * from collezione_condivisa(?)");
+                    //recupero foto della collezione
 
                     st1.setString(1,combobox.getSelectionModel().getSelectedItem());
                     ResultSet rs= st1.executeQuery();
@@ -124,14 +128,15 @@ public class CollezioniController extends MenuController implements Initializabl
 
                         gridPane.add(imageView, j, i);
                         // faccio un semplice ciclo per impostare la posizione delle immagevie nella griglia
-                        j++;                                                                                                                    // rispetto alle matrici qui si mette prima la colonna e poi la riga
+                        j++;
                         if (j > 4) {
                             j = 0;
                             i++;
                         }
 
 
-                        imageView.setOnMouseClicked((MouseEvent e) ->                                                                           // creo un semplice listner per poter andare a eliminare le foto ogni qual volta vengano cliccate
+                        imageView.setOnMouseClicked((MouseEvent e) ->
+                                //  semplice listner per poter rendere private le foto ogni qual volta vengano cliccate
                         {                                                                                                                       // per fare cio uso un alert
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
@@ -145,6 +150,7 @@ public class CollezioniController extends MenuController implements Initializabl
 
                                 try {
                                     PreparedStatement ps = Main.DoPrepared("call rendi_fotografia_privata_o_pubblica(?,?)");
+                                    //viene resa privata la foto
 
                                     int value = (int) ((Node) e.getSource()).getUserData();
                                     Node node =(Node) e.getSource();

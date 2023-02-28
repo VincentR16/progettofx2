@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class FiltraController extends MenuController implements Initializable
 {
+    //gestisce la pagina che filtra le foto
     @FXML
     private ComboBox<String> combobox;
     @FXML
@@ -30,7 +31,6 @@ public class FiltraController extends MenuController implements Initializable
     @FXML
     private TextField textfiled;
     private MainController Main;
-
 
 
     @FXML
@@ -48,9 +48,10 @@ public class FiltraController extends MenuController implements Initializable
         }else{
 
             if (combobox.getSelectionModel().getSelectedItem()=="Soggetto"){scelta="stesso_soggetto";}else {scelta="stesso_luogo";}
-
+                //scelta viene impostata, come il nome della funzione del db,
 
                 PreparedStatement ps= Main.DoPrepared("Select * from "+scelta+"(?,?)");
+            //la funzione nel db restituisce le foto con quei criteri
                 ps.setInt(1,Utente.getUtente().getIdutente());
                 ps.setString(2,textfiled.getText());
 
@@ -92,17 +93,15 @@ public class FiltraController extends MenuController implements Initializable
     {
         Main=MainController.getInstance();
 
-
         combobox.getItems().add("Luogo");
         combobox.getItems().add("Soggetto");
-
         combobox.setPromptText("Scegliere qui");
 
 
-        MainController main = MainController.getInstance();
 
         try {
-            PreparedStatement ps= main.DoPrepared("select * from top_3_luoghi(?)");
+            PreparedStatement ps= Main.DoPrepared("select * from top_3_luoghi(?)");
+            //query che restituisce i luoghi più immortalati
             ps.setInt(1,Utente.getUtente().getIdutente());
 
             ResultSet rs= ps.executeQuery();
@@ -112,9 +111,11 @@ public class FiltraController extends MenuController implements Initializable
             if(rs.next()) labelsec.setText(rs.getString(1)+"  "+rs.getString(2));
             if(rs.next())labelterz.setText(rs.getString(1)+"  "+rs.getString(2));
 
+            //gli if servono nel caso in cui non ci siano meno stringhe
+
             rs.close();
             ps.close();
-            main.Closeall();
+            Main.Closeall();
 
         } catch (SQLException e) {throw new RuntimeException(e);}
 
