@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.*;
@@ -56,7 +55,7 @@ public class AddController extends  MenuController implements Initializable
     }
 
     @FXML
-    void aggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException {
+    void aggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException {
 
 
         if(CityField.getText().equals(""))
@@ -130,7 +129,7 @@ public class AddController extends  MenuController implements Initializable
                 rs.close();
                 Main.Closeall();
 
-            }catch (SQLException e){}
+            }catch (SQLException e){e.printStackTrace();}
 
 
 
@@ -174,7 +173,7 @@ public class AddController extends  MenuController implements Initializable
 
 // altro metodo piu lungo che non funzionava alla perfezione, poiche si deve aggiungere una variabile che tiene conto se la foto è stata eliminata o meno.
 // non funzionava perchè il change listener ascolta tutti i cambiamentni di una stringa, quando viene eliminata lo registra come cambiamento e
-// fa comparire l'alert 2 volte(quando veniva cliccata e quando veniva eliminata)  di seguito al 2 alert veniva eliminata un altra stringa, non trovando piu quella di riferimento;
+// fa comparire l'alert 2 volte(quando veniva cliccata e quando veniva eliminata) di seguito al secondo alert veniva eliminata un altra stringa, non trovando piu quella di riferimento;
 
 
 

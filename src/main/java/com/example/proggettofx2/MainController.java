@@ -209,8 +209,8 @@ public class MainController {
 
         // viene usato(SwingFXUtils) una libreria esterna (aggiunta tramite file .jar) per poter trasformare una
         // buffered image (sottoclasse d' image in java classico) in una immagine writable
-        // sotto classe di image di javafx.
-        // infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
+        // sotto classe d' image di javafx.
+        // Infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
         // e quindi di conseguenza non compatibile con le componenti di javafx
         // funziona perche writableimg estende img
 
@@ -258,7 +258,7 @@ public class MainController {
 
 
     void setVideo(List<Image> images, List<String> dispositivo, List<String> city, List<String> soggetti) throws SQLException, IOException {
-       //imposta una lista di images , di dispositivi(string),di citta(string),di soggetti(string)che poi verranno utlizzate all'internon del video
+       //imposta una lista d' images, di dispositivi(string),di citta(string),di soggetti(string)che poi verranno utlizzate all'internon del video
 
         MainController main = MainController.getInstance();
 
@@ -272,7 +272,7 @@ public class MainController {
             ImageView imageView = main.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));
             images.add(imageView.getImage());
 
-            //le foto vengono aggiunte a una lista di image
+            //le foto vengono aggiunte a una lista d' image
             // le foto provengono da main.setimageview, che restituisce imageview, quindi viene usato il metodo getimages
 
 
