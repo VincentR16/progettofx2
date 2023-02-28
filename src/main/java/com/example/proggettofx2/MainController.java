@@ -180,15 +180,15 @@ public class MainController {
     }
 
     public ImageView setImageview(byte[] binaryData, int id_foto) throws IOException {
-        //metto la foto in un array di byte
+                                                                                                                                 //metto la foto in un array di byte
         InputStream in = new ByteArrayInputStream(binaryData);                                                                  // trasformo i bite in uno stream di dati per poter utilizzarlo come buffered
         BufferedImage Bimage = ImageIO.read(in);
 
-        // uso(SwingFXUtils) una  libreria esterna (aggiunta tramite file .jar) per poter trasformare una
+                                                                                                                                      // uso(SwingFXUtils) una  libreria esterna (aggiunta tramite file .jar) per poter trasformare una
         ImageView imageView = new ImageView();                                                                                   // buffered image (sottoclasse d' image in java classico) in una immagine writable
         imageView.setUserData(id_foto);                                                                                         // sotto classe di image di javafx.
-        // infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
-        // e quindi di conseguenza non compatibile con le componenti di javafx
+                                                                                                                                 // infatti per quanto possa risultare strano Img(java) NON è COMPATIBILE con IMG(javafx)
+                                                                                                                                 // e quindi di conseguenza non compatibile con le componenti di javafx
         imageView.setImage(SwingFXUtils.toFXImage(Bimage, null));                                                         // funziona perche writableimg estende img
 
         imageView.setFitHeight(135);                                                                                                 // imposto la grandezza dell'imagine
@@ -229,7 +229,7 @@ public class MainController {
         ResultSet rs;
 
 
-        rs = main.getInstance().GetImage(0);
+        rs = main.GetImage(0);
 
         while (rs.next()) {
             ImageView imageView = main.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));

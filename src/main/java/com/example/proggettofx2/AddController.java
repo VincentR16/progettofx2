@@ -158,9 +158,9 @@ public class AddController extends  MenuController implements Initializable
 
 
 
-// altro metodo piu lungo che non funzionava alla perfezione, poiche si deve aggiungere una variabile che tiene conto se la foto è stata eliminata o meno,
-// poiche il change listener ascolta tutti i cambiamentni di una stringa, e per questo quando viene eliminata lo registra come cambiamento e
-// fa comparire l'alert 2 volte di seguito eliminando un altra stringa, non trovando piu quella di riferimento;
+// altro metodo piu lungo che non funzionava alla perfezione, poiche si deve aggiungere una variabile che tiene conto se la foto è stata eliminata o meno.
+// non funzionava perchè il change listener ascolta tutti i cambiamentni di una stringa, quando viene eliminata lo registra come cambiamento e
+// fa comparire l'alert 2 volte(quando veniva cliccata e quando veniva eliminata)  di seguito al 2 alert veniva eliminata un altra stringa, non trovando piu quella di riferimento;
 
 
 
