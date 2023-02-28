@@ -2,7 +2,7 @@
 #    README
 
 Progetto 2023,  
-OOBD_T2G02 traccia numero 2.
+OOBD_T2G17 traccia numero 2.
 
 ## Descrizione generale 
 
@@ -173,7 +173,7 @@ Inoltre grazie alle seguenti istruzioni:
 una volta terminate tutte le foto, l'animazione riparte da capo, in modo tale che sia solo *l'utente* a poter scegliere 
 di far fermare il video.
 
-In altre parole questa piccola animazione, si comporta come un **listner** e tramite il metodo **handle(l)**tiene conto di ogni 
+In altre parole questa piccola animazione, si comporta come un **listner** e tramite il metodo **handle(l)** tiene conto di ogni 
 cambiamento della variabile **tempocorrente** svolgendo il codice solo quando le condizioni create sono rispettate.
 
 
