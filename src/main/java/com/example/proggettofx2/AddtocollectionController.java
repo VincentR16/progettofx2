@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddtocollectionController extends MenuController implements Initializable
+public class AddtocollectionController extends MenuController //implements Initializable
 {
     //gestisce l'aggiunta della foto nella collezione
     @FXML
@@ -36,8 +36,8 @@ public class AddtocollectionController extends MenuController implements Initial
         Main.CreateStage("Collezionipage.fxml");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    //@Override
+   /* public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Main = MainController.getInstance();
 
@@ -116,5 +116,5 @@ public class AddtocollectionController extends MenuController implements Initial
 
         pannel.setContent(gridPane);
 
-    }
+    }*/
 }

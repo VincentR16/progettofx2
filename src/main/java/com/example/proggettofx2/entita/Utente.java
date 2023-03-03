@@ -2,9 +2,12 @@ package com.example.proggettofx2.entita;
 
 
 import com.example.proggettofx2.MainController;
+import javafx.scene.control.ListView;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Utente {
     //classe utente
@@ -73,6 +76,33 @@ public class Utente {
     public String getPassword() {return Password;}
     public int getIdutente(){return idutente;}
 
+
+    public void vistautente(ListView<String> VistaUtente)
+    {
+
+        //viene creata una listview con tutte le email di tutti gli utenti presenti nel db
+
+        ArrayList<String> lista = new ArrayList<>();
+
+        MainController C = MainController.getInstance();
+        ResultSet rs = C.DoQuery("select email from utente");
+
+        try {
+
+            while (rs.next()) {
+                lista.add(rs.getString("email"));
+            }
+
+            rs.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        VistaUtente.getItems().addAll(lista);
+
+    }
 
 
 

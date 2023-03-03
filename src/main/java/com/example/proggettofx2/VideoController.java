@@ -1,29 +1,22 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Video;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class VideoController extends MenuController implements Initializable
 {
     // gestisce lo stage del video
-    boolean controllo=true;
-    private final List<Image> images= new ArrayList<>();
-    private final List<String>dispositivo= new ArrayList<>();
-    private final List<String>city= new ArrayList<>();
-    private final List<String>soggetti= new ArrayList<>();
+
     private AnimationTimer animationTimer;
-    private MainController Main;
 
 
     @FXML
@@ -37,12 +30,7 @@ public class VideoController extends MenuController implements Initializable
 
 
     @FXML
-    void Playbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) throws SQLException, IOException {
-        if(controllo)
-        {
-            Main.setVideo(images, dispositivo, city, soggetti);
-            controllo=false;
-        }
+    void Playbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) {
         animationTimer.start();
     }
 
@@ -50,41 +38,20 @@ public class VideoController extends MenuController implements Initializable
     void Stopbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) {animationTimer.stop();}
 
 
-    public void animazione()
-    {
-        //piccola animazione per scorrere le foto(leggere readme)
-        final long[] inizio = {System.currentTimeMillis()};
-        final int[] indice = {0};
+    public void animazione() throws SQLException, IOException {
 
-        animationTimer = new AnimationTimer()
-        {
-            @Override
-            public void handle(long l)
-            {
-                long tempocorrente= System.currentTimeMillis();
-
-                if(tempocorrente- inizio[0] >= 4000)
-                {
-
-                    if(indice[0] <images.size())
-                    {
-                        videoview.setImage(images.get(indice[0]));
-
-                        labeldisp.setText(dispositivo.get(indice[0]));
-                        labeluog.setText(city.get(indice[0]));
-                        labesoggetto.setText(soggetti.get(indice[0]));
-
-                    }else {indice[0]=-1;}
-
-                    indice[0]++;
-
-                    inizio[0] =tempocorrente;
-                }
-            }
-        };
+        Video video= new Video();
+        animationTimer = video.animazione(videoview,labeldisp,labeluog,labesoggetto);
     }
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {Main=MainController.getInstance();animazione();}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        try {
+
+            animazione();
+
+        } catch (SQLException e) {throw new RuntimeException(e);} catch (IOException e) {throw new RuntimeException(e);}
+    }
 }

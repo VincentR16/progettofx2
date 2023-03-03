@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CollezioniController extends MenuController implements Initializable
+public class CollezioniController extends MenuController //implements Initializable
 {
     //gestisce lo stage delle collezioni
     @FXML
@@ -69,7 +69,7 @@ public class CollezioniController extends MenuController implements Initializabl
     }
 
 
-    @Override
+  /*  @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         combobox.setPromptText("Scegli la libreria");
@@ -125,7 +125,7 @@ public class CollezioniController extends MenuController implements Initializabl
                     int j = 0;
 
                     while (rs.next()) {
-                        ImageView imageView = Main.setImageview(rs.getBytes("val_foto"), rs.getInt("id_foto"));
+                        ImageView imageView = (rs.getBytes("val_foto"), rs.getInt("id_foto"));
 
                         gridPane.add(imageView, j, i);
                         // faccio un semplice ciclo per impostare la posizione delle immagevie nella griglia
@@ -189,5 +189,5 @@ public class CollezioniController extends MenuController implements Initializabl
 
         } catch (SQLException e) {throw new RuntimeException(e);}
 
-    }
+    }*/
 }

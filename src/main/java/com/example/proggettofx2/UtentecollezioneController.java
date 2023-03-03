@@ -1,6 +1,7 @@
 
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +32,7 @@ public class UtentecollezioneController extends MenuController implements Initia
 
         Main=MainController.getInstance();
 
-        Main.listView(VistaUtente);
+        Utente.getUtente().vistautente(VistaUtente);
 
 
         VistaUtente.setOnMouseClicked(event ->

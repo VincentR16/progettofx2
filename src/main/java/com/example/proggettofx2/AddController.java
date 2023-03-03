@@ -1,5 +1,7 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Add;
+import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.*;
@@ -25,11 +28,9 @@ public class AddController extends  MenuController implements Initializable
     private TextField Pathfield;
     @FXML
     private ComboBox<String> Subjectbox;
+
     private boolean Controllo=true;
     private List<String> list;
-    private MainController Main;
-    private  URL myurl;
-    private ResourceBundle myres;
 
 
     @FXML
@@ -51,11 +52,11 @@ public class AddController extends  MenuController implements Initializable
             //viene mostrato il path a schermo
             Pathfield.setText(filePath);
         }
-
     }
 
+
     @FXML
-    void aggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException {
+    void aggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException {
 
 
         if(CityField.getText().equals(""))
@@ -96,11 +97,15 @@ public class AddController extends  MenuController implements Initializable
         if(Controllo)
         {
 
-            Main.addPhoto(Pathfield.getText(),DeviceField.getText(),CityField.getText(),Subjectbox.getSelectionModel().getSelectedItem(),list);
+            Add add= new Add(Pathfield.getText(),CityField.getText(),DeviceField.getText(),Subjectbox.getSelectionModel().getSelectedItem(),list);
+            add.Addphoto();
             //metodo che aggiunge le foto al db
-            Main.getStage().close();
 
-            initialize(myurl,myres);
+
+            MainController.getInstance().getStage().close();
+            MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
+
+
         }
     }
 
@@ -109,31 +114,17 @@ public class AddController extends  MenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        myurl=url;
-        myres=resourceBundle;
+        Add add=new Add();
+
         //servono per poter chimare initialize in un altro metodo
 
         list=new ArrayList<>();
         //lista che tiene conto di tutti gli utenti presenti nella foto
 
-        Main = MainController.getInstance();
-
-            ResultSet rs= Main.DoQuery("select categoria from soggetto");
-            //restituisce la categorie e vengono inserite nel Subjectbox
-
-            try {
-                while (rs.next())
-                {
-                    Subjectbox.getItems().add(rs.getString("categoria"));
-                }
-                rs.close();
-                Main.Closeall();
-
-            }catch (SQLException e){e.printStackTrace();}
+       add.setSubjectbox(Subjectbox);
 
 
-
-        Main.listView(VistaUtente);
+        Utente.getUtente().vistautente(VistaUtente);
             //viene impostata vistautente(listview)
 
 

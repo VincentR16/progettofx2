@@ -103,7 +103,7 @@ public class CreacollezioneController extends MenuController implements Initiali
 
         Main=MainController.getInstance();
 
-        Main.listView(VistaUtente);
+        Utente.getUtente().vistautente(VistaUtente);
 
         VistaUtente.setOnMouseClicked(event ->
         {

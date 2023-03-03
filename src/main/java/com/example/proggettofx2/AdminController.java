@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Utente;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -30,7 +31,7 @@ public class AdminController implements Initializable
     {
         Main =MainController.getInstance();
 
-        Main.listView(VistaUtente);
+        Utente.getUtente().vistautente(VistaUtente);
         //imposta vistautente(listview)
 
         ResultSet rs = Main.DoQuery("select * from numero_totale_fotografie_e_utenti");

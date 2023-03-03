@@ -69,7 +69,7 @@ public class FiltraController extends MenuController implements Initializable
 
                     while (rs.next())
                     {
-                        ImageView imageView =Main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+                        ImageView imageView= new ImageView() ;//=Main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
 
                         gridPane.add(imageView,j,i);
                         j++;                                                                                                                    // rispetto alle matrici qui si mette prima la colonna e poi la riga
@@ -79,7 +79,7 @@ public class FiltraController extends MenuController implements Initializable
                     rs.close();
                     Main.getCon().close();
 
-                }catch(SQLException | IOException e){throw new RuntimeException(e);}
+                }catch(SQLException e){throw new RuntimeException(e);}
 
 
             pannel.setContent(gridPane);
