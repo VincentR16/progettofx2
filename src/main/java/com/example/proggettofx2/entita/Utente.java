@@ -1,5 +1,7 @@
-package com.example.proggettofx2;
+package com.example.proggettofx2.entita;
 
+
+import com.example.proggettofx2.MainController;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

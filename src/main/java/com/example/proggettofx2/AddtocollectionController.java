@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,7 +48,7 @@ public class AddtocollectionController extends MenuController implements Initial
             ps= Main.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
             //prende tutte le foto non presenti nella collezione
 
-            ps.setInt(1,Utente.getUtente().getIdutente());
+            ps.setInt(1, Utente.getUtente().getIdutente());
             ps.setString(2, Main.getScelta());
 
             rs = ps.executeQuery();

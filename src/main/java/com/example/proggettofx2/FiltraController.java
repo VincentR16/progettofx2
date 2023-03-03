@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -52,7 +53,7 @@ public class FiltraController extends MenuController implements Initializable
 
                 PreparedStatement ps= Main.DoPrepared("Select * from "+scelta+"(?,?)");
             //la funzione nel db restituisce le foto con quei criteri
-                ps.setInt(1,Utente.getUtente().getIdutente());
+                ps.setInt(1, Utente.getUtente().getIdutente());
                 ps.setString(2,textfiled.getText());
 
                 ResultSet rs = ps.executeQuery();

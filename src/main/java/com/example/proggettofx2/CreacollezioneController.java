@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,7 +55,7 @@ public class CreacollezioneController extends MenuController implements Initiali
 
 
                 PreparedStatement pst = Main.DoPrepared("call crea_collezione_condivisa(?,?,?)");
-                pst.setInt(1,Utente.getUtente().getIdutente());
+                pst.setInt(1, Utente.getUtente().getIdutente());
                 pst.setString(2,utente);
                 pst.setString(3,nomecollezione);
 

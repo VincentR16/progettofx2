@@ -10,4 +10,5 @@ module proggettofx2
     requires org.postgresql.jdbc;
 
     opens com.example.proggettofx2;
+    opens com.example.proggettofx2.entita;
 }

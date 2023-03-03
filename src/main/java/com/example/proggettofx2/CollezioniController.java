@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,7 +80,7 @@ public class CollezioniController extends MenuController implements Initializabl
         try {
 
             PreparedStatement pst = Main.DoPrepared("select distinct nome from collezione as c, utente_possiede_collezione as u where u.id_utente=? and c.personale=0 and c.id_collezione= u.id_collezione");
-            pst.setInt(1,Utente.getUtente().getIdutente());
+            pst.setInt(1, Utente.getUtente().getIdutente());
 
             ResultSet rs1 = pst.executeQuery();
 
