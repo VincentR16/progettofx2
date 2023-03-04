@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -113,14 +114,26 @@ public class Fotografie
     }
 
 
+    public void setCollezione(String S) throws SQLException, IOException {
+        ImageView imageView;
+
+        collezione = new ArrayList<>();
+
+        MainController Main=MainController.getInstance();
 
 
+        PreparedStatement st1 = Main.DoPrepared("select * from collezione_condivisa(?)");
+        //recupero foto della collezione
 
+        st1.setString(1,S);
+        ResultSet rs= st1.executeQuery();
 
+        while (rs.next())
+        {
+            imageView=this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+            collezione.add(imageView);
+        }
+    }
 
-
-
-
-
-
+    public List<ImageView> getCollezione() {return collezione;}
 }
