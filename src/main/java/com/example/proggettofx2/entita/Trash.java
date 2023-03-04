@@ -81,7 +81,7 @@ public class Trash
                     } catch (SQLException ex) {throw new RuntimeException(ex);} catch (IOException ex) {throw new RuntimeException(ex);}
 
 
-                    Main.getStage().close();
+                        Main.getStage().close();
 
                     try {
 

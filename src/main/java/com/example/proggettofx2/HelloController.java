@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Admin;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -98,7 +99,7 @@ public class HelloController  {
     }
 
     @FXML
-    void BottonAd(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException {
+    void BottonAd(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException {
 
         TextInputDialog Dialog =new TextInputDialog("AMMINISTRATORE");
         Dialog.setTitle("ACCEDI COME AMMINISTRATORE");
@@ -110,9 +111,11 @@ public class HelloController  {
 
         MainController main= MainController.getInstance();
 
+        Admin admin = new Admin();
+
         try {
 
-                if (Pass.get().equals(main.find_Admin().getString("password")))
+                if (Pass.get().equals(admin.getPassword()))
                 //find_admin resituisce la password dell admin, presa dal db
                 {
                     main.getStage().close();
@@ -131,7 +134,7 @@ public class HelloController  {
                     alert.show();
                 }
 
-        }catch (SQLException e){throw  new RuntimeException(e);}
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 
 

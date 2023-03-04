@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Admin;
 import com.example.proggettofx2.entita.Utente;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,33 +24,30 @@ public class AdminController implements Initializable
     private ListView<String> VistaUtente;
     @FXML
     private Label labelfoto;
-    private MainController Main;
+
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
-        Main =MainController.getInstance();
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Utente.getUtente().vistautente(VistaUtente);
-        //imposta vistautente(listview)
-
-        ResultSet rs = Main.DoQuery("select * from numero_totale_fotografie_e_utenti");
+        Admin admin;
 
         try {
-            rs.next();
 
-            labelfoto.setText(""+rs.getInt("totale_foto"));
-            Labelutenti.setText(""+rs.getInt("totale_utenti"));
-
-
+            admin = new Admin();
+            admin.setLabel(labelfoto,Labelutenti);
 
         } catch (SQLException e) {throw new RuntimeException(e);}
 
 
 
 
+        Utente.getUtente().vistautente(VistaUtente);
+        //imposta vistautente(listview)
+
+
         VistaUtente.setOnMouseClicked(event ->
+
                 //ad ogni click viene eliminato l' utente dal db
         {
             String item = VistaUtente.getSelectionModel().getSelectedItem();
@@ -62,30 +60,16 @@ public class AdminController implements Initializable
                 alert.setContentText(item);
 
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK)
-                {
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     //viene eliminato l'utente
 
 
                     try
                     {
-                        CallableStatement cst = Main.Callprocedure("{?=call recupera_id_utente(?)}");
-                        //parrtendo dall'email si recupera l'id dell'utente
-
-                        cst.registerOutParameter(1, Types.INTEGER);
-                        cst.setString(2,item);
-
-                        cst.execute();
-
-                        PreparedStatement pst = Main.Callprocedure("call elimina_utente(?)");
-                        //eliminazioe utente
-                        pst.setInt(1,cst.getInt(1));
-
-                        pst.execute();
-
-                        Main.Closeall();
+                       admin.deleteUtente(item);
 
                     } catch (SQLException e) {throw new RuntimeException(e);}
+
 
                     VistaUtente.getItems().remove(item);
                 }
