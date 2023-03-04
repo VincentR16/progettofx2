@@ -19,10 +19,19 @@ import java.util.Optional;
 public class Collezioni
 {
 
-    private String scelta ;
-    private int id_Collezioni;
+    private static String scelta ;
+    private List<ImageView> listused;
+    private List<ImageView> listnotused;
+    private static int id_Collezioni;
+
 
     public  Collezioni(){}
+
+    public Collezioni(String S) throws SQLException, IOException
+    {
+        this.setID(S);
+        listused=Fotografie.getInstance().getCollezione();
+    }
 
 
 
@@ -47,7 +56,8 @@ public class Collezioni
 
     public GridPane setAction()
     {
-        List<ImageView> list;
+
+
         ImageView imageView;
         MainController main= MainController.getInstance();
 
@@ -65,8 +75,7 @@ public class Collezioni
             foto.setCollezione(this.getScelta());
 
 
-            list=foto.getCollezione();
-            Iterator it = list.listIterator();
+            Iterator it = listused.listIterator();
 
             while(it.hasNext())
             {
@@ -118,7 +127,7 @@ public class Collezioni
 
     }
 
-    public void Setscelta(String S) {scelta=S;}
+    private void Setscelta(String S) {scelta=S;}
 
     private String getScelta() {return scelta;}
 
@@ -144,8 +153,9 @@ public class Collezioni
         return node;
     }
 
-    private void setID() throws SQLException
+    private void setID(String S) throws SQLException
     {
+        this.Setscelta(S);
 
         MainController main = MainController.getInstance();
 
@@ -157,6 +167,8 @@ public class Collezioni
         cs1.setString(2, this.getScelta());
 
          cs1.execute();
+
+         id_Collezioni=(int)cs1.getInt(1);
     }
 
 

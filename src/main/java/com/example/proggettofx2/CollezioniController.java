@@ -17,10 +17,8 @@ public class CollezioniController extends MenuController implements Initializabl
     //gestisce lo stage delle collezioni
     @FXML
     public ScrollPane pannel;
-
     @FXML
     private ComboBox<String> combobox;
-
     private MainController Main;
 
 
@@ -82,9 +80,16 @@ public class CollezioniController extends MenuController implements Initializabl
 
        combobox.setOnAction((ActionEvent er)->
             {
-                collezioni.Setscelta(combobox.getSelectionModel().getSelectedItem());
+                Collezioni collection;
 
-                pannel.setContent(collezioni.setAction());                                                                             // imposto la griglia come contenuto dello scroll pane
+                try {
+
+                     collection = new Collezioni(combobox.getSelectionModel().getSelectedItem());
+
+                } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+                // collezioni.Setscelta(combobox.getSelectionModel().getSelectedItem());
+
+                pannel.setContent(collection.setAction());                                                                             // imposto la griglia come contenuto dello scroll pane
 
             });
    }

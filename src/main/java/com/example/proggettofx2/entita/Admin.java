@@ -8,7 +8,11 @@ import java.sql.*;
 public class Admin
 {
     private String Password;
-    public Admin() throws SQLException {
+
+    public Admin() throws SQLException {this.setPassword();}
+    public Admin(Label labelfoto,Label labelutenti) throws SQLException
+    {
+        this.setLabel(labelfoto,labelutenti);
         this.setPassword();
     }
 

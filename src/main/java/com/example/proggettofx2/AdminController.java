@@ -34,8 +34,7 @@ public class AdminController implements Initializable
 
         try {
 
-            admin = new Admin();
-            admin.setLabel(labelfoto,Labelutenti);
+            admin = new Admin(labelfoto,Labelutenti);
 
         } catch (SQLException e) {throw new RuntimeException(e);}
 

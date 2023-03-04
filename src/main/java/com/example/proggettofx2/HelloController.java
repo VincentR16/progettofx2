@@ -66,9 +66,9 @@ public class HelloController  {
                         controllo2=false;
                         // controlla se esiste almeno un utente
 
-                        Fotografie.getInstance();
 
                         Utente.getUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
+                        Fotografie.getInstance();
 
                         main.getStage().close();
                         //lo stage utilizzato in questo momento viene chiuso
