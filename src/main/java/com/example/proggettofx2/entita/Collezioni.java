@@ -136,8 +136,9 @@ public class Collezioni
         ps.setInt(1, value);
         ps.setString(2, "privata");
 
-        ps.execute();
+        System.out.println(value);
 
+        ps.execute();
         ps.close();
 
         return node;

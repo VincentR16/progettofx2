@@ -19,9 +19,15 @@ public class Home
 {
     private GridPane gridPane;
 
-    public Home() throws SQLException, IOException {
+    public Home() throws SQLException, IOException
+    {
+        gridPane =new GridPane();
+        this.setGridpane(gridPane);
 
+    }
 
+    public GridPane getGridPane() {return gridPane;}
+    private void setGridpane(GridPane gridPane) throws SQLException, IOException {
         int i=0;
         int j=0;
 
@@ -31,7 +37,6 @@ public class Home
         Fotografie foto=Fotografie.getInstance();
         List<ImageView> list;
 
-        gridPane =new GridPane();
         // creo una griglia e ne imposto il gap in altezza e in orizzontale
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -71,30 +76,35 @@ public class Home
                 {
                     try
                     {
-                        PreparedStatement pst= Main.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
+                       this.setOnAction(e);
 
-                        int value = (int) ((Node)e.getSource()).getUserData();
-                        pst.setInt(1,value);
-                        pst.execute();
-
-                        pst.close();
-
-                        foto.setlistafoto();
-                        foto.setListafotoeliminate();
-
-                        // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
-                        Main.getStage().close();
-                        Main.CreateStage("HOME_page.fxml");
-                        Main.Closeall();
-
-                    } catch (SQLException ex) {throw new RuntimeException(ex);}
-                    catch (IOException ex) {throw new RuntimeException(ex);}
+                    } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
                 }
             });
         }
 
         Main.getCon().close();
+
     }
 
-    public GridPane getGridPane() {return gridPane;}
+    private void setOnAction(MouseEvent e) throws SQLException, IOException {
+        MainController Main=MainController.getInstance();
+
+        PreparedStatement pst= Main.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
+
+        int value = (int) ((Node)e.getSource()).getUserData();
+        pst.setInt(1,value);
+        pst.execute();
+
+        pst.close();
+
+        Fotografie.getInstance().setlistafoto();
+        Fotografie.getInstance().setListafotoeliminate();
+
+        // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
+
+        this.setGridpane(gridPane);
+        Main.Closeall();
+
+    }
 }

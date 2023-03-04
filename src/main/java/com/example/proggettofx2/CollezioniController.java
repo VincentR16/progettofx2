@@ -1,20 +1,15 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Collezioni;
-import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
+
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CollezioniController extends MenuController implements Initializable
@@ -74,6 +69,7 @@ public class CollezioniController extends MenuController implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle)
    {
        Collezioni collezioni= new Collezioni();
+
        Main=MainController.getInstance();
 
         combobox.setPromptText("Scegli la libreria");
