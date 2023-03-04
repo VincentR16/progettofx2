@@ -28,6 +28,7 @@ public class Home
 
     public GridPane getGridPane() {return gridPane;}
     private void setGridpane(GridPane gridPane) throws SQLException, IOException {
+
         int i=0;
         int j=0;
 
@@ -45,16 +46,17 @@ public class Home
         list=foto.getListafoto();
 
 
-        Iterator it = list.listIterator();
+        for (ImageView view : list) {
 
-        while(it.hasNext())
-        {
-            imageView=(ImageView) it.next();
+            imageView = view;
 
-            gridPane.add(imageView,j,i);
+            gridPane.add(imageView, j, i);
 
             j++;
-            if(j>4){j=0;i++;}
+            if (j > 4) {
+                j = 0;
+                i++;
+            }
             //  ciclo per impostare la posizione delle immagini nella griglia
             // rispetto alle matrici qui si mette prima la colonna e poi la riga
 
@@ -69,16 +71,16 @@ public class Home
                 alert.setContentText("VUOI ELIMINARE LA FOTO?");
 
 
-
                 Optional<ButtonType> result = alert.showAndWait();
 
-                if (result.get() == ButtonType.OK)
-                {
-                    try
-                    {
-                       this.setOnAction(e);
+                if (result.get() == ButtonType.OK) {
+                    try {
 
-                    } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
+                        gridPane.getChildren().remove(this.setOnAction(e));
+
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
         }
@@ -87,12 +89,13 @@ public class Home
 
     }
 
-    private void setOnAction(MouseEvent e) throws SQLException, IOException {
+    private Node setOnAction(MouseEvent e) throws SQLException, IOException {
         MainController Main=MainController.getInstance();
 
         PreparedStatement pst= Main.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
 
         int value = (int) ((Node)e.getSource()).getUserData();
+        Node node = (Node) e.getSource();
         pst.setInt(1,value);
         pst.execute();
 
@@ -103,8 +106,9 @@ public class Home
 
         // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
 
-        this.setGridpane(gridPane);
+
         Main.Closeall();
 
+        return node;
     }
 }

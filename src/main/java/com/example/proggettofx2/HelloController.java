@@ -1,6 +1,7 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Admin;
+import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,6 +65,8 @@ public class HelloController  {
                     {
                         controllo2=false;
                         // controlla se esiste almeno un utente
+
+                        Fotografie.getInstance();
 
                         Utente.getUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
 

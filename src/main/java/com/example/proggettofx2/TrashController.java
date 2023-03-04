@@ -27,10 +27,9 @@ public class TrashController extends MenuController implements Initializable
 
             trash = new Trash();
 
-        } catch (SQLException e) {throw new RuntimeException(e);
-        } catch (IOException e) {throw new RuntimeException(e);}
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
-        pannel.setContent(trash.getGridPane());                                                                             // imposto la griglia come contenuto dello scroll pane
+        pannel.setContent(trash.getGridPane());
     }
 
 }

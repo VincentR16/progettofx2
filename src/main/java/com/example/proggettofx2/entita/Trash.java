@@ -19,8 +19,15 @@ public class Trash
 {
     private GridPane gridPane;
 
-    public Trash() throws SQLException, IOException {
+    public Trash() throws SQLException, IOException
+    {
+        gridPane= new GridPane();
+        this.setGridPane(gridPane);
+    }
 
+    public GridPane getGridPane() {return gridPane;}
+
+    public void setGridPane(GridPane gridPane) throws SQLException, IOException {
         int i = 0;
         int j = 0;
 
@@ -32,7 +39,7 @@ public class Trash
         List<ImageView> list = foto.getListafotoeliminate();
 
 
-        gridPane = new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
+        // creo una griglia e ne imposto il gap in altezza e in orizzontale
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
@@ -61,45 +68,47 @@ public class Trash
                 Optional<ButtonType> result = alert.showAndWait();
 
                 if (result.get() == ButtonType.OK) {
-                    try {
-                        PreparedStatement pst = Main.DoPrepared("delete from fotografia where eliminata=1 and id_foto=?");
-                        // elimina definitivamente la foto dal db
-
-                        int value = (int) ((Node) e.getSource()).getUserData();
-                        pst.setInt(1, value);
-
-
-                        System.out.println(Utente.getUtente().getIdutente());
-                        pst.execute();
-
-                        pst.close();
-
-                        foto.setListafotoeliminate();
-
-                        Main.Closeall();
-
-                    } catch (SQLException ex) {throw new RuntimeException(ex);} catch (IOException ex) {throw new RuntimeException(ex);}
-
-
-                        Main.getStage().close();
 
                     try {
+                        gridPane.getChildren().remove(this.setOnAction(e));
 
-                        Main.CreateStage("Trashpage.fxml");                     // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
 
-                    } catch (IOException ex) {throw new RuntimeException(ex);}
+                    } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
 
                 }
             });
         }
+
     }
 
 
+    private Node setOnAction(MouseEvent e) throws SQLException, IOException
+    {
+        MainController Main=MainController.getInstance();
+
+        PreparedStatement pst = Main.DoPrepared("delete from fotografia where eliminata=1 and id_foto=?");
+        // elimina definitivamente la foto dal db
+
+        int value = (int) ((Node) e.getSource()).getUserData();
+        Node node = (Node) e.getSource();
+        pst.setInt(1, value);
+
+
+        System.out.println(Utente.getUtente().getIdutente());
+        pst.execute();
+
+        pst.close();
+
+        Fotografie.getInstance().setListafotoeliminate();
 
 
 
-
-
-    public GridPane getGridPane() {return gridPane;}
-
+        Main.Closeall();
+        return node;
+    }
 }
+
+
+
+
+
