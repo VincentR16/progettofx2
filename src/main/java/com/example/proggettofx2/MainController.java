@@ -26,21 +26,13 @@ public class MainController {
     private Statement st = null;
     private CallableStatement stmt = null;
     private PreparedStatement pst = null;
-    private String scelta;
+
 
 
     private MainController() {}
 
     public Connection getCon() {
         return con;
-    }
-
-    public void setScelta(String s) {
-        scelta = s;
-    }
-
-    public String getScelta() {
-        return scelta;
     }
 
     public Stage getStage() {

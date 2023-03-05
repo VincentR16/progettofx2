@@ -136,4 +136,33 @@ public class Fotografie
     }
 
     public List<ImageView> getCollezione() {return collezione;}
+
+
+    public void setNonincollezione(String S) throws SQLException, IOException {
+
+        ImageView imageView;
+        nonincollezione=new ArrayList<>();
+
+        MainController Main = MainController.getInstance();
+
+        //query gestita dal controller principale che prende tutte le foto dell'utente loggato
+
+            PreparedStatement ps= Main.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
+            //prende tutte le foto non presenti nella collezione
+
+            ps.setInt(1, Utente.getUtente().getIdutente());
+            ps.setString(2, S);
+
+
+           ResultSet rs = ps.executeQuery();
+
+        while (rs.next())
+        {
+            imageView=this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+            nonincollezione.add(imageView);
+        }
+    }
+
+
+    public List<ImageView> getNonincollezione() {return nonincollezione;}
 }

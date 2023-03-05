@@ -1,7 +1,6 @@
 package com.example.proggettofx2.entita;
 
 import com.example.proggettofx2.MainController;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -30,7 +29,14 @@ public class Collezioni
     public Collezioni(String S) throws SQLException, IOException
     {
         this.setID(S);
-        listused=Fotografie.getInstance().getCollezione();
+
+        Fotografie foto= Fotografie.getInstance();
+
+        foto.setCollezione(S);
+        foto.setNonincollezione(S);
+
+        listused=foto.getCollezione();
+        listnotused=foto.getNonincollezione();
     }
 
 
@@ -57,9 +63,7 @@ public class Collezioni
     public GridPane setAction()
     {
 
-
         ImageView imageView;
-        MainController main= MainController.getInstance();
 
 
         GridPane gridPane = new GridPane();
@@ -109,7 +113,7 @@ public class Collezioni
                             gridPane.getChildren().remove(this.privatephoto(er));
                             foto.setCollezione(this.getScelta());
 
-                            main.Closeall();
+
 
 
                         } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
@@ -118,7 +122,6 @@ public class Collezioni
 
             }
 
-            main.getCon().close();
 
         } catch (SQLException | IOException ex) {throw new RuntimeException(ex);
         }
@@ -145,10 +148,12 @@ public class Collezioni
         ps.setInt(1, value);
         ps.setString(2, "privata");
 
-        System.out.println(value);
 
         ps.execute();
         ps.close();
+
+        main.Closeall();
+
 
         return node;
     }
@@ -169,7 +174,101 @@ public class Collezioni
          cs1.execute();
 
          id_Collezioni=(int)cs1.getInt(1);
+
+         main.Closeall();
     }
+
+
+
+    public GridPane aggiungifoto() throws SQLException, IOException {
+
+
+        Fotografie foto=Fotografie.getInstance();
+
+        listnotused=foto.getNonincollezione();
+
+        GridPane gridPane = new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        int i = 0;
+        int j = 0;
+
+
+        Iterator it = listnotused.listIterator();
+
+        while(it.hasNext())
+        {
+            ImageView imageView = (ImageView) it.next();
+
+            gridPane.add(imageView, j, i);
+
+            j++;
+            if (j > 4) {
+                j = 0;
+                i++;
+            }
+
+                imageView.setOnMouseClicked((MouseEvent e) ->
+                        // listner per poter andare ad aggiungere le foto ogni qual volta vengano cliccate
+                {                                                                                                                       // per fare cio uso un alert
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                    alert.setTitle("AGGIUNGI FOTO");
+                    alert.setContentText("VUOI AGGIUNGERE LE FOTO ALLA COLLEZIONE?");
+
+
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    if (result.get() == ButtonType.OK)
+                    {
+                        try {
+
+                            gridPane.getChildren().remove(this.Onactionadd(e));
+
+                            foto.setNonincollezione(this.getScelta());
+                            foto.setCollezione(this.getScelta());
+
+
+
+                        } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
+
+                    }
+                });
+            }
+
+        return gridPane;
+    }
+
+
+    private Node Onactionadd(MouseEvent e) throws SQLException {
+
+        MainController Main=MainController.getInstance();
+
+
+
+        PreparedStatement  ps1 = Main.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");
+        //le foto vengono aggiiunte alla collezione
+
+        int value = (int) ((Node)e.getSource()).getUserData();
+        Node node = (Node) e.getSource();
+
+        ps1.setInt(1,value);
+        ps1.setString(2, this.getScelta());
+
+        ps1.execute();
+        ps1.close();
+
+        Main.Closeall();
+
+        return node;
+    }
+
+
+
+
+
+
 
 
 }
