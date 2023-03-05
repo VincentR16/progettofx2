@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -27,15 +26,14 @@ public class Video
     public void setVideo() throws SQLException, IOException {
         //imposta una lista d' images, di dispositivi(string),di citta(string),di soggetti(string)che poi verranno utlizzate all'internon del video
 
-        MainController main = MainController.getInstance();
+        Connection C= new Connection();
 
-
-        Fotografie foto=Fotografie.getInstance();
+                Fotografie foto=Fotografie.getInstance();
 
         for (ImageView imageView : foto.getListafoto()) {
             images.add(imageView.getImage());
 
-            PreparedStatement pst = MainController.getInstance().DoPrepared("select dispositivo,città from fotografia where id_foto=?");
+            PreparedStatement pst = C.DoPrepared("select dispositivo,città from fotografia where id_foto=?");
             //vegnono recuperati tutti i dispositivi e tutte le citta
             pst.setInt(1, (int) imageView.getUserData());
 
@@ -49,7 +47,7 @@ public class Video
             pst.close();
 
 
-            PreparedStatement ps = main.DoPrepared("Select * from recupera_soggetti_foto(?)");
+            PreparedStatement ps = C.DoPrepared("Select * from recupera_soggetti_foto(?)");
             //vegono recuperati tutti i soggetti di una foto
             ps.setInt(1, (int) imageView.getUserData());
 
@@ -62,7 +60,7 @@ public class Video
             rs2.close();
         }
 
-        main.Closeall();
+        C.Closeall();
     }
 
 

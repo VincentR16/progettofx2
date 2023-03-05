@@ -1,8 +1,6 @@
 package com.example.proggettofx2;
 
-import com.example.proggettofx2.entita.Admin;
-import com.example.proggettofx2.entita.Fotografie;
-import com.example.proggettofx2.entita.Utente;
+import com.example.proggettofx2.entita.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -54,8 +52,8 @@ public class HelloController  {
             String E=txtFIELD.getText();
             String P=assfield1.getText();
 
-            MainController main= MainController.getInstance();
-            ResultSet rs =main.find_users();
+            Connection C= new Connection();
+            ResultSet rs =C.find_users();
 
             //find_users prende tutte le email e tutte le password dal database
 
@@ -77,7 +75,9 @@ public class HelloController  {
                         stage.close();
 
                         //lo stage utilizzato in questo momento viene chiuso
-                        main.CreateStage("HOME_page.fxml");
+
+                        MyStage myStage = new MyStage();
+                        myStage.CreateStage("HOME_page.fxml");
                         // viene creato un altro stage
 
 
@@ -90,7 +90,7 @@ public class HelloController  {
 
                 }
                 rs.close();
-                main.Closeall();
+                C.Closeall();
 
                 if(controllo2)
                 {
@@ -117,7 +117,7 @@ public class HelloController  {
         // variabile string che si riferisce alla password inserita dall'utente all' interno dell' alert
 
 
-        MainController main= MainController.getInstance();
+
 
         Admin admin = new Admin();
 
@@ -129,10 +129,13 @@ public class HelloController  {
                     Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.close();
 
-                    main.CreateStage("Adminpage.fxml");
 
-                    main.getStage().setHeight(570);
-                    main.getStage().setWidth(600);
+                    MyStage myStage = new MyStage();
+
+                    myStage.CreateStage("Adminpage.fxml");
+
+                    myStage.getStage().setHeight(570);
+                    myStage.getStage().setWidth(600);
 
 
                 } else
@@ -151,15 +154,16 @@ public class HelloController  {
     @FXML
     void BottonR(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        MainController main= MainController.getInstance();
 
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        main.CreateStage("Second page.fxml");
+        MyStage myStage = new MyStage();
 
-        main.getStage().setTitle("Welcome");
-        main.getStage().setWidth(700);
-        main.getStage().setHeight(500);
+        myStage.CreateStage("Second page.fxml");
+
+        myStage.getStage().setTitle("Welcome");
+        myStage.getStage().setWidth(700);
+        myStage.getStage().setHeight(500);
     }
 }

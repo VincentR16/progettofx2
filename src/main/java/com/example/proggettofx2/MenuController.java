@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.MyStage;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public abstract class MenuController
 {
     //gestisce il menu laterale di ogni pagina
-    private final MainController  Main = MainController.getInstance();
+    private final MyStage myStage = new MyStage();
 
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException
@@ -21,9 +22,10 @@ public abstract class MenuController
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("Aggiungifotopage.fxml");
-        Main.getStage().setWidth(920);
-        Main.getStage().setHeight(620);
+
+        myStage.CreateStage("Aggiungifotopage.fxml");
+        myStage.getStage().setWidth(920);
+        myStage.getStage().setHeight(620);
     }
 
     @FXML
@@ -32,7 +34,7 @@ public abstract class MenuController
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("Trashpage.fxml");
+        myStage.CreateStage("Trashpage.fxml");
     }
 
     @FXML
@@ -41,7 +43,7 @@ public abstract class MenuController
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("Collezionipage.fxml");
+        myStage.CreateStage("Collezionipage.fxml");
     }
 
     @FXML
@@ -50,7 +52,7 @@ public abstract class MenuController
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("Profile-page.fxml");
+        myStage.CreateStage("Profile-page.fxml");
     }
 
     @FXML
@@ -59,7 +61,7 @@ public abstract class MenuController
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("Videopage.fxml");
+        myStage.CreateStage("Videopage.fxml");
     }
 
 
@@ -69,10 +71,10 @@ public abstract class MenuController
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("Firstpage.fxml");
-        Main.getStage().setHeight(450);
-        Main.getStage().setWidth(655);
-        Main.getStage().setResizable(false);
+        myStage.CreateStage("Firstpage.fxml");
+        myStage.getStage().setHeight(450);
+        myStage.getStage().setWidth(655);
+        myStage.getStage().setResizable(false);
 
         Utente.getUtente().setdefault();
 
@@ -98,7 +100,7 @@ public abstract class MenuController
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("HOME_page.fxml");
+        myStage.CreateStage("HOME_page.fxml");
     }
 
 

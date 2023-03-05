@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -84,9 +83,10 @@ public class Trash
 
     private Node setOnAction(MouseEvent e) throws SQLException, IOException
     {
-        MainController Main=MainController.getInstance();
+        Connection C= new Connection();
 
-        PreparedStatement pst = Main.DoPrepared("delete from fotografia where eliminata=1 and id_foto=?");
+
+        PreparedStatement pst = C.DoPrepared("delete from fotografia where eliminata=1 and id_foto=?");
         // elimina definitivamente la foto dal db
 
         int value = (int) ((Node) e.getSource()).getUserData();
@@ -103,7 +103,7 @@ public class Trash
 
 
 
-        Main.Closeall();
+        C.Closeall();
         return node;
     }
 }

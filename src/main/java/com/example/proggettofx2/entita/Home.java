@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -26,6 +25,7 @@ public class Home
     }
 
     public GridPane getGridPane() {return gridPane;}
+
     private void setGridpane(GridPane gridPane) throws SQLException, IOException {
 
         int i=0;
@@ -89,9 +89,10 @@ public class Home
     private Node setOnAction(MouseEvent e) throws SQLException, IOException
     {
 
-        MainController Main=MainController.getInstance();
+        Connection C= new Connection();
 
-        PreparedStatement pst= Main.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
+
+        PreparedStatement pst= C.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
 
         int value = (int) ((Node)e.getSource()).getUserData();
         Node node = (Node) e.getSource();
@@ -106,7 +107,7 @@ public class Home
         // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
 
 
-        Main.Closeall();
+        C.Closeall();
 
         return node;
     }

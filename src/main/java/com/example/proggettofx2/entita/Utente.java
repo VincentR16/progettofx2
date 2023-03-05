@@ -1,7 +1,6 @@
 package com.example.proggettofx2.entita;
 
 
-import com.example.proggettofx2.MainController;
 import javafx.scene.control.ListView;
 
 import java.sql.PreparedStatement;
@@ -40,22 +39,23 @@ public class Utente {
 
     public  void setdefault() {istanza=null;}
 
-    public void Modifica(String N,String C,String Na,String E,String P)throws SQLException
+    public void Modifica(String N,String Co,String Na,String E,String P)throws SQLException
     {
 
-        MainController Main= MainController.getInstance();
-        PreparedStatement pst= Main.DoPrepared("update utente set nome= ?,cognome= ?,email= ?,nazionalità= ?,password= ? where id_utente= ?");
+        Connection C= new Connection();
+
+        PreparedStatement pst= C.DoPrepared("update utente set nome= ?,cognome= ?,email= ?,nazionalità= ?,password= ? where id_utente= ?");
 // nel caso di modifica, viene modificato anche il db
 
         Nome=N;
-        Cognome=C;
+        Cognome=Co;
         Nazionalita=Na;
         Email=E;
         Password=P;
 
 
         pst.setString(1,N);
-        pst.setString(2,C);
+        pst.setString(2,Co);
         pst.setString(3,E);
         pst.setString(4,Na);
         pst.setString(5,P);
@@ -64,7 +64,7 @@ public class Utente {
         pst.execute();
         pst.close();
 
-        Main.Closeall();
+        C.Closeall();
     }
 
 
@@ -84,7 +84,8 @@ public class Utente {
 
         ArrayList<String> lista = new ArrayList<>();
 
-        MainController C = MainController.getInstance();
+        Connection C= new Connection();
+
         ResultSet rs = C.DoQuery("select email from utente");
 
         try {

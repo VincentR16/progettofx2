@@ -2,11 +2,14 @@ package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Collezioni;
 import com.example.proggettofx2.entita.Fotografie;
+import com.example.proggettofx2.entita.MyStage;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +23,6 @@ public class CreacollezioneController extends MenuController implements Initiali
 
     private boolean controllo= true;
     private String utente;
-    private MainController Main;
     @FXML
     private TextField label;
     @FXML
@@ -72,8 +74,13 @@ public class CreacollezioneController extends MenuController implements Initiali
                 }
 
 
-                Main.getStage().close();
-                Main.CreateStage("Collezionipage.fxml");
+
+                Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.close();
+
+
+                MyStage myStage = new MyStage();
+                myStage.CreateStage("Collezionipage.fxml");
             }
         }
     }
@@ -84,8 +91,6 @@ public class CreacollezioneController extends MenuController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
-        Main=MainController.getInstance();
 
         Utente.getUtente().vistautente(VistaUtente);
 

@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -42,9 +41,9 @@ public class Collezioni
 
     public void SetCombo(ComboBox<String> comboBox) throws SQLException
     {
-        MainController main = MainController.getInstance();
+        Connection C= new Connection();
 
-        PreparedStatement pst = main.DoPrepared("select distinct nome from collezione as c, utente_possiede_collezione as u where u.id_utente=? and c.personale=0 and c.id_collezione= u.id_collezione");
+        PreparedStatement pst = C.DoPrepared("select distinct nome from collezione as c, utente_possiede_collezione as u where u.id_utente=? and c.personale=0 and c.id_collezione= u.id_collezione");
         pst.setInt(1, Utente.getUtente().getIdutente());
 
         ResultSet rs1 = pst.executeQuery();
@@ -54,7 +53,7 @@ public class Collezioni
             comboBox.getItems().add(rs1.getString("nome"));
         }
 
-        main.Closeall();
+        C.Closeall();
         rs1.close();
     }
 
@@ -132,9 +131,9 @@ public class Collezioni
     private Node privatephoto(MouseEvent er) throws SQLException
     {
 
-        MainController main=MainController.getInstance();
+        Connection C= new Connection();
 
-        PreparedStatement ps =main.DoPrepared("call rendi_fotografia_privata_o_pubblica(?,?)");
+        PreparedStatement ps =C.DoPrepared("call rendi_fotografia_privata_o_pubblica(?,?)");
         //viene resa privata la foto
 
         int value = (int) ((Node) er.getSource()).getUserData();
@@ -147,7 +146,7 @@ public class Collezioni
         ps.execute();
         ps.close();
 
-        main.Closeall();
+        C.Closeall();
 
 
         return node;
@@ -157,9 +156,9 @@ public class Collezioni
     {
         this.Setscelta(S);
 
-        MainController main = MainController.getInstance();
+        Connection C= new Connection();
 
-        CallableStatement cs1 = main.Callprocedure("{?= call recupera_id_collezione(?)}");
+        CallableStatement cs1 = C.Callprocedure("{?= call recupera_id_collezione(?)}");
 
         // partendo dal nome della collezione, viene recupoerato l id della collezione
         cs1.registerOutParameter(1, Types.INTEGER);
@@ -170,7 +169,7 @@ public class Collezioni
 
          id_Collezioni=cs1.getInt(1);
 
-         main.Closeall();
+         C.Closeall();
     }
 
 
@@ -234,11 +233,10 @@ public class Collezioni
     private Node Onactionadd(MouseEvent e) throws SQLException
     {
 
-        MainController Main=MainController.getInstance();
+        Connection C= new Connection();
 
 
-
-        PreparedStatement  ps1 = Main.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");
+        PreparedStatement  ps1 = C.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");
         //le foto vengono aggiiunte alla collezione
 
         int value = (int) ((Node)e.getSource()).getUserData();
@@ -250,24 +248,25 @@ public class Collezioni
         ps1.execute();
         ps1.close();
 
-        Main.Closeall();
+        C.Closeall();
 
         return node;
     }
 
     public void creaCollezione(String utente,String nomecollezione) throws SQLException
     {
-        MainController Main = MainController.getInstance();
+        Connection C= new Connection();
 
 
-        PreparedStatement pst = Main.DoPrepared("call crea_collezione_condivisa(?,?,?)");
+
+        PreparedStatement pst = C.DoPrepared("call crea_collezione_condivisa(?,?,?)");
         pst.setInt(1, Utente.getUtente().getIdutente());
         pst.setString(2,utente);
         pst.setString(3,nomecollezione);
 
         pst.execute();
 
-        Main.Closeall();
+        C.Closeall();
         pst.close();
     }
 

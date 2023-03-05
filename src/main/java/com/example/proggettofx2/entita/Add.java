@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class Add
 
     public void Addphoto() throws SQLException, IOException {
 
-        MainController C = MainController.getInstance();
+        Connection C = new Connection();
 
         PreparedStatement pst;
         pst= C.DoPrepared("call aggiungi_fotografia(pg_read_binary_file(?),?,?,?)");
@@ -60,7 +59,7 @@ public class Add
 
 
 
-        pst=MainController.getInstance().DoPrepared("call inserisci_in_foto_raffigura_soggetto(?,?)");
+        pst= C.DoPrepared("call inserisci_in_foto_raffigura_soggetto(?,?)");
         pst.setInt(1, id_foto);
         pst.setString(2,soggetto);
 
@@ -93,9 +92,9 @@ public class Add
     public void setSubjectbox(ComboBox<String> comboBox)
     {
 
-        MainController Main = MainController.getInstance();
+        Connection C = new Connection();
 
-        ResultSet rs= Main.DoQuery("select categoria from soggetto");
+        ResultSet rs= C.DoQuery("select categoria from soggetto");
         //restituisce la categorie e vengono inserite nel Subjectbox
 
         try {
@@ -104,7 +103,7 @@ public class Add
                 comboBox.getItems().add(rs.getString("categoria"));
             }
             rs.close();
-            Main.Closeall();
+            C.Closeall();
 
         }catch (SQLException e){e.printStackTrace();}
 

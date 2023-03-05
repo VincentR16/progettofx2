@@ -1,6 +1,8 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Collezioni;
+import com.example.proggettofx2.entita.Connection;
+import com.example.proggettofx2.entita.MyStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +20,7 @@ public class AddtocollectionController extends MenuController implements Initial
     //gestisce l'aggiunta della foto nella collezione
     @FXML
     public ScrollPane pannel;
-    public MainController main;
+    public Connection main;
 
 
     @FXML
@@ -27,13 +29,15 @@ public class AddtocollectionController extends MenuController implements Initial
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        main.CreateStage("Collezionipage.fxml");
+        MyStage stage1 = new MyStage();
+        stage1.CreateStage("Collezionipage.fxml");
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
 
-         main =MainController.getInstance();
+
 
         Collezioni collezioni=new Collezioni();
 

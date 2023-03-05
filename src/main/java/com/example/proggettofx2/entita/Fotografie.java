@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 
@@ -46,9 +45,10 @@ public class Fotografie
 
         listafoto = new ArrayList<>();
 
-        MainController Main=MainController.getInstance();
+        Connection C= new Connection();
 
-        ResultSet rs = Main.GetImage(0);
+
+        ResultSet rs = C.GetImage(0);
 
         while (rs.next())
         {
@@ -66,9 +66,10 @@ public class Fotografie
 
         listafotoeliminate = new ArrayList<>();
 
-        MainController Main=MainController.getInstance();
+        Connection C= new Connection();
 
-        ResultSet rs = Main.GetImage(1);
+
+        ResultSet rs = C.GetImage(1);
 
         while (rs.next())
         {
@@ -122,10 +123,11 @@ public class Fotografie
 
         collezione = new ArrayList<>();
 
-        MainController Main=MainController.getInstance();
+        Connection C= new Connection();
 
 
-        PreparedStatement st1 = Main.DoPrepared("select * from collezione_condivisa(?)");
+
+        PreparedStatement st1 = C.DoPrepared("select * from collezione_condivisa(?)");
         //recupero foto della collezione
 
         st1.setString(1,S);
@@ -145,11 +147,12 @@ public class Fotografie
 
         nonincollezione=new ArrayList<>();
 
-        MainController Main = MainController.getInstance();
+        Connection C= new Connection();
+
 
         //query gestita dal controller principale che prende tutte le foto dell'utente loggato
 
-            PreparedStatement ps= Main.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
+            PreparedStatement ps= C.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
             //prende tutte le foto non presenti nella collezione
 
             ps.setInt(1, Utente.getUtente().getIdutente());
@@ -171,16 +174,17 @@ public class Fotografie
     public void fotoincollezione(String utente) throws SQLException
     {
 
-        MainController Main= MainController.getInstance();
+        Connection C= new Connection();
 
-        PreparedStatement pst1 = Main.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
+
+        PreparedStatement pst1 = C.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
         //inserimento di tutte le foto
         pst1.setInt(1,Utente.getUtente().getIdutente());
         pst1.setString(2,utente);
 
         pst1.execute();
 
-        Main.Closeall();
+        C.Closeall();
         pst1.close();
 
     }
@@ -188,10 +192,11 @@ public class Fotografie
 
     public void setFotofiltrate(String scelta, String testo) throws SQLException, IOException {
 
-        MainController Main = MainController.getInstance();
+        Connection C= new Connection();
+
         fotofiltrate= new ArrayList<>();
 
-        PreparedStatement ps= Main.DoPrepared("Select * from "+scelta+"(?,?)");
+        PreparedStatement ps= C.DoPrepared("Select * from "+scelta+"(?,?)");
         //la funzione nel db restituisce le foto con quei criteri
 
         ps.setInt(1, Utente.getUtente().getIdutente());

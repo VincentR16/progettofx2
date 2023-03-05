@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.MyStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -7,14 +8,15 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException
+    {
 
-        MainController Main =MainController.getInstance();
+        MyStage myStage = new MyStage();
 
-        Main.CreateStage("Firstpage.fxml");
-        Main.getStage().setHeight(450);
-        Main.getStage().setWidth(655);
-        Main.getStage().setResizable(false);
+        myStage.CreateStage("Firstpage.fxml");
+        myStage.getStage().setHeight(450);
+        myStage.getStage().setWidth(655);
+        myStage.getStage().setResizable(false);
 
     }
 

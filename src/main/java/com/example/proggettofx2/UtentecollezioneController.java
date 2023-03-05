@@ -2,6 +2,7 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Collezioni;
+import com.example.proggettofx2.entita.MyStage;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,20 +19,20 @@ public class UtentecollezioneController extends MenuController implements Initia
 
     @FXML
     private ListView<String> VistaUtente;
-    private MainController Main;
+
 
 
     @FXML
     void Back(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException {
 
-        Main.getStage().close();
-        Main.CreateStage("Collezionipage.fxml");
+        MyStage myStage= new MyStage();
+
+        myStage.getStage().close();
+        myStage.CreateStage("Collezionipage.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        Main=MainController.getInstance();
 
         Utente.getUtente().vistautente(VistaUtente);
 

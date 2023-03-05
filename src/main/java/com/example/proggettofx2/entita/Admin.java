@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.scene.control.Label;
 
 import java.sql.*;
@@ -18,18 +17,18 @@ public class Admin
 
     private void setPassword() throws SQLException
     {
-        MainController main= MainController.getInstance();
+        Connection C= new Connection();
 
-        Password=main.find_Admin().getString("password");
+        Password=C.find_Admin().getString("password");
     }
 
     public String getPassword() {return Password;}
 
     public void setLabel(Label labelfoto,Label labelutenti) throws SQLException
     {
-        MainController main =MainController.getInstance();
+        Connection C= new Connection();
 
-        ResultSet rs = main.DoQuery("select * from numero_totale_fotografie_e_utenti");
+        ResultSet rs = C.DoQuery("select * from numero_totale_fotografie_e_utenti");
 
         rs.next();
 
@@ -40,8 +39,9 @@ public class Admin
 
     public void deleteUtente(String item) throws SQLException
     {
-        MainController main = MainController.getInstance();
-        CallableStatement cst = main.Callprocedure("{?=call recupera_id_utente(?)}");
+        Connection C= new Connection();
+
+        CallableStatement cst = C.Callprocedure("{?=call recupera_id_utente(?)}");
         //parrtendo dall'email si recupera l'id dell'utente
 
         cst.registerOutParameter(1, Types.INTEGER);
@@ -49,12 +49,12 @@ public class Admin
 
         cst.execute();
 
-        PreparedStatement pst = main.Callprocedure("call elimina_utente(?)");
+        PreparedStatement pst = C.Callprocedure("call elimina_utente(?)");
         //eliminazioe utente
         pst.setInt(1, cst.getInt(1));
 
         pst.execute();
 
-        main.Closeall();
+        C.Closeall();
     }
 }

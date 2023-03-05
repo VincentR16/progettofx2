@@ -1,6 +1,5 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.MainController;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -54,9 +53,10 @@ public class Fotofiltrate
 
     public void top3(Label labelprimo,Label labelsec,Label labelterz) throws SQLException
     {
-        MainController Main=MainController.getInstance();
+        Connection C= new Connection();
 
-        PreparedStatement ps= Main.DoPrepared("select * from top_3_luoghi(?)");
+
+        PreparedStatement ps= C.DoPrepared("select * from top_3_luoghi(?)");
 
         //query che restituisce i luoghi più immortalati
         ps.setInt(1,Utente.getUtente().getIdutente());
@@ -72,7 +72,7 @@ public class Fotofiltrate
 
         rs.close();
         ps.close();
-        Main.Closeall();
+        C.Closeall();
     }
 
 

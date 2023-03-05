@@ -1,6 +1,7 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Collezioni;
+import com.example.proggettofx2.entita.MyStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +22,7 @@ public class CollezioniController extends MenuController implements Initializabl
     public ScrollPane pannel;
     @FXML
     private ComboBox<String> combobox;
-    private MainController Main;
+
 
 
     @FXML
@@ -30,7 +31,8 @@ public class CollezioniController extends MenuController implements Initializabl
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 
-        Main.CreateStage("Creacollezionepage.fxml");
+        MyStage myStage = new MyStage();
+        myStage.CreateStage("Creacollezionepage.fxml");
     }
     @FXML
     void BaddCollection(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
@@ -47,7 +49,8 @@ public class CollezioniController extends MenuController implements Initializabl
             Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
 
-            Main.CreateStage("Add2Collectionpage.fxml");
+            MyStage myStage= new MyStage();
+            myStage.CreateStage("Add2Collectionpage.fxml");
         }
     }
 
@@ -66,7 +69,8 @@ public class CollezioniController extends MenuController implements Initializabl
             Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
 
-            Main.CreateStage("UtenteCollezione.fxml");
+            MyStage myStage = new MyStage();
+            myStage.CreateStage("UtenteCollezione.fxml");
         }
     }
 
@@ -76,7 +80,6 @@ public class CollezioniController extends MenuController implements Initializabl
    {
        Collezioni collezioni= new Collezioni();
 
-       Main=MainController.getInstance();
 
         combobox.setPromptText("Scegli la libreria");
 

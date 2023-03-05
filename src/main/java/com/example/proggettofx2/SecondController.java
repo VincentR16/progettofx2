@@ -1,5 +1,7 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Connection;
+import com.example.proggettofx2.entita.MyStage;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -84,11 +86,11 @@ public class SecondController {
 
         if(controllo)
         {
-                MainController mainController  =MainController.getInstance();
+                com.example.proggettofx2.entita.Connection C  = new Connection();
             try
             {
                 PreparedStatement stmt;
-                stmt=mainController.DoPrepared("call crea_utente(?,?,?,?,?)");
+                stmt=C.DoPrepared("call crea_utente(?,?,?,?,?)");
 
                 //viene creato un utente all' interno del db
 
@@ -100,7 +102,7 @@ public class SecondController {
 
                 stmt.execute();
 
-                mainController.Closeall();
+                C.Closeall();
             }
             catch (SQLException e)
             {
@@ -123,7 +125,7 @@ public class SecondController {
                 {
                 int id_utente;
 
-                CallableStatement cst=mainController.Callprocedure("{?=call recupera_id_utente(?)}");
+                CallableStatement cst=C.Callprocedure("{?=call recupera_id_utente(?)}");
                 // viene recuperato l'id dell 'utente cche si è appena registrato
 
                 cst.registerOutParameter(1, Types.INTEGER);
@@ -138,12 +140,13 @@ public class SecondController {
                 //viene creato un oggetto utente, che è un singleton poichè come in ogni app, si accede solo un utente alla volta per ogni dispositivo
 
 
-                mainController.Closeall();
+                C.Closeall();
 
                     Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.close();
 
-                mainController.CreateStage("HOME_page.fxml");
+                    MyStage myStage = new MyStage();
+                    myStage.CreateStage("HOME_page.fxml");
             }
         }
     }

@@ -1,13 +1,9 @@
-package com.example.proggettofx2;
+package com.example.proggettofx2.entita;
 
 import com.example.proggettofx2.entita.Utente;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import java.sql.*;
 
-import java.io.IOException;
+
 
 // todo si potrebbe renderla non statica, e fare che ogni volta che si crea un oggetto venga impostata la connessione nella variabile con,
 // todo gli stage vengono gestiti in altro modo tipo andando a creare un altra classe statica, oppure facendo come i nodi e non usare nessuna
@@ -16,26 +12,17 @@ import java.io.IOException;
 // todo andare poi a scorporare tutte le query e andare a creare un metodo per ogni query che gestisce la connessione e che restituisce solo cio che è
 // todo realmente utile
 
-public class MainController {
+public class Connection {
 
-    //gestisce il collegamento col db, calcoli ed elaborazione dati, e trasmissione dati tra i diversi controller
+    //gestisce il collegamento col db,
 
-    private static MainController istanza = null;
-    private Stage stage;
-    private Connection con = null;
+    private java.sql.Connection con;
     private Statement st = null;
     private CallableStatement stmt = null;
     private PreparedStatement pst = null;
 
+    public Connection() {con=this.getConnention();}
 
-
-    private MainController() {}
-
-    public Connection getCon() {
-        return con;
-    }
-
-    public Stage getStage() {return stage;}
 
     public void Closeall() throws SQLException
     {
@@ -47,34 +34,8 @@ public class MainController {
     }
 
 
-    public Stage CreateStage(String S) throws IOException {
-        //crea un nuovo stage partendo dal file fxml
-        //riceve come input il nome del file, presente nella cartella resources/com.examples..
 
-        Parent root = FXMLLoader.load(getClass().getResource(S));
-        stage = new Stage();
-
-        stage.setScene(new Scene(root, 500, 500));
-        stage.setTitle("Project Gallery");
-        stage.setResizable(false);
-
-
-        stage.setWidth(920);
-        stage.setHeight(620);
-        stage.show();
-
-        return stage;
-    }
-
-    public static MainController getInstance() {
-        //crea o restituisce istanza maincontroller
-        if (istanza == null) {
-            istanza = new MainController();
-        }
-        return istanza;
-    }
-
-    public Connection getConnention() {
+    public java.sql.Connection getConnention() {
 
         //staabilisce connessione col db
         //si sarebbe potuto creare un ulteriore pagina che prima dell'apertura dell'applicazione, chiede
@@ -100,12 +61,11 @@ public class MainController {
 
     }
 
-    public ResultSet DoQuery(String S) {
+    public ResultSet DoQuery(String S)
+    {
         //svolge la query rappresentata dalla stringa S
-        con = this.getConnention();
 
         try {
-
             st = con.createStatement();
             return st.executeQuery(S);
 
@@ -113,7 +73,6 @@ public class MainController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public PreparedStatement DoPrepared(String S) throws SQLException {
@@ -122,7 +81,6 @@ public class MainController {
         pst = con.prepareStatement(S);
 
         return pst;
-
     }
 
     public CallableStatement Callprocedure(String S) throws SQLException {

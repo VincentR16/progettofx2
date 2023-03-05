@@ -1,7 +1,9 @@
 package com.example.proggettofx2;
 
 
+import com.example.proggettofx2.entita.Connection;
 import com.example.proggettofx2.entita.Home;
+import com.example.proggettofx2.entita.MyStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +24,7 @@ public class HomeController extends MenuController implements Initializable
 
 @FXML
 public ScrollPane pannel;
-private MainController Main;
+private Connection Main;
 
 
         @FXML
@@ -31,7 +33,8 @@ private MainController Main;
                 Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.close();
 
-                Main.CreateStage("Filtrapage.fxml");
+                MyStage myStage = new MyStage();
+                myStage.CreateStage("Filtrapage.fxml");
         }
 
 
@@ -39,9 +42,6 @@ private MainController Main;
         public void initialize(URL url, ResourceBundle resourceBundle)
         {
                 Home home;
-
-                Main=MainController.getInstance();
-
 
                 try {
                       home = new Home();
