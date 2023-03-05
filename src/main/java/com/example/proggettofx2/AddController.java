@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,7 +103,9 @@ public class AddController extends  MenuController implements Initializable
             //metodo che aggiunge le foto al db
 
 
-            MainController.getInstance().getStage().close();
+            Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+
             MainController.getInstance().CreateStage("Aggiungifotopage.fxml");
 
 

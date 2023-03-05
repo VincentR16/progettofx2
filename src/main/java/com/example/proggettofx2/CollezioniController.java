@@ -4,7 +4,9 @@ import com.example.proggettofx2.entita.Collezioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 
 import java.io.IOException;
@@ -25,7 +27,9 @@ public class CollezioniController extends MenuController implements Initializabl
     @FXML
     void BnewCollection(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        Main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         Main.CreateStage("Creacollezionepage.fxml");
     }
     @FXML
@@ -40,7 +44,9 @@ public class CollezioniController extends MenuController implements Initializabl
             alert.show();
         }else
         {
-            Main.getStage().close();
+            Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+
             Main.CreateStage("Add2Collectionpage.fxml");
         }
     }
@@ -57,7 +63,9 @@ public class CollezioniController extends MenuController implements Initializabl
             alert.show();
         }else
         {
-            Main.getStage().close();
+            Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+
             Main.CreateStage("UtenteCollezione.fxml");
         }
     }

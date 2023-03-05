@@ -1,6 +1,7 @@
 
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Collezioni;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,7 +50,9 @@ public class UtentecollezioneController extends MenuController implements Initia
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK)
                 {
-                    //todo fare query che manda al db
+                    Collezioni collezioni= new Collezioni();
+                    collezioni.aggiungiutente();
+
                     VistaUtente.getItems().remove(item);
                 }
             }

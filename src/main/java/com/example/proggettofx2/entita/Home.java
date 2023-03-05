@@ -34,7 +34,6 @@ public class Home
 
         ImageView imageView;
 
-        MainController Main = MainController.getInstance();
         Fotografie foto=Fotografie.getInstance();
         List<ImageView> list;
 
@@ -53,7 +52,8 @@ public class Home
             gridPane.add(imageView, j, i);
 
             j++;
-            if (j > 4) {
+            if (j > 4)
+            {
                 j = 0;
                 i++;
             }
@@ -73,23 +73,23 @@ public class Home
 
                 Optional<ButtonType> result = alert.showAndWait();
 
-                if (result.get() == ButtonType.OK) {
-                    try {
+                if (result.get() == ButtonType.OK)
+                {
+                    try
+                    {
 
                         gridPane.getChildren().remove(this.setOnAction(e));
 
-                    } catch (SQLException | IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
                 }
             });
         }
 
-        Main.getCon().close();
-
     }
 
-    private Node setOnAction(MouseEvent e) throws SQLException, IOException {
+    private Node setOnAction(MouseEvent e) throws SQLException, IOException
+    {
+
         MainController Main=MainController.getInstance();
 
         PreparedStatement pst= Main.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");

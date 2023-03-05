@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Fotofiltrate;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,11 +32,11 @@ public class FiltraController extends MenuController implements Initializable
     private ScrollPane pannel;
     @FXML
     private TextField textfiled;
-    private MainController Main;
+
 
 
     @FXML
-    void Bcerca(ActionEvent event) throws SQLException {
+    void Bcerca(ActionEvent event) throws SQLException, IOException {
 
         String scelta;
 
@@ -46,43 +47,16 @@ public class FiltraController extends MenuController implements Initializable
             alert.setContentText("Scegliere la categoria della ricerca");
 
             alert.show();
-        }else{
+
+        }
+        else{
 
             if (combobox.getSelectionModel().getSelectedItem()=="Soggetto"){scelta="stesso_soggetto";}else {scelta="stesso_luogo";}
                 //scelta viene impostata, come il nome della funzione del db,
 
-                PreparedStatement ps= Main.DoPrepared("Select * from "+scelta+"(?,?)");
-            //la funzione nel db restituisce le foto con quei criteri
-                ps.setInt(1, Utente.getUtente().getIdutente());
-                ps.setString(2,textfiled.getText());
 
-                ResultSet rs = ps.executeQuery();
-
-                GridPane gridPane =new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
-                gridPane.setHgap(10);
-                gridPane.setVgap(10);
-
-                try
-                 {
-                    int i=0;
-                    int j=0;
-
-                    while (rs.next())
-                    {
-                        ImageView imageView= new ImageView() ;//=Main.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-
-                        gridPane.add(imageView,j,i);
-                        j++;                                                                                                                    // rispetto alle matrici qui si mette prima la colonna e poi la riga
-                        if(j>4){j=0;i++;}
-                    }
-
-                    rs.close();
-                    Main.getCon().close();
-
-                }catch(SQLException e){throw new RuntimeException(e);}
-
-
-            pannel.setContent(gridPane);
+            Fotofiltrate fotofiltrate = new Fotofiltrate(scelta,textfiled.getText());
+            pannel.setContent(fotofiltrate.setGridpane());
         }
     }
 
@@ -92,31 +66,16 @@ public class FiltraController extends MenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        Main=MainController.getInstance();
+
 
         combobox.getItems().add("Luogo");
         combobox.getItems().add("Soggetto");
         combobox.setPromptText("Scegliere qui");
 
-
-
+        Fotofiltrate fotofiltrate = new Fotofiltrate();
         try {
-            PreparedStatement ps= Main.DoPrepared("select * from top_3_luoghi(?)");
-            //query che restituisce i luoghi più immortalati
-            ps.setInt(1,Utente.getUtente().getIdutente());
 
-            ResultSet rs= ps.executeQuery();
-
-
-            if(rs.next()) labelprimo.setText(rs.getString(1)+"  "+rs.getString(2));
-            if(rs.next()) labelsec.setText(rs.getString(1)+"  "+rs.getString(2));
-            if(rs.next())labelterz.setText(rs.getString(1)+"  "+rs.getString(2));
-
-            //gli if servono nel caso in cui non ci siano meno stringhe
-
-            rs.close();
-            ps.close();
-            Main.Closeall();
+            fotofiltrate.top3(labelprimo,labelsec,labelterz);
 
         } catch (SQLException e) {throw new RuntimeException(e);}
 

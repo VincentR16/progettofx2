@@ -241,7 +241,8 @@ public class Collezioni
     }
 
 
-    private Node Onactionadd(MouseEvent e) throws SQLException {
+    private Node Onactionadd(MouseEvent e) throws SQLException
+    {
 
         MainController Main=MainController.getInstance();
 
@@ -264,11 +265,25 @@ public class Collezioni
         return node;
     }
 
+    public void creaCollezione(String utente,String nomecollezione) throws SQLException
+    {
+        MainController Main = MainController.getInstance();
 
 
+        PreparedStatement pst = Main.DoPrepared("call crea_collezione_condivisa(?,?,?)");
+        pst.setInt(1, Utente.getUtente().getIdutente());
+        pst.setString(2,utente);
+        pst.setString(3,nomecollezione);
+
+        pst.execute();
+
+        Main.Closeall();
+        pst.close();
+    }
 
 
+    public void aggiungiutente()
+    {
 
-
-
+    }
 }

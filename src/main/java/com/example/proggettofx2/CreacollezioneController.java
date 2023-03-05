@@ -1,16 +1,15 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.entita.Collezioni;
+import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -21,7 +20,6 @@ public class CreacollezioneController extends MenuController implements Initiali
 
     private boolean controllo= true;
     private String utente;
-
     private MainController Main;
     @FXML
     private TextField label;
@@ -39,7 +37,8 @@ public class CreacollezioneController extends MenuController implements Initiali
 
             alert.setTitle("IMPORTANTE");
             alert.setContentText("Scegliere un utente");
-        }else{
+        }
+        else {
 
             String nomecollezione=label.getText();
 
@@ -49,20 +48,12 @@ public class CreacollezioneController extends MenuController implements Initiali
 
                 alert.setTitle("IMPORTANTE");
                 alert.setContentText("Scegliere il nome della collezione");
-            }else{
+            }
+             else{
 
-                Main = MainController.getInstance();
+                Collezioni collection = new Collezioni();
+                collection.creaCollezione(utente,nomecollezione);
 
-
-                PreparedStatement pst = Main.DoPrepared("call crea_collezione_condivisa(?,?,?)");
-                pst.setInt(1, Utente.getUtente().getIdutente());
-                pst.setString(2,utente);
-                pst.setString(3,nomecollezione);
-
-                pst.execute();
-
-                Main.Closeall();
-                pst.close();
 
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -76,15 +67,8 @@ public class CreacollezioneController extends MenuController implements Initiali
 
                 if(result.get()==ButtonType.OK)
                 {
-                    PreparedStatement pst1 = Main.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
-                    //inserimento di tutte le foto
-                    pst1.setInt(1,Utente.getUtente().getIdutente());
-                    pst1.setString(2,utente);
-
-                    pst1.execute();
-
-                    Main.Closeall();
-                    pst1.close();
+                    Fotografie foto = Fotografie.getInstance();
+                    foto.fotoincollezione(utente);
                 }
 
 
@@ -108,6 +92,7 @@ public class CreacollezioneController extends MenuController implements Initiali
         VistaUtente.setOnMouseClicked(event ->
         {
             String item = VistaUtente.getSelectionModel().getSelectedItem();
+
             //nella creazione di una collezione si puo scegliere solo un utente(item)
             if (item != null && controllo)
             {

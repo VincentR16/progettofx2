@@ -21,6 +21,10 @@ public class Fotografie
     private List<ImageView> listafotoeliminate;
     private List<ImageView> collezione;
     private List<ImageView> nonincollezione;
+    private List<ImageView> fotofiltrate;
+
+    private ImageView imageView;
+
 
     private static Fotografie instanza =null;
 
@@ -165,4 +169,43 @@ public class Fotografie
 
 
     public List<ImageView> getNonincollezione() {return nonincollezione;}
+
+    public void fotoincollezione(String utente) throws SQLException
+    {
+
+        MainController Main= MainController.getInstance();
+
+        PreparedStatement pst1 = Main.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
+        //inserimento di tutte le foto
+        pst1.setInt(1,Utente.getUtente().getIdutente());
+        pst1.setString(2,utente);
+
+        pst1.execute();
+
+        Main.Closeall();
+        pst1.close();
+
+    }
+
+
+    public void setFotofiltrate(String scelta, String testo) throws SQLException, IOException {
+
+        MainController Main = MainController.getInstance();
+
+        PreparedStatement ps= Main.DoPrepared("Select * from "+scelta+"(?,?)");
+        //la funzione nel db restituisce le foto con quei criteri
+        ps.setInt(1, Utente.getUtente().getIdutente());
+        ps.setString(2,testo);
+
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next())
+        {
+            imageView=this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+            fotofiltrate.add(imageView);
+        }
+    }
+
+    public List<ImageView> getFotofiltrate() {return fotofiltrate;}
 }

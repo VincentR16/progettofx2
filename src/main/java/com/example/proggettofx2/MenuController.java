@@ -3,8 +3,10 @@ package com.example.proggettofx2;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -16,7 +18,9 @@ public abstract class MenuController
     @FXML
     void BAggiungifoto(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException
     {
-        Main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         Main.CreateStage("Aggiungifotopage.fxml");
         Main.getStage().setWidth(920);
         Main.getStage().setHeight(620);
@@ -25,28 +29,36 @@ public abstract class MenuController
     @FXML
     void BCestino(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        Main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         Main.CreateStage("Trashpage.fxml");
     }
 
     @FXML
     void BCollezioni(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        Main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         Main.CreateStage("Collezionipage.fxml");
     }
 
     @FXML
     void BProfile(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        Main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         Main.CreateStage("Profile-page.fxml");
     }
 
     @FXML
     void Bvideo(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
-        Main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         Main.CreateStage("Videopage.fxml");
     }
 
@@ -54,7 +66,8 @@ public abstract class MenuController
     @FXML
     void Bexit(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
-        Main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
 
         Main.CreateStage("Firstpage.fxml");
         Main.getStage().setHeight(450);
@@ -81,7 +94,10 @@ public abstract class MenuController
 
     @FXML
     void BbackToHome(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException {
-        Main.getStage().close();
+
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         Main.CreateStage("HOME_page.fxml");
     }
 

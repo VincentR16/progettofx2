@@ -5,7 +5,10 @@ import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,7 +73,9 @@ public class HelloController  {
                         Utente.getUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
                         Fotografie.getInstance();
 
-                        main.getStage().close();
+                        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.close();
+
                         //lo stage utilizzato in questo momento viene chiuso
                         main.CreateStage("HOME_page.fxml");
                         // viene creato un altro stage
@@ -121,7 +126,9 @@ public class HelloController  {
                 if (Pass.get().equals(admin.getPassword()))
                 //find_admin resituisce la password dell admin, presa dal db
                 {
-                    main.getStage().close();
+                    Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.close();
+
                     main.CreateStage("Adminpage.fxml");
 
                     main.getStage().setHeight(570);
@@ -146,11 +153,12 @@ public class HelloController  {
     {
         MainController main= MainController.getInstance();
 
-        main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         main.CreateStage("Second page.fxml");
 
         main.getStage().setTitle("Welcome");
-
         main.getStage().setWidth(700);
         main.getStage().setHeight(500);
     }

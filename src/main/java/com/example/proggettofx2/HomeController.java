@@ -5,7 +5,9 @@ import com.example.proggettofx2.entita.Home;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.stage.Stage;
 
 
 import java.io.IOException;
@@ -26,7 +28,9 @@ private MainController Main;
         @FXML
         void FiltraButton(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
         {
-                Main.getStage().close();
+                Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.close();
+
                 Main.CreateStage("Filtrapage.fxml");
         }
 
@@ -35,6 +39,9 @@ private MainController Main;
         public void initialize(URL url, ResourceBundle resourceBundle)
         {
                 Home home;
+
+                Main=MainController.getInstance();
+
 
                 try {
                       home = new Home();

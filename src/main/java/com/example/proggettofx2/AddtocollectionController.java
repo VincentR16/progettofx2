@@ -4,7 +4,9 @@ import com.example.proggettofx2.entita.Collezioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +24,9 @@ public class AddtocollectionController extends MenuController implements Initial
     @FXML
     void Back(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException {
 
-        main.getStage().close();
+        Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+
         main.CreateStage("Collezionipage.fxml");
     }
 

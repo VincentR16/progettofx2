@@ -35,9 +35,7 @@ public class MainController {
         return con;
     }
 
-    public Stage getStage() {
-        return stage;
-    }
+    public Stage getStage() {return stage;}
 
     public void Closeall() throws SQLException
     {

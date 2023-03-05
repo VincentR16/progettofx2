@@ -3,8 +3,10 @@ package com.example.proggettofx2;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
@@ -137,7 +139,10 @@ public class SecondController {
 
 
                 mainController.Closeall();
-                mainController.getStage().close();
+
+                    Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.close();
+
                 mainController.CreateStage("HOME_page.fxml");
             }
         }

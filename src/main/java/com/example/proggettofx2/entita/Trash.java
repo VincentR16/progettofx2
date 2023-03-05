@@ -45,13 +45,16 @@ public class Trash
 
         Iterator it = list.listIterator();
 
-        while (it.hasNext()) {
+        while (it.hasNext())
+        {
+
             imageView = (ImageView) it.next();
 
             gridPane.add(imageView, j, i);
 
             j++;
-            if (j > 4) {
+            if (j > 4)
+            {
                 j = 0;
                 i++;
             }
