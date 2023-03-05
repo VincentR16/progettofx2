@@ -20,7 +20,7 @@ public class AddtocollectionController extends MenuController implements Initial
     //gestisce l'aggiunta della foto nella collezione
     @FXML
     public ScrollPane pannel;
-    public Connection main;
+
 
 
     @FXML
