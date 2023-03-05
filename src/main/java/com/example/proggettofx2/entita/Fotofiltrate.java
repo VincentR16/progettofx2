@@ -9,15 +9,13 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 
 public class Fotofiltrate
 {
      private List<ImageView> fotofiltrate;
-     private ImageView imageView;
 
-     public Fotofiltrate(){}
+    public Fotofiltrate(){}
 
     public Fotofiltrate(String scelta, String testo) throws SQLException, IOException
     {
@@ -38,18 +36,13 @@ public class Fotofiltrate
         int i=0;
         int j=0;
 
-        Iterator<ImageView> it = fotofiltrate.listIterator();
+        for (ImageView view : fotofiltrate) {
 
-        while (it.hasNext())
-        {
-            imageView = (ImageView) it.next();
-
-            gridPane.add(imageView, j, i);
+            gridPane.add(view, j, i);
 
             j++;
 
-            if (j > 4)
-            {
+            if (j > 4) {
                 j = 0;
                 i++;
             }

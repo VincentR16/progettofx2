@@ -4,11 +4,10 @@ import com.example.proggettofx2.entita.Video;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -55,6 +54,6 @@ public class VideoController extends MenuController implements Initializable
 
             animazione();
 
-        } catch (SQLException e) {throw new RuntimeException(e);} catch (IOException e) {throw new RuntimeException(e);}
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
     }
 }

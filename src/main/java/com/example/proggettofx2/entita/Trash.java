@@ -11,13 +11,12 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 public class Trash
 {
-    private GridPane gridPane;
+    private final GridPane gridPane;
 
     public Trash() throws SQLException, IOException
     {
@@ -31,7 +30,7 @@ public class Trash
         int i = 0;
         int j = 0;
 
-        MainController Main = MainController.getInstance();
+
         ImageView imageView;
 
         Fotografie foto= Fotografie.getInstance();
@@ -43,18 +42,14 @@ public class Trash
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
-        Iterator it = list.listIterator();
+        for (ImageView view : list) {
 
-        while (it.hasNext())
-        {
-
-            imageView = (ImageView) it.next();
+            imageView = view;
 
             gridPane.add(imageView, j, i);
 
             j++;
-            if (j > 4)
-            {
+            if (j > 4) {
                 j = 0;
                 i++;
             }
@@ -76,7 +71,9 @@ public class Trash
                         gridPane.getChildren().remove(this.setOnAction(e));
 
 
-                    } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
                 }
             });

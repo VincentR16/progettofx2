@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Video
@@ -33,16 +32,12 @@ public class Video
 
         Fotografie foto=Fotografie.getInstance();
 
-        Iterator it = foto.getListafoto().listIterator();
-
-        while (it.hasNext())
-        {
-            ImageView imageView = (ImageView) it.next();
+        for (ImageView imageView : foto.getListafoto()) {
             images.add(imageView.getImage());
 
             PreparedStatement pst = MainController.getInstance().DoPrepared("select dispositivo,città from fotografia where id_foto=?");
             //vegnono recuperati tutti i dispositivi e tutte le citta
-             pst.setInt(1, (int) imageView.getUserData());
+            pst.setInt(1, (int) imageView.getUserData());
 
             ResultSet rs1 = pst.executeQuery();
             rs1.next();
@@ -56,7 +51,7 @@ public class Video
 
             PreparedStatement ps = main.DoPrepared("Select * from recupera_soggetti_foto(?)");
             //vegono recuperati tutti i soggetti di una foto
-             ps.setInt(1, (int) imageView.getUserData());
+            ps.setInt(1, (int) imageView.getUserData());
 
             ResultSet rs2 = ps.executeQuery();
             rs2.next();
@@ -76,7 +71,7 @@ public class Video
         final long[] inizio = {System.currentTimeMillis()};
         final int[] indice = {0};
 
-        AnimationTimer animationTimer= new AnimationTimer()
+        return new AnimationTimer()
         {
             @Override
             public void handle(long l)
@@ -102,8 +97,6 @@ public class Video
                 }
             }
         };
-
-        return animationTimer;
     }
 
 

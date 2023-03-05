@@ -11,13 +11,12 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 public class Home
 {
-    private GridPane gridPane;
+    private final GridPane gridPane;
 
     public Home() throws SQLException, IOException
     {

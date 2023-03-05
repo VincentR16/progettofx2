@@ -33,7 +33,8 @@ public class Fotografie
         setListafotoeliminate();
     }
 
-    public static Fotografie getInstance() throws SQLException, IOException {
+    public static Fotografie getInstance() throws SQLException, IOException
+    {
         if (instanza == null) {instanza = new Fotografie();}
 
             return instanza;
@@ -42,7 +43,6 @@ public class Fotografie
 
     public void setlistafoto() throws SQLException, IOException {
 
-        ImageView imageView;
 
         listafoto = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public class Fotografie
 
     public void setListafotoeliminate()throws SQLException,IOException{
 
-        ImageView imageView;
+
 
         listafotoeliminate = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class Fotografie
         // e quindi di conseguenza non compatibile con le componenti di javafx
         // funziona perche writableimg estende img
 
-        ImageView imageView = new ImageView();
+        imageView = new ImageView();
 
         imageView.setUserData(id_foto);
 
@@ -119,7 +119,6 @@ public class Fotografie
 
 
     public void setCollezione(String S) throws SQLException, IOException {
-        ImageView imageView;
 
         collezione = new ArrayList<>();
 
@@ -144,7 +143,6 @@ public class Fotografie
 
     public void setNonincollezione(String S) throws SQLException, IOException {
 
-        ImageView imageView;
         nonincollezione=new ArrayList<>();
 
         MainController Main = MainController.getInstance();
@@ -191,9 +189,11 @@ public class Fotografie
     public void setFotofiltrate(String scelta, String testo) throws SQLException, IOException {
 
         MainController Main = MainController.getInstance();
+        fotofiltrate= new ArrayList<>();
 
         PreparedStatement ps= Main.DoPrepared("Select * from "+scelta+"(?,?)");
         //la funzione nel db restituisce le foto con quei criteri
+
         ps.setInt(1, Utente.getUtente().getIdutente());
         ps.setString(2,testo);
 
@@ -203,6 +203,7 @@ public class Fotografie
         while (rs.next())
         {
             imageView=this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
+
             fotofiltrate.add(imageView);
         }
     }

@@ -45,7 +45,7 @@ private MainController Main;
 
                 try {
                       home = new Home();
-                } catch (SQLException e) {throw new RuntimeException(e);} catch (IOException e) {throw new RuntimeException(e);}
+                } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
                 pannel.setContent(home.getGridPane());// viene impostata la griglia come contenuto dello scroll pane
         }

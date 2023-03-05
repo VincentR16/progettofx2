@@ -11,7 +11,6 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,11 +78,8 @@ public class Collezioni
             foto.setCollezione(this.getScelta());
 
 
-            Iterator it = listused.listIterator();
-
-            while(it.hasNext())
-            {
-                imageView = (ImageView) it.next();
+            for (ImageView view : listused) {
+                imageView = view;
 
                 gridPane.add(imageView, j, i);
 
@@ -105,8 +101,7 @@ public class Collezioni
 
                     Optional<ButtonType> result = alert.showAndWait();
 
-                    if (result.get() == ButtonType.OK)
-                    {
+                    if (result.get() == ButtonType.OK) {
 
                         try {
 
@@ -114,9 +109,9 @@ public class Collezioni
                             foto.setCollezione(this.getScelta());
 
 
-
-
-                        } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
+                        } catch (SQLException | IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 });
 
@@ -173,7 +168,7 @@ public class Collezioni
 
          cs1.execute();
 
-         id_Collezioni=(int)cs1.getInt(1);
+         id_Collezioni=cs1.getInt(1);
 
          main.Closeall();
     }
@@ -195,12 +190,7 @@ public class Collezioni
         int j = 0;
 
 
-        Iterator it = listnotused.listIterator();
-
-        while(it.hasNext())
-        {
-            ImageView imageView = (ImageView) it.next();
-
+        for (ImageView imageView : listnotused) {
             gridPane.add(imageView, j, i);
 
             j++;
@@ -209,33 +199,33 @@ public class Collezioni
                 i++;
             }
 
-                imageView.setOnMouseClicked((MouseEvent e) ->
-                        // listner per poter andare ad aggiungere le foto ogni qual volta vengano cliccate
-                {                                                                                                                       // per fare cio uso un alert
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            imageView.setOnMouseClicked((MouseEvent e) ->
+                    // listner per poter andare ad aggiungere le foto ogni qual volta vengano cliccate
+            {                                                                                                                       // per fare cio uso un alert
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
-                    alert.setTitle("AGGIUNGI FOTO");
-                    alert.setContentText("VUOI AGGIUNGERE LE FOTO ALLA COLLEZIONE?");
-
-
-                    Optional<ButtonType> result = alert.showAndWait();
-
-                    if (result.get() == ButtonType.OK)
-                    {
-                        try {
-
-                            gridPane.getChildren().remove(this.Onactionadd(e));
-
-                            foto.setNonincollezione(this.getScelta());
-                            foto.setCollezione(this.getScelta());
+                alert.setTitle("AGGIUNGI FOTO");
+                alert.setContentText("VUOI AGGIUNGERE LE FOTO ALLA COLLEZIONE?");
 
 
+                Optional<ButtonType> result = alert.showAndWait();
 
-                        } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
+                if (result.get() == ButtonType.OK) {
+                    try {
 
+                        gridPane.getChildren().remove(this.Onactionadd(e));
+
+                        foto.setNonincollezione(this.getScelta());
+                        foto.setCollezione(this.getScelta());
+
+
+                    } catch (SQLException | IOException ex) {
+                        throw new RuntimeException(ex);
                     }
-                });
-            }
+
+                }
+            });
+        }
 
         return gridPane;
     }

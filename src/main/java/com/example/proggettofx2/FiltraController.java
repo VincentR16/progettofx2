@@ -1,13 +1,10 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Fotofiltrate;
-import com.example.proggettofx2.entita.Utente;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +31,7 @@ public class FiltraController extends MenuController implements Initializable
 
 
     @FXML
-    void Bcerca(ActionEvent event) throws SQLException, IOException {
+    void Bcerca() throws SQLException, IOException {
 
         String scelta;
 
@@ -49,7 +46,7 @@ public class FiltraController extends MenuController implements Initializable
         }
         else{
 
-            if (combobox.getSelectionModel().getSelectedItem()=="Soggetto"){scelta="stesso_soggetto";}else {scelta="stesso_luogo";}
+            if (combobox.getSelectionModel().getSelectedItem().equals("Soggetto")){scelta="stesso_soggetto";}else {scelta="stesso_luogo";}
                 //scelta viene impostata, come il nome della funzione del db,
 
 
