@@ -1,8 +1,6 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Collezioni;
-import com.example.proggettofx2.entita.Connection;
-import com.example.proggettofx2.entita.MyStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

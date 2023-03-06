@@ -2,7 +2,6 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Collezioni;
-import com.example.proggettofx2.entita.MyStage;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

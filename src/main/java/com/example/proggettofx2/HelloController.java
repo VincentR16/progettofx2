@@ -13,7 +13,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 
-public class HelloController  {
+public class HelloController
+{
     //gestisce accesso utente
 
     @FXML
@@ -23,7 +24,8 @@ public class HelloController  {
     private TextField txtFIELD;
 
     @FXML
-    void BottonAccedi(ActionEvent event) throws IOException {
+    void BottonAccedi(ActionEvent event) throws IOException
+    {
 
         boolean controllo=true;
         // serve a verificare che tutti sono stati inseriti
@@ -68,7 +70,7 @@ public class HelloController  {
                         // controlla se esiste almeno un utente
 
 
-                        Utente.getUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
+                        Utente.getUtente().CreaUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
                         Fotografie.getInstance();
 
                         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -80,12 +82,6 @@ public class HelloController  {
                         myStage.CreateStage("HOME_page.fxml");
                         // viene creato un altro stage
 
-
-
-
-                        // questo è un altro metodo, per avere una variabile con lo stage utilizzato in questo momento
-                        // gli è stato preferito dichiarare e salvare lo stage nel mainController
-                       // Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     }
 
                 }
@@ -115,7 +111,6 @@ public class HelloController  {
 
         Optional<String> Pass =  Dialog.showAndWait();
         // variabile string che si riferisce alla password inserita dall'utente all' interno dell' alert
-
 
 
 

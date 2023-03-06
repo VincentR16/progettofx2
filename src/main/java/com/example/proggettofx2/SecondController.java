@@ -1,7 +1,6 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Connection;
-import com.example.proggettofx2.entita.MyStage;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -86,23 +85,10 @@ public class SecondController {
 
         if(controllo)
         {
-                com.example.proggettofx2.entita.Connection C  = new Connection();
+
             try
             {
-                PreparedStatement stmt;
-                stmt=C.DoPrepared("call crea_utente(?,?,?,?,?)");
-
-                //viene creato un utente all' interno del db
-
-                stmt.setString(1,NomeField.getText());
-                stmt.setString(2,CognomeField.getText());
-                stmt.setString(3,EField.getText());
-                stmt.setString(4,NaField.getText());
-                stmt.setString(5,PassField.getText());
-
-                stmt.execute();
-
-                C.Closeall();
+               Utente.getUtente().Creautente(NomeField.getText(),CognomeField.getText(),EField.getText(),NaField.getText(),PassField.getText());
             }
             catch (SQLException e)
             {
@@ -123,24 +109,6 @@ public class SecondController {
 
                 if(controllo)
                 {
-                int id_utente;
-
-                CallableStatement cst=C.Callprocedure("{?=call recupera_id_utente(?)}");
-                // viene recuperato l'id dell 'utente cche si è appena registrato
-
-                cst.registerOutParameter(1, Types.INTEGER);
-                cst.setString(2,EField.getText());
-
-                cst.execute();
-
-                id_utente=cst.getInt(1);
-
-
-                Utente.getUtente(NomeField.getText(), CognomeField.getText(),NaField.getText(),EField.getText(),PassField.getText(),id_utente);
-                //viene creato un oggetto utente, che è un singleton poichè come in ogni app, si accede solo un utente alla volta per ogni dispositivo
-
-
-                C.Closeall();
 
                     Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.close();

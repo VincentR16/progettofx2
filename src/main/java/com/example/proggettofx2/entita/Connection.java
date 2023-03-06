@@ -1,14 +1,10 @@
 package com.example.proggettofx2.entita;
 
-import com.example.proggettofx2.entita.Utente;
 import java.sql.*;
 
 
 
-// todo si potrebbe renderla non statica, e fare che ogni volta che si crea un oggetto venga impostata la connessione nella variabile con,
-// todo gli stage vengono gestiti in altro modo tipo andando a creare un altra classe statica, oppure facendo come i nodi e non usare nessuna
-// todo classe per gestire gli stage.
-// todo questa diventerebbe una classe connessione.
+
 // todo andare poi a scorporare tutte le query e andare a creare un metodo per ogni query che gestisce la connessione e che restituisce solo cio che è
 // todo realmente utile
 

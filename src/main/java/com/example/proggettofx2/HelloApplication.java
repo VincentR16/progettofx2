@@ -1,6 +1,5 @@
 package com.example.proggettofx2;
 
-import com.example.proggettofx2.entita.MyStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

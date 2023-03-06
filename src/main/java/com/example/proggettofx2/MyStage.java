@@ -1,4 +1,4 @@
-package com.example.proggettofx2.entita;
+package com.example.proggettofx2;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +19,7 @@ public class MyStage
         //riceve come input il nome del file, presente nella cartella resources/com.examples..
 
         Parent root = FXMLLoader.load(getClass().getResource(S));
-        stage = new javafx.stage.Stage();
+        stage = new Stage();
 
         stage.setScene(new Scene(root, 500, 500));
         stage.setTitle("Project Gallery");

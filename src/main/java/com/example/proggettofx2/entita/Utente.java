@@ -3,16 +3,14 @@ package com.example.proggettofx2.entita;
 
 import javafx.scene.control.ListView;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Utente {
     //classe utente
 
     private static Utente istanza= null;
-    private final int idutente;
+    private int idutente;
     private String Nome;
     private String Cognome;
     private String Nazionalita;
@@ -20,7 +18,10 @@ public class Utente {
     private String Password;
 
 
-   private Utente(String N,String C,String Na,String E,String P,int id)
+    private Utente(){}
+
+
+   private void setUtente(String N,String C,String Na,String E,String P,int id)
    {
        Nome=N;
        Cognome=C;
@@ -31,9 +32,9 @@ public class Utente {
    }
 
 
-    public static Utente getUtente(String N,String C,String Na,String E,String P,int id)
+    public  static Utente getUtente()
     {
-        if(istanza==null) {istanza=new Utente(N,C,Na,E,P,id);}
+        if(istanza==null) {istanza=new Utente();}
         return istanza;
     }
 
@@ -68,7 +69,7 @@ public class Utente {
     }
 
 
-    public static  Utente getUtente(){return istanza;}
+
     public String getNome() {return Nome;}
     public String getCognome() {return Cognome;}
     public String getNazionalita() {return Nazionalita;}
@@ -105,6 +106,51 @@ public class Utente {
 
     }
 
+    public void Creautente(String n,String c, String e,String na,String P) throws SQLException
+    {
+        Connection C  = new Connection();
+
+            PreparedStatement stmt;
+            stmt=C.DoPrepared("call crea_utente(?,?,?,?,?)");
+
+            //viene creato un utente all' interno del db
+
+            stmt.setString(1,n);
+            stmt.setString(2,c);
+            stmt.setString(3,e);
+            stmt.setString(4,na);
+            stmt.setString(5,P);
+
+            stmt.execute();
+
+            C.Closeall();
+
+            this.setUtente(n,c,na,e,P,this.RecuperaId(e));
+    }
+
+    private int RecuperaId(String E) throws SQLException
+    {
+
+        Connection C = new Connection();
+
+        CallableStatement cst=C.Callprocedure("{?=call recupera_id_utente(?)}");
+        // viene recuperato l'id dell 'utente cche si è appena registrato
+
+        cst.registerOutParameter(1, Types.INTEGER);
+        cst.setString(2,E);
+
+        cst.execute();
+
+        C.Closeall();
+
+       return cst.getInt(1);
+    }
+
+
+    public void CreaUtente(String N,String C,String E, String Na, String P, int id)
+    {
+        this.setUtente(N,C,Na,E,P,id);
+    }
 
 
 
