@@ -34,6 +34,7 @@ public class Video
             images.add(imageView.getImage());
 
             PreparedStatement pst = C.DoPrepared("select dispositivo,città from fotografia where id_foto=?");
+
             //vegnono recuperati tutti i dispositivi e tutte le citta
             pst.setInt(1, (int) imageView.getUserData());
 

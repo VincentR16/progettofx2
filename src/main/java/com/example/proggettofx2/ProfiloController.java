@@ -43,7 +43,6 @@ public class ProfiloController extends MenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
         Nome.setText(Utente.getUtente().getNome());
         Cognome.setText(Utente.getUtente().getCognome());
         Nazionalita.setText(Utente.getUtente().getNazionalita());

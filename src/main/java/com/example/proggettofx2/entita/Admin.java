@@ -19,7 +19,10 @@ public class Admin
     {
         Connection C= new Connection();
 
-        Password=C.find_Admin().getString("password");
+        ResultSet rs=C.find_Admin();
+        rs.next();
+
+        Password=rs.getString("password");
     }
 
     public String getPassword() {return Password;}

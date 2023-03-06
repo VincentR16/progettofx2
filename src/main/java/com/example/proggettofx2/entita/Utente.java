@@ -123,7 +123,7 @@ public class Utente {
 
             stmt.execute();
 
-            C.Closeall();
+
 
             this.setUtente(n,c,na,e,P,this.RecuperaId(e));
     }
@@ -141,7 +141,7 @@ public class Utente {
 
         cst.execute();
 
-        C.Closeall();
+
 
        return cst.getInt(1);
     }
