@@ -1,6 +1,7 @@
 package com.example.proggettofx2.entita;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
@@ -21,15 +22,17 @@ public class Fotografie
     private List<ImageView> collezione;
     private List<ImageView> nonincollezione;
     private List<ImageView> fotofiltrate;
-
-    private ImageView imageView;
-
-
+    private ImageView imageView = new ImageView();
     private static Fotografie instanza =null;
+    private String scelta;
 
-    private Fotografie() throws SQLException, IOException {
-        setlistafoto();
-        setListafotoeliminate();
+    private Fotografie()
+    {
+        listafoto=new ArrayList<>();
+        listafotoeliminate= new ArrayList<>();
+        collezione= new ArrayList<>();
+        nonincollezione = new ArrayList<>();
+        fotofiltrate=new ArrayList<>();
     }
 
     public static Fotografie getInstance() throws SQLException, IOException
@@ -39,52 +42,42 @@ public class Fotografie
             return instanza;
     }
 
-
-    public void setlistafoto() throws SQLException, IOException {
-
-
-        listafoto = new ArrayList<>();
-
-        Connection C= new Connection();
-
-
-        ResultSet rs = C.GetImage(0);
-
-        while (rs.next())
-        {
-             imageView =this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-             listafoto.add(imageView);
-        }
+    void AggiungiFoto(String path)
+    {
+         Image image= new Image(path);
+         imageView.setImage(image);
+         listafoto.add(imageView);
     }
+    void AggiungiCollezione(String path)
+    {
+        Image image= new Image(path);
+        imageView.setImage(image);
+        collezione.add(imageView);
+    }
+
+    public void setScelta(String S){scelta=S;}
+
+    public String getScelta() {return scelta;}
 
     public List<ImageView> getListafoto() {return listafoto;}
-
-
-    public void setListafotoeliminate()throws SQLException,IOException{
-
-
-
-        listafotoeliminate = new ArrayList<>();
-
-        Connection C= new Connection();
-
-
-        ResultSet rs = C.GetImage(1);
-
-        while (rs.next())
-        {
-            imageView =this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-            listafotoeliminate.add(imageView);
-        }
-    }
-
     public List<ImageView> getListafotoeliminate() {
         return listafotoeliminate;
     }
+    public List<ImageView> getCollezione() {return collezione;}
+    public List<ImageView> getNonincollezione() {return nonincollezione;}
 
 
 
-    public ImageView setImageview(byte[] binaryData, int id_foto) throws IOException {
+
+    public void resetfoto(){this.listafoto = new ArrayList<>(); this.listafotoeliminate = new ArrayList<>();}
+
+    public void eliminafoto()
+    {
+    }
+
+
+    public ImageView setImageview(byte[] binaryData, int id_foto) throws IOException
+    {
         //metodo per trasfromare le foto(viene spiegato all'interno del readme)
 
         // la foto sotto forma di bytea viene messa in un array di byte
@@ -119,57 +112,10 @@ public class Fotografie
     }
 
 
-    public void setCollezione(String S) throws SQLException, IOException {
-
-        collezione = new ArrayList<>();
-
-        Connection C= new Connection();
 
 
 
-        PreparedStatement st1 = C.DoPrepared("select * from collezione_condivisa(?)");
-        //recupero foto della collezione
 
-        st1.setString(1,S);
-        ResultSet rs= st1.executeQuery();
-
-        while (rs.next())
-        {
-            imageView=this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-            collezione.add(imageView);
-        }
-    }
-
-    public List<ImageView> getCollezione() {return collezione;}
-
-
-    public void setNonincollezione(String S) throws SQLException, IOException {
-
-        nonincollezione=new ArrayList<>();
-
-        Connection C= new Connection();
-
-
-        //query gestita dal controller principale che prende tutte le foto dell'utente loggato
-
-            PreparedStatement ps= C.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
-            //prende tutte le foto non presenti nella collezione
-
-            ps.setInt(1, Utente.getUtente().getIdutente());
-            ps.setString(2, S);
-
-
-           ResultSet rs = ps.executeQuery();
-
-        while (rs.next())
-        {
-            imageView=this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-            nonincollezione.add(imageView);
-        }
-    }
-
-
-    public List<ImageView> getNonincollezione() {return nonincollezione;}
 
     public void fotoincollezione(String utente) throws SQLException
     {

@@ -14,15 +14,12 @@ public class Fotofiltrate
 {
      private List<ImageView> fotofiltrate;
 
-    public Fotofiltrate(){}
 
-    public Fotofiltrate(String scelta, String testo) throws SQLException, IOException
+    public Fotofiltrate() throws SQLException, IOException
     {
         Fotografie foto = Fotografie.getInstance();
-        foto.setFotofiltrate(scelta, testo);
 
         fotofiltrate=foto.getFotofiltrate();
-
     }
 
     public GridPane setGridpane()

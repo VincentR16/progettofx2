@@ -1,7 +1,9 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.FotografieDAO;
 import com.example.proggettofx2.entita.Fotofiltrate;
 
+import com.example.proggettofx2.entita.Fotografie;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -50,7 +52,12 @@ public class FiltraController extends MenuController implements Initializable
                 //scelta viene impostata, come il nome della funzione del db,
 
 
-            Fotofiltrate fotofiltrate = new Fotofiltrate(scelta,textfiled.getText());
+            Fotografie fotografie = Fotografie.getInstance();
+
+            FotografieDAO fotografieDAO = new FotografieDAO();
+            fotografieDAO.search(fotografie,scelta,textfiled.getText());
+
+            Fotofiltrate fotofiltrate = new Fotofiltrate();
             pannel.setContent(fotofiltrate.setGridpane());
         }
     }
@@ -67,12 +74,13 @@ public class FiltraController extends MenuController implements Initializable
         combobox.getItems().add("Soggetto");
         combobox.setPromptText("Scegliere qui");
 
-        Fotofiltrate fotofiltrate = new Fotofiltrate();
+
         try {
 
+            Fotofiltrate fotofiltrate = new Fotofiltrate();
             fotofiltrate.top3(labelprimo,labelsec,labelterz);
 
-        } catch (SQLException e) {throw new RuntimeException(e);}
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
 
     }

@@ -1,5 +1,6 @@
 package com.example.proggettofx2.entita;
 
+import com.example.proggettofx2.DAO.FotografieDAO;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -28,10 +29,13 @@ public class Collezioni
     {
         this.setID(S);
 
-        Fotografie foto= Fotografie.getInstance();
+        FotografieDAO fotografieDAO = new FotografieDAO();
 
-        foto.setCollezione(S);
-        foto.setNonincollezione(S);
+        Fotografie foto= Fotografie.getInstance();
+        foto.setScelta(S);
+
+        fotografieDAO.collection(foto);
+
 
         listused=foto.getCollezione();
         listnotused=foto.getNonincollezione();
@@ -71,60 +75,52 @@ public class Collezioni
         int i = 0;
         int j = 0;
 
-        try {
 
-            Fotografie foto= Fotografie.getInstance();
-            foto.setCollezione(this.getScelta());
+        for (ImageView view : listused) {
+            imageView = view;
 
+            gridPane.add(imageView, j, i);
 
-            for (ImageView view : listused) {
-                imageView = view;
-
-                gridPane.add(imageView, j, i);
-
-                j++;
-                if (j > 4) {
-                    j = 0;
-                    i++;
-                }
-
-
-                imageView.setOnMouseClicked((MouseEvent er) ->
-
-                        //  semplice listner per poter rendere private le foto ogni qual volta vengano cliccate
-                {                                                                                                                       // per fare cio uso un alert
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("FOTO");
-                    alert.setContentText("VUOI RENDERE PRIVATA LA FOTO?");
-
-
-                    Optional<ButtonType> result = alert.showAndWait();
-
-                    if (result.get() == ButtonType.OK) {
-
-                        try {
-
-                            gridPane.getChildren().remove(this.privatephoto(er));
-                            foto.setCollezione(this.getScelta());
-
-
-                        } catch (SQLException | IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                });
-
+            j++;
+            if (j > 4) {
+                j = 0;
+                i++;
             }
 
 
-        } catch (SQLException | IOException ex) {throw new RuntimeException(ex);
+            imageView.setOnMouseClicked((MouseEvent er) ->
+
+                    //  semplice listner per poter rendere private le foto ogni qual volta vengano cliccate
+            {                                                                                                                       // per fare cio uso un alert
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("FOTO");
+                alert.setContentText("VUOI RENDERE PRIVATA LA FOTO?");
+
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.get() == ButtonType.OK) {
+
+                    try {
+
+                        gridPane.getChildren().remove(this.privatephoto(er));
+                        //foto.setCollezione(this.getScelta());
+
+
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+
         }
+
 
         return gridPane;
 
     }
 
-    private void Setscelta(String S) {scelta=S;}
+    private void Setscelta(String S) throws SQLException, IOException {scelta=S;Fotografie.getInstance().setScelta(S);}
 
     private String getScelta() {return scelta;}
 
@@ -152,7 +148,7 @@ public class Collezioni
         return node;
     }
 
-    private void setID(String S) throws SQLException
+    private void setID(String S) throws SQLException, IOException
     {
         this.Setscelta(S);
 
@@ -210,17 +206,21 @@ public class Collezioni
                 Optional<ButtonType> result = alert.showAndWait();
 
                 if (result.get() == ButtonType.OK) {
-                    try {
-
-                        gridPane.getChildren().remove(this.Onactionadd(e));
-
-                        foto.setNonincollezione(this.getScelta());
-                        foto.setCollezione(this.getScelta());
 
 
-                    } catch (SQLException | IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                        try {
+                            gridPane.getChildren().remove(this.Onactionadd(e));
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        // foto.setNonincollezione(this.getScelta());
+                       // foto.setCollezione(this.getScelta());
+
+
+                   // } catch (SQLException | IOException ex) {
+                    //    throw new RuntimeException(ex);
+
 
                 }
             });

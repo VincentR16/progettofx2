@@ -1,5 +1,6 @@
 package com.example.proggettofx2.entita;
 
+import com.example.proggettofx2.DAO.FotografieDAO;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -99,9 +100,11 @@ public class Trash
 
         pst.close();
 
-        Fotografie.getInstance().setListafotoeliminate();
+       Fotografie fotografie = Fotografie.getInstance();
+       fotografie.resetfoto();
 
-
+        FotografieDAO fotografieDAO = new FotografieDAO();
+        fotografieDAO.initialize(fotografie);
 
         C.Closeall();
         return node;

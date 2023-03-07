@@ -40,7 +40,8 @@ public class VideoController extends MenuController implements Initializable
     void Stopbutton(@SuppressWarnings("UnusedParameters")MouseEvent event) {animationTimer.stop();}
 
 
-    public void animazione() throws SQLException, IOException {
+    public void animazione() throws SQLException, IOException
+    {
 
         Video video= new Video();
         animationTimer = video.animazione(videoview,labeldisp,labeluog,labesoggetto);

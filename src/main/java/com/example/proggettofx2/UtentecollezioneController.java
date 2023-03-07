@@ -13,7 +13,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UtentecollezioneController extends MenuController implements Initializable {
+public class UtentecollezioneController extends MenuController implements Initializable
+{
     //gestisce lo stage per poter aggiungere altri utenti alla collezione
 
     @FXML

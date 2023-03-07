@@ -1,6 +1,7 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.entita.Connection;
+import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -109,7 +110,6 @@ public class SecondController {
 
                 if(controllo)
                 {
-
                     Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.close();
 

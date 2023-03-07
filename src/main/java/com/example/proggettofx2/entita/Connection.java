@@ -121,18 +121,6 @@ public class Connection {
         return this.DoQuery("Select password from amministratore");
     }
 
-    public ResultSet GetImage(int value) throws SQLException {
-
-        //query per cercare tutte le foto di un utente
-
-        PreparedStatement pst = this.DoPrepared("select val_foto,id_foto from fotografia where id_utente=? and eliminata=?");
-
-        pst.setInt(1, Utente.getUtente().getIdutente());
-        pst.setInt(2, value);
-
-
-        return pst.executeQuery();
-    }
 }
 
 

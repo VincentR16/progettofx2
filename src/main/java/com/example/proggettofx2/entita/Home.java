@@ -1,5 +1,6 @@
 package com.example.proggettofx2.entita;
 
+import com.example.proggettofx2.DAO.FotografieDAO;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -76,7 +77,6 @@ public class Home
                 {
                     try
                     {
-
                         gridPane.getChildren().remove(this.setOnAction(e));
 
                     } catch (SQLException | IOException ex) {throw new RuntimeException(ex);}
@@ -86,28 +86,26 @@ public class Home
 
     }
 
+
+
+
+
     private Node setOnAction(MouseEvent e) throws SQLException, IOException
     {
 
-        Connection C= new Connection();
-
-
-        PreparedStatement pst= C.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
 
         int value = (int) ((Node)e.getSource()).getUserData();
         Node node = (Node) e.getSource();
-        pst.setInt(1,value);
-        pst.execute();
 
-        pst.close();
+        Fotografie fotografie = Fotografie.getInstance();
 
-        Fotografie.getInstance().setlistafoto();
-        Fotografie.getInstance().setListafotoeliminate();
-
-        // una sorta di refresh alla pagina ogni qual volta viene eliminata una foto
+        FotografieDAO fotografieDAO = new FotografieDAO();
+        fotografieDAO.delete(fotografie,value);
 
 
-        C.Closeall();
+        fotografie.resetfoto();
+        fotografieDAO.initialize(fotografie);
+
 
         return node;
     }

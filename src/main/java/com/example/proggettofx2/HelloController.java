@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.FotografieDAO;
 import com.example.proggettofx2.entita.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,8 +71,14 @@ public class HelloController
                         // controlla se esiste almeno un utente
 
 
+
                         Utente.getUtente().CreaUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
-                        Fotografie.getInstance();
+
+                        Fotografie fotografie = Fotografie.getInstance();
+
+                        FotografieDAO fotografieDAO = new FotografieDAO();
+                        fotografieDAO.initialize(fotografie);
+
 
                         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
                         stage.close();
