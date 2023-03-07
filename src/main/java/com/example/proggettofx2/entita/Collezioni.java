@@ -1,5 +1,6 @@
 package com.example.proggettofx2.entita;
 
+import com.example.proggettofx2.DAO.CollezioniDao;
 import com.example.proggettofx2.DAO.FotografieDAO;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -101,7 +102,7 @@ public class Collezioni
                         //foto.setCollezione(this.getScelta());
 
 
-                    } catch (SQLException e) {
+                    } catch (SQLException | IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -118,25 +119,19 @@ public class Collezioni
 
     private String getScelta() {return scelta;}
 
-    private Node privatephoto(MouseEvent er) throws SQLException
-    {
+    private Node privatephoto(MouseEvent er) throws SQLException, IOException {
 
-        Connection C= new Connection();
 
-        PreparedStatement ps =C.DoPrepared("call rendi_fotografia_privata_o_pubblica(?,?)");
-        //viene resa privata la foto
 
         int value = (int) ((Node) er.getSource()).getUserData();
         Node node = (Node) er.getSource();
 
-        ps.setInt(1, value);
-        ps.setString(2, "privata");
+        Collezioni collezioni= new Collezioni();
 
+        CollezioniDao collezioniDao = new CollezioniDao();
+        collezioniDao.delete(collezioni,value);
 
-        ps.execute();
-        ps.close();
-
-        C.Closeall();
+        Fotografie.getInstance().rimuoviCollezione(value);
 
 
         return node;

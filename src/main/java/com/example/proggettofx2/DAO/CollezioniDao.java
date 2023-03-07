@@ -57,11 +57,43 @@ public class CollezioniDao implements Dao<Collezioni,String>
     @Override
     public void insert(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException {
 
+
+
+    }
+    @Override
+    public void insert(String s) throws SQLException
+    {
+        Connection C= new Connection();
+
+
+        PreparedStatement pst1 = C.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
+        //inserimento di tutte le foto
+        pst1.setInt(1,Utente.getUtente().getIdutente());
+        pst1.setString(2,s);
+
+        pst1.execute();
+
+        C.Closeall();
+        pst1.close();
+
     }
 
     @Override
     public void delete(Collezioni collezioni, int value) throws SQLException {
 
+        Connection C= new Connection();
+
+        PreparedStatement ps =C.DoPrepared("call rendi_fotografia_privata_o_pubblica(?,?)");
+        //viene resa privata la foto
+
+        ps.setInt(1, value);
+        ps.setString(2, "privata");
+
+
+        ps.execute();
+        ps.close();
+
+        C.Closeall();
     }
 
     @Override

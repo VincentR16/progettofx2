@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.CollezioniDao;
 import com.example.proggettofx2.entita.Collezioni;
 import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
@@ -68,8 +69,8 @@ public class CreacollezioneController extends MenuController implements Initiali
 
                 if(result.get()==ButtonType.OK)
                 {
-                    Fotografie foto = Fotografie.getInstance();
-                    foto.fotoincollezione(utente);
+                    CollezioniDao collezioniDao = new CollezioniDao();
+                    collezioniDao.insert(utente);
                 }
 
 

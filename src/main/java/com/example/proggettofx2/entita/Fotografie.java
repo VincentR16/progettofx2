@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -60,6 +59,19 @@ public class Fotografie
 
             if(value==id){collezione.add(imageView);it.remove();}
          }
+    }
+
+    void rimuoviCollezione(int id)
+    {
+        Iterator it = collezione.listIterator();
+
+        while (it.hasNext())
+        {
+            imageView = (ImageView) it.next();
+            int value= (int) imageView.getUserData();
+
+            if(value==id){nonincollezione.add(imageView);it.remove();}
+        }
     }
 
     public void setScelta(String S){scelta=S;}
@@ -133,22 +145,4 @@ public class Fotografie
         return imageView;
     }
 
-
-    public void fotoincollezione(String utente) throws SQLException
-    {
-
-        Connection C= new Connection();
-
-
-        PreparedStatement pst1 = C.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
-        //inserimento di tutte le foto
-        pst1.setInt(1,Utente.getUtente().getIdutente());
-        pst1.setString(2,utente);
-
-        pst1.execute();
-
-        C.Closeall();
-        pst1.close();
-
-    }
 }

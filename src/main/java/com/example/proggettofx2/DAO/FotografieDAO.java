@@ -104,6 +104,9 @@ public class FotografieDAO implements Dao<Fotografie,String>{
     }
 
     @Override
+    public void insert(String s) throws SQLException {}
+
+    @Override
     public void delete(Fotografie fotografie, int value) throws SQLException
     {
 

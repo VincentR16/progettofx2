@@ -12,6 +12,9 @@ public interface Dao<T,S>
      Connection Con = null;
      void initialize(T t) throws SQLException, IOException;
     void insert(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException;
+
+    void insert(String s) throws SQLException;
+
     void delete(T t, int value) throws SQLException;
     void search(T t,String s, String testo)throws SQLException,IOException;
     void collection(T t) throws SQLException, IOException;
