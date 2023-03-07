@@ -36,8 +36,12 @@ public class AddtocollectionController extends MenuController implements Initial
     {
 
 
+        Collezioni collezioni= null;
+        try {
 
-        Collezioni collezioni=new Collezioni();
+            collezioni = new Collezioni();
+
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
         try {
             pannel.setContent(collezioni.aggiungifoto());

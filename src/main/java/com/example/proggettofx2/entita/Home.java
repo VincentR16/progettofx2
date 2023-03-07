@@ -9,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -93,18 +92,15 @@ public class Home
     private Node setOnAction(MouseEvent e) throws SQLException, IOException
     {
 
-
         int value = (int) ((Node)e.getSource()).getUserData();
         Node node = (Node) e.getSource();
 
         Fotografie fotografie = Fotografie.getInstance();
 
         FotografieDAO fotografieDAO = new FotografieDAO();
-        fotografieDAO.delete(fotografie,value);
 
-
-        fotografie.resetfoto();
-        fotografieDAO.initialize(fotografie);
+        fotografieDAO.update(fotografie,value);
+        fotografie.eliminafoto(value);
 
 
         return node;

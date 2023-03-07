@@ -28,8 +28,6 @@ public class FotografieDAO implements Dao<Fotografie,String>{
 
 
 
-
-
         ResultSet rs1 = this.getImages(1);
 
         while (rs1.next())
@@ -41,11 +39,14 @@ public class FotografieDAO implements Dao<Fotografie,String>{
         Con.Closeall();
     }
 
+
+
+
     public FotografieDAO(){this.Con=new Connection();}
 
 
     @Override
-    public void update(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException
+    public void insert(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException
     {
         this.Con=new Connection();
 
@@ -105,17 +106,19 @@ public class FotografieDAO implements Dao<Fotografie,String>{
     @Override
     public void delete(Fotografie fotografie, int value) throws SQLException
     {
-        this.Con=new Connection();
 
-        PreparedStatement pst= Con.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
+        Con= new Connection();
 
-        pst.setInt(1,value);
+
+        PreparedStatement pst = Con.DoPrepared("delete from fotografia where eliminata=1 and id_foto=?");
+        // elimina definitivamente la foto dal db
+        pst.setInt(1, value);
+
         pst.execute();
 
         pst.close();
 
         Con.Closeall();
-
     }
 
     @Override
@@ -146,35 +149,20 @@ public class FotografieDAO implements Dao<Fotografie,String>{
     @Override
     public void collection(Fotografie fotografie) throws SQLException, IOException {
 
+
+    }
+
+    @Override
+    public void update(Fotografie fotografie, int value) throws SQLException
+    {
         this.Con=new Connection();
 
-        PreparedStatement st1 = Con.DoPrepared("select * from collezione_condivisa(?)");
-        //recupero foto della collezione
+        PreparedStatement pst= Con.DoPrepared("update fotografia set eliminata=1 where id_foto = ?");
 
-        st1.setString(1,fotografie.getScelta());
-        ResultSet rs= st1.executeQuery();
+        pst.setInt(1,value);
+        pst.execute();
 
-        while (rs.next())
-        {
-            ImageView imageView=fotografie.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-            fotografie.getCollezione().add(imageView);
-        }
-
-
-        PreparedStatement ps= Con.DoPrepared("Select * from foto_non_presenti_in_collezione_condivisa(?,?)");
-        //prende tutte le foto non presenti nella collezione
-
-        ps.setInt(1, Utente.getUtente().getIdutente());
-        ps.setString(2, fotografie.getScelta());
-
-
-         rs = ps.executeQuery();
-
-        while (rs.next())
-        {
-           ImageView imageView=fotografie.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-            fotografie.getNonincollezione().add(imageView);
-        }
+        pst.close();
 
         Con.Closeall();
     }

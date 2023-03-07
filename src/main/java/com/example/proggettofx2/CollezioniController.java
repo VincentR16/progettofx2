@@ -1,6 +1,8 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.CollezioniDao;
 import com.example.proggettofx2.entita.Collezioni;
+import com.example.proggettofx2.entita.Fotografie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -77,7 +79,14 @@ public class CollezioniController extends MenuController implements Initializabl
    @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
    {
-       Collezioni collezioni= new Collezioni();
+       Collezioni collezioni= null;
+       Fotografie fotografie= null;
+
+       try {
+           fotografie = Fotografie.getInstance();
+
+       } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+
 
 
         combobox.setPromptText("Scegli la libreria");
@@ -88,13 +97,19 @@ public class CollezioniController extends MenuController implements Initializabl
 
        } catch (SQLException e) {throw new RuntimeException(e);}
 
+       Fotografie finalFotografie = fotografie;
        combobox.setOnAction((ActionEvent er)->
             {
                 Collezioni collection;
 
                 try {
+                     finalFotografie.setScelta(combobox.getSelectionModel().getSelectedItem());
 
-                     collection = new Collezioni(combobox.getSelectionModel().getSelectedItem());
+                     CollezioniDao collezioniDao= new CollezioniDao();
+                     collezioniDao.initialize(collezioni);
+
+
+                     collection = new Collezioni();
 
                 } catch (SQLException | IOException e) {throw new RuntimeException(e);}
                 // collezioni.Setscelta(combobox.getSelectionModel().getSelectedItem());

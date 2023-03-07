@@ -6,7 +6,6 @@ import javafx.scene.control.ComboBox;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -41,7 +40,7 @@ public class Add
         Fotografie fotografie = Fotografie.getInstance();
 
         fotografie.AggiungiFoto(path);
-        fotodao.update(fotografie,list1,list);
+        fotodao.insert(fotografie,list1,list);
 
     }
 

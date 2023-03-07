@@ -9,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -84,29 +83,17 @@ public class Trash
 
     private Node setOnAction(MouseEvent e) throws SQLException, IOException
     {
-        Connection C= new Connection();
+        FotografieDAO fotografieDAO = new FotografieDAO();
+        Fotografie fotografie = Fotografie.getInstance();
 
-
-        PreparedStatement pst = C.DoPrepared("delete from fotografia where eliminata=1 and id_foto=?");
-        // elimina definitivamente la foto dal db
 
         int value = (int) ((Node) e.getSource()).getUserData();
         Node node = (Node) e.getSource();
-        pst.setInt(1, value);
 
+        fotografieDAO.delete(fotografie,value);
 
-        System.out.println(Utente.getUtente().getIdutente());
-        pst.execute();
+        fotografie.deletecestino(value);
 
-        pst.close();
-
-       Fotografie fotografie = Fotografie.getInstance();
-       fotografie.resetfoto();
-
-        FotografieDAO fotografieDAO = new FotografieDAO();
-        fotografieDAO.initialize(fotografie);
-
-        C.Closeall();
         return node;
     }
 }

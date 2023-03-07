@@ -20,22 +20,15 @@ public class Collezioni
     private static String scelta ;
     private List<ImageView> listused;
     private List<ImageView> listnotused;
+    private List<String>nomi;
     private static int id_Collezioni;
 
 
-    public  Collezioni(){}
 
-    public Collezioni(String S) throws SQLException, IOException
+
+    public Collezioni() throws SQLException, IOException
     {
-        this.setID(S);
-
-        FotografieDAO fotografieDAO = new FotografieDAO();
-
         Fotografie foto= Fotografie.getInstance();
-        foto.setScelta(S);
-
-        fotografieDAO.collection(foto);
-
 
         listused=foto.getCollezione();
         listnotused=foto.getNonincollezione();
@@ -54,6 +47,7 @@ public class Collezioni
 
         while (rs1.next())
         {
+            nomi.add(rs1.getString("nome"));
             comboBox.getItems().add(rs1.getString("nome"));
         }
 

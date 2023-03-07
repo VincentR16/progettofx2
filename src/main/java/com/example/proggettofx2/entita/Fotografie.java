@@ -10,9 +10,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Fotografie
@@ -48,31 +48,53 @@ public class Fotografie
          imageView.setImage(image);
          listafoto.add(imageView);
     }
-    void AggiungiCollezione(String path)
+
+    void AggiungiCollezione(int id)
     {
-        Image image= new Image(path);
-        imageView.setImage(image);
-        collezione.add(imageView);
+        Iterator it = nonincollezione.listIterator();
+
+         while (it.hasNext())
+         {
+             imageView = (ImageView) it.next();
+             int value= (int) imageView.getUserData();
+
+            if(value==id){collezione.add(imageView);it.remove();}
+         }
     }
 
     public void setScelta(String S){scelta=S;}
-
     public String getScelta() {return scelta;}
-
     public List<ImageView> getListafoto() {return listafoto;}
-    public List<ImageView> getListafotoeliminate() {
-        return listafotoeliminate;
-    }
+    public List<ImageView> getListafotoeliminate() {return listafotoeliminate;}
     public List<ImageView> getCollezione() {return collezione;}
     public List<ImageView> getNonincollezione() {return nonincollezione;}
+    public List<ImageView> getFotofiltrate() {return fotofiltrate;}
 
-
-
-
-    public void resetfoto(){this.listafoto = new ArrayList<>(); this.listafotoeliminate = new ArrayList<>();}
-
-    public void eliminafoto()
+    public void eliminafoto(int id)
     {
+        Iterator it = listafoto.listIterator();
+
+        while (it.hasNext())
+        {
+            imageView = (ImageView) it.next();
+            int value= (int) imageView.getUserData();
+
+            if(value==id){listafotoeliminate.add(imageView);it.remove();}
+        }
+    }
+
+    public void deletecestino(int id)
+    {
+        Iterator it = listafotoeliminate.listIterator();
+
+        while (it.hasNext())
+        {
+            imageView = (ImageView) it.next();
+            int value= (int) imageView.getUserData();
+
+            if(value==id){it.remove();}
+        }
+
     }
 
 
@@ -112,11 +134,6 @@ public class Fotografie
     }
 
 
-
-
-
-
-
     public void fotoincollezione(String utente) throws SQLException
     {
 
@@ -134,30 +151,4 @@ public class Fotografie
         pst1.close();
 
     }
-
-
-    public void setFotofiltrate(String scelta, String testo) throws SQLException, IOException {
-
-        Connection C= new Connection();
-
-        fotofiltrate= new ArrayList<>();
-
-        PreparedStatement ps= C.DoPrepared("Select * from "+scelta+"(?,?)");
-        //la funzione nel db restituisce le foto con quei criteri
-
-        ps.setInt(1, Utente.getUtente().getIdutente());
-        ps.setString(2,testo);
-
-
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next())
-        {
-            imageView=this.setImageview(rs.getBytes("val_foto"),rs.getInt("id_foto"));
-
-            fotofiltrate.add(imageView);
-        }
-    }
-
-    public List<ImageView> getFotofiltrate() {return fotofiltrate;}
 }

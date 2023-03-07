@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -51,7 +52,10 @@ public class UtentecollezioneController extends MenuController implements Initia
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK)
                 {
-                    Collezioni collezioni= new Collezioni();
+                    Collezioni collezioni= null;
+                    try {
+                        collezioni = new Collezioni();
+                    } catch (SQLException | IOException e) {throw new RuntimeException(e);}
                     collezioni.aggiungiutente();
 
                     VistaUtente.getItems().remove(item);
