@@ -1,6 +1,10 @@
 package com.example.proggettofx2;
 
-import com.example.proggettofx2.entita.Add;
+import com.example.proggettofx2.DAO.FotografieDAO;
+import com.example.proggettofx2.DAO.SoggettiDao;
+import com.example.proggettofx2.entita.Collezioni;
+import com.example.proggettofx2.entita.Fotografie;
+import com.example.proggettofx2.entita.SoggettieLuoghi;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,8 +19,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.*;
 
-public class AddController extends  MenuController implements Initializable
-{
+public class AddController extends  MenuController implements Initializable {
     //gestisce la pagine dell aggiunta delle foto
     @FXML
     private ListView<String> VistaUtente;
@@ -28,9 +31,14 @@ public class AddController extends  MenuController implements Initializable
     private TextField Pathfield;
     @FXML
     private ComboBox<String> Subjectbox;
-
-    private boolean Controllo=true;
+    private boolean Controllo = true;
     private List<String> list;
+
+
+    private Fotografie fotografie;
+    private FotografieDAO fotografieDAO;
+    private SoggettieLuoghi soggettieLuoghi;
+    private SoggettiDao soggettiDao;
 
 
     @FXML
@@ -42,12 +50,12 @@ public class AddController extends  MenuController implements Initializable
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.gif"));
 
 
-        File file = fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
+        File file = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+
         // apre la cartella dell 'utente e gli permette di scegliere le foto
         //all'interno di showopenadialog si inserisce lo stage corrente
 
-        if (file != null)
-        {
+        if (file != null) {
             String filePath = file.getPath();
             //viene mostrato il path a schermo
             Pathfield.setText(filePath);
@@ -56,79 +64,86 @@ public class AddController extends  MenuController implements Initializable
 
 
     @FXML
-    void aggiungifoto(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException {
+    void aggiungifoto(@SuppressWarnings("UnusedParameters") ActionEvent event) throws SQLException, IOException {
 
 
-        if(CityField.getText().equals(""))
-            {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("ERRORE");
-                alert.setContentText("Inserire una città");
-                alert.showAndWait();
-                Controllo=false;
+        if (CityField.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERRORE");
+            alert.setContentText("Inserire una città");
+            alert.showAndWait();
+            Controllo = false;
 
-            }else if(DeviceField.getText().equals(""))
-                     {
-                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                         alert.setTitle("ERRORE");
-                         alert.setContentText("Inserire un device con il quale la foto è stata scattata");
-                         alert.showAndWait();
-                         Controllo=false;
+        } else if (DeviceField.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERRORE");
+            alert.setContentText("Inserire un device con il quale la foto è stata scattata");
+            alert.showAndWait();
+            Controllo = false;
 
-                     }else  if(Pathfield.getText().equals(""))
-                                    {
-                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                        alert.setTitle("ERRORE");
-                                        alert.setContentText("SCEGLIERE UNA FOTO");
-                                        alert.showAndWait();
-                                        Controllo=false;
+        } else if (Pathfield.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERRORE");
+            alert.setContentText("SCEGLIERE UNA FOTO");
+            alert.showAndWait();
+            Controllo = false;
 
-                                    }else if ( Subjectbox.getSelectionModel().getSelectedItem()==null)
-                                            {
-                                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                                alert.setTitle("ERRORE");
-                                                alert.setContentText("Scegliere il soggetto della foto");
-                                                alert.showAndWait();
-                                                Controllo=false;
+        } else if (Subjectbox.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERRORE");
+            alert.setContentText("Scegliere il soggetto della foto");
+            alert.showAndWait();
+            Controllo = false;
 
-                                            }
+        }
 
 
-        if(Controllo)
+        if (Controllo)
         {
 
-            Add add= new Add(Pathfield.getText(),CityField.getText(),DeviceField.getText(),Subjectbox.getSelectionModel().getSelectedItem(),list);
-            add.Addphoto();
+            this.Addphoto(Pathfield.getText(), CityField.getText(),Subjectbox.getSelectionModel().getSelectedItem(), DeviceField.getText(), list);
             //metodo che aggiunge le foto al db
 
 
-            Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
 
             MyStage myStage1 = new MyStage();
             myStage1.CreateStage("Aggiungifotopage.fxml");
-
-
         }
     }
-
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        Add add=new Add();
 
         //servono per poter chimare initialize in un altro metodo
 
-        list=new ArrayList<>();
+        list = new ArrayList<>();
         //lista che tiene conto di tutti gli utenti presenti nella foto
 
-       add.setSubjectbox(Subjectbox);
+        soggettieLuoghi = new SoggettieLuoghi();
+        soggettiDao = new SoggettiDao();
+        fotografieDAO = new FotografieDAO();
+
+
+        try
+        {
+            fotografie = Fotografie.getInstance();
+
+
+
+            soggettiDao.initialize(soggettieLuoghi);
+
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+
+
+        soggettieLuoghi.setBox(Subjectbox);
 
 
         Utente.getUtente().vistautente(VistaUtente);
-            //viene impostata vistautente(listview)
+        //viene impostata vistautente(listview)
 
 
         VistaUtente.setOnMouseClicked(event ->
@@ -140,7 +155,7 @@ public class AddController extends  MenuController implements Initializable
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Aggiungi Soggetto");
-                alert.setHeaderText("Aggiungere "+item+" come utente presente nella tua foto?");
+                alert.setHeaderText("Aggiungere " + item + " come utente presente nella tua foto?");
                 alert.setContentText(item);
 
                 Optional<ButtonType> result = alert.showAndWait();
@@ -153,7 +168,29 @@ public class AddController extends  MenuController implements Initializable
         });
 
     }
+
+
+    public void Addphoto(String path, String citta,String soggetto, String dispositivo, List<String> list) throws SQLException
+    {
+        List<String> list1 = new ArrayList<>();
+
+        list1.add(path);
+        list1.add(dispositivo);
+        list1.add(citta);
+        list1.add(dispositivo);
+        list1.add(soggetto);
+
+
+        fotografie.AggiungiFoto(path);
+        fotografieDAO.insert(fotografie, list1, list);
+    }
+
 }
+
+
+
+
+
 
 
 

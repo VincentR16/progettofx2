@@ -8,12 +8,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CollezioniController extends MenuController implements Initializable
@@ -25,7 +30,6 @@ public class CollezioniController extends MenuController implements Initializabl
     private ComboBox<String> combobox;
 
 
-
     @FXML
     void BnewCollection(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException
     {
@@ -35,6 +39,8 @@ public class CollezioniController extends MenuController implements Initializabl
         MyStage myStage = new MyStage();
         myStage.CreateStage("Creacollezionepage.fxml");
     }
+
+
     @FXML
     void BaddCollection(@SuppressWarnings("UnusedParameters")ActionEvent event)throws IOException
     {
@@ -79,44 +85,145 @@ public class CollezioniController extends MenuController implements Initializabl
    @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
    {
-       Collezioni collezioni= null;
-       Fotografie fotografie= null;
+       Collezioni collezioni;
+       Fotografie fotografie;
 
        try {
-           fotografie = Fotografie.getInstance();
+            collezioni= new Collezioni();
+            fotografie = Fotografie.getInstance();
 
        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
 
 
         combobox.setPromptText("Scegli la libreria");
+        CollezioniDao collezioniDao= new CollezioniDao();
 
        try {
 
-           collezioni.SetCombo(combobox);
+           collezioni.setNomi(collezioniDao.search(collezioni,"ricerca","nomicollezioni"));
+           SetCombo(combobox);
 
-       } catch (SQLException e) {throw new RuntimeException(e);}
+       } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
-       Fotografie finalFotografie = fotografie;
+
        combobox.setOnAction((ActionEvent er)->
             {
-                Collezioni collection;
 
                 try {
-                     finalFotografie.setScelta(combobox.getSelectionModel().getSelectedItem());
 
-                     CollezioniDao collezioniDao= new CollezioniDao();
+                     fotografie.setScelta(combobox.getSelectionModel().getSelectedItem());
                      collezioniDao.initialize(collezioni);
 
 
-                     collection = new Collezioni();
-
                 } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+
                 // collezioni.Setscelta(combobox.getSelectionModel().getSelectedItem());
 
-                pannel.setContent(collection.setAction());                                                                             // imposto la griglia come contenuto dello scroll pane
+                try {
+                    pannel.setContent(setAction());
+
+                // imposto la griglia come contenuto dello scroll pane
+                } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
             });
    }
+
+
+    public void SetCombo(ComboBox<String> comboBox) throws SQLException, IOException
+    {
+        Collezioni collezioni = new Collezioni();
+
+        Iterator it = collezioni.getNomicollezione().listIterator();
+
+        while (it.hasNext())
+        {
+            comboBox.getItems().add((String) it.next());
+        }
+    }
+
+
+
+    public GridPane setAction() throws SQLException, IOException
+    {
+
+        ImageView imageView;
+
+        Collezioni collezioni = new Collezioni();
+
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        int i = 0;
+        int j = 0;
+
+
+        for (ImageView view : collezioni.getListused()) {
+            imageView = view;
+
+            gridPane.add(imageView, j, i);
+
+            j++;
+            if (j > 4) {
+                j = 0;
+                i++;
+            }
+
+
+            imageView.setOnMouseClicked((MouseEvent er) ->
+
+                    //  semplice listner per poter rendere private le foto ogni qual volta vengano cliccate
+            {                                                                                                                       // per fare cio uso un alert
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("FOTO");
+                alert.setContentText("VUOI RENDERE PRIVATA LA FOTO?");
+
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.get() == ButtonType.OK) {
+
+                    try {
+
+                        gridPane.getChildren().remove(this.privatephoto(er));
+                        //foto.setCollezione(this.getScelta());
+
+
+                    } catch (SQLException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+
+        }
+
+
+        return gridPane;
+
+    }
+
+    private Node privatephoto(MouseEvent er) throws SQLException, IOException
+    {
+
+        int value = (int) ((Node) er.getSource()).getUserData();
+        Node node = (Node) er.getSource();
+
+        Collezioni collezioni= new Collezioni();
+
+        CollezioniDao collezioniDao = new CollezioniDao();
+        collezioniDao.delete(collezioni,value);
+
+        Fotografie.getInstance().rimuoviCollezione(value);
+
+
+        return node;
+    }
+
+
+
+
+
 
 }

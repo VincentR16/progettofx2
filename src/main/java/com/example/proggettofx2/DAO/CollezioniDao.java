@@ -7,9 +7,8 @@ import com.example.proggettofx2.entita.Utente;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CollezioniDao implements Dao<Collezioni,String>
@@ -57,8 +56,6 @@ public class CollezioniDao implements Dao<Collezioni,String>
     @Override
     public void insert(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException {
 
-
-
     }
     @Override
     public void insert(String s) throws SQLException
@@ -97,17 +94,85 @@ public class CollezioniDao implements Dao<Collezioni,String>
     }
 
     @Override
-    public void search(Collezioni collezioni, String s, String testo) throws SQLException, IOException {
+    public List<String> search(Collezioni collezioni, String s, String testo) throws SQLException {
+
+        Connection C= new Connection();
+
+        PreparedStatement pst = C.DoPrepared("select distinct nome from collezione as c, utente_possiede_collezione as u where u.id_utente=? and c.personale=0 and c.id_collezione= u.id_collezione");
+        pst.setInt(1, Utente.getUtente().getIdutente());
+
+        ResultSet rs1 = pst.executeQuery();
+
+        List<String>nomecollezione= new ArrayList<>();
+
+        while (rs1.next())
+        {
+
+            nomecollezione.add(rs1.getString("nome"));
+        }
+
+        C.Closeall();
+        rs1.close();
+
+        return nomecollezione;
+    }
+
+    @Override
+    public void collection(Collezioni collezioni,String utente,String nomecollezione) throws SQLException
+    {
+
+        Connection C= new Connection();
+
+
+        PreparedStatement pst = C.DoPrepared("call crea_collezione_condivisa(?,?,?)");
+        pst.setInt(1, Utente.getUtente().getIdutente());
+        pst.setString(2,utente);
+        pst.setString(3,nomecollezione);
+
+        pst.execute();
+
+        C.Closeall();
+        pst.close();
 
     }
 
     @Override
-    public void collection(Collezioni collezioni) throws SQLException, IOException {
+    public void update(Collezioni collezioni, int value) throws SQLException, IOException {
+
+        Connection C= new Connection();
+
+        Fotografie fotografie = Fotografie.getInstance();
+
+        PreparedStatement  ps1 = C.DoPrepared("call inserisci_fotografia_in_collezione_condivisa(?,?)");
+
+        ps1.setInt(1,value);
+        ps1.setString(2,fotografie .getScelta());
+
+        ps1.execute();
+        ps1.close();
+
+        C.Closeall();
 
     }
 
-    @Override
-    public void update(Collezioni collezioni, int value) throws SQLException {
 
+    public  void Setid(Collezioni collezioni) throws SQLException, IOException
+    {
+        Fotografie fotografie = Fotografie.getInstance();
+
+        Connection C= new Connection();
+
+        CallableStatement cs1 = C.Callprocedure("{?= call recupera_id_collezione(?)}");
+
+        // partendo dal nome della collezione, viene recupoerato l id della collezione
+        cs1.registerOutParameter(1, Types.INTEGER);
+        cs1.setString(2, fotografie.getScelta());
+
+        cs1.execute();
+
+        collezioni.setID(cs1.getInt(1));
+
+        C.Closeall();
     }
+
 }

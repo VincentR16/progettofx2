@@ -41,7 +41,6 @@ public class FotografieDAO implements Dao<Fotografie,String>{
 
 
 
-
     public FotografieDAO(){this.Con=new Connection();}
 
 
@@ -78,7 +77,7 @@ public class FotografieDAO implements Dao<Fotografie,String>{
 
         pst= Con.DoPrepared("call inserisci_in_foto_raffigura_soggetto(?,?)");
         pst.setInt(1, id_foto);
-        pst.setString(2,lista1.get(3));
+        pst.setString(2,lista1.get(4));
 
         pst.execute();
         pst.close();
@@ -125,7 +124,7 @@ public class FotografieDAO implements Dao<Fotografie,String>{
     }
 
     @Override
-    public void search(Fotografie fotografie,String scelta,String testo) throws SQLException, IOException {
+    public List<String> search(Fotografie fotografie, String scelta, String testo) throws SQLException, IOException {
 
 
         this.Con=new Connection();
@@ -147,10 +146,11 @@ public class FotografieDAO implements Dao<Fotografie,String>{
         }
 
 
+        return null;
     }
 
     @Override
-    public void collection(Fotografie fotografie) throws SQLException, IOException {
+    public void collection(Fotografie fotografie,String S, String S1) throws SQLException, IOException {
 
 
     }

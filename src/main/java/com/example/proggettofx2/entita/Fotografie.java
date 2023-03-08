@@ -41,14 +41,26 @@ public class Fotografie
             return instanza;
     }
 
-    void AggiungiFoto(String path)
+
+
+
+    public void setScelta(String S){scelta=S;}
+    public String getScelta() {return scelta;}
+    public List<ImageView> getListafoto() {return listafoto;}
+    public List<ImageView> getListafotoeliminate() {return listafotoeliminate;}
+    public List<ImageView> getCollezione() {return collezione;}
+    public List<ImageView> getNonincollezione() {return nonincollezione;}
+    public List<ImageView> getFotofiltrate() {return fotofiltrate;}
+
+
+    public void AggiungiFoto(String path)
     {
          Image image= new Image(path);
          imageView.setImage(image);
          listafoto.add(imageView);
     }
 
-    void AggiungiCollezione(int id)
+   public void AggiungiCollezione(int id)
     {
         Iterator it = nonincollezione.listIterator();
 
@@ -61,7 +73,7 @@ public class Fotografie
          }
     }
 
-    void rimuoviCollezione(int id)
+   public void rimuoviCollezione(int id)
     {
         Iterator it = collezione.listIterator();
 
@@ -74,13 +86,7 @@ public class Fotografie
         }
     }
 
-    public void setScelta(String S){scelta=S;}
-    public String getScelta() {return scelta;}
-    public List<ImageView> getListafoto() {return listafoto;}
-    public List<ImageView> getListafotoeliminate() {return listafotoeliminate;}
-    public List<ImageView> getCollezione() {return collezione;}
-    public List<ImageView> getNonincollezione() {return nonincollezione;}
-    public List<ImageView> getFotofiltrate() {return fotofiltrate;}
+
 
     public void eliminafoto(int id)
     {

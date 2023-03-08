@@ -54,7 +54,15 @@ public class CreacollezioneController extends MenuController implements Initiali
              else{
 
                 Collezioni collection = new Collezioni();
-                collection.creaCollezione(utente,nomecollezione);
+
+                CollezioniDao collezioniDao = new CollezioniDao();
+
+                collezioniDao.collection(collection,utente,nomecollezione);
+
+                collection.getNomicollezione().add(nomecollezione);
+
+
+
 
 
 
@@ -69,7 +77,6 @@ public class CreacollezioneController extends MenuController implements Initiali
 
                 if(result.get()==ButtonType.OK)
                 {
-                    CollezioniDao collezioniDao = new CollezioniDao();
                     collezioniDao.insert(utente);
                 }
 

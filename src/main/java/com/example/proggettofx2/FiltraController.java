@@ -7,6 +7,8 @@ import com.example.proggettofx2.entita.Fotografie;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -84,4 +86,40 @@ public class FiltraController extends MenuController implements Initializable
 
 
     }
+
+
+
+
+    public GridPane setGridpane()
+    {
+        GridPane gridPane = new GridPane();// creo una griglia e ne imposto il gap in altezza e in orizzontale
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+
+        int i=0;
+        int j=0;
+
+        for (ImageView view : fotofiltrate) {
+
+            gridPane.add(view, j, i);
+
+            j++;
+
+            if (j > 4) {
+                j = 0;
+                i++;
+            }
+        }
+
+
+        return gridPane;
+    }
+
+
+
+
+
+
+
 }
