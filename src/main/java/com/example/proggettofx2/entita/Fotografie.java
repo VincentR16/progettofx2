@@ -87,7 +87,6 @@ public class Fotografie
     }
 
 
-
     public void eliminafoto(int id)
     {
         Iterator it = listafoto.listIterator();

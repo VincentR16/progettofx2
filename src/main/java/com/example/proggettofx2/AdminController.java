@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.AdminDao;
 import com.example.proggettofx2.entita.Admin;
 import com.example.proggettofx2.entita.Utente;
 import javafx.fxml.FXML;
@@ -30,15 +31,17 @@ public class AdminController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Admin admin;
 
-        try {
+         Admin admin = new Admin(labelfoto,Labelutenti);
+         AdminDao adminDao = new AdminDao();
 
-            admin = new Admin(labelfoto,Labelutenti);
+        try
+        {
+            adminDao.search(admin,"cerca","label");}
 
-        } catch (SQLException e) {throw new RuntimeException(e);}
 
 
+        catch (SQLException e) {throw new RuntimeException(e);}
 
 
         Utente.getUtente().vistautente(VistaUtente);
@@ -65,7 +68,7 @@ public class AdminController implements Initializable
 
                     try
                     {
-                       admin.deleteUtente(item);
+                        adminDao.insert(item);
 
                     } catch (SQLException e) {throw new RuntimeException(e);}
 

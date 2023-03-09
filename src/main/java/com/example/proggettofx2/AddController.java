@@ -174,6 +174,7 @@ public class AddController extends  MenuController implements Initializable {
     {
         List<String> list1 = new ArrayList<>();
 
+
         list1.add(path);
         list1.add(dispositivo);
         list1.add(citta);

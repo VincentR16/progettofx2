@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SoggettiDao implements Dao<SoggettieLuoghi,String>
@@ -51,11 +52,10 @@ public class SoggettiDao implements Dao<SoggettieLuoghi,String>
     }
 
     @Override
-    public List<String> search(SoggettieLuoghi soggettieLuoghi, String s, String testo) throws SQLException, IOException {
+    public List<String> search(SoggettieLuoghi soggettieLuoghi, String s, String testo) throws SQLException, IOException
+    {
 
         Connection C= new Connection();
-
-
         PreparedStatement ps= C.DoPrepared("select * from top_3_luoghi(?)");
 
         //query che restituisce i luoghi più immortalati
@@ -64,17 +64,19 @@ public class SoggettiDao implements Dao<SoggettieLuoghi,String>
         ResultSet rs= ps.executeQuery();
 
 
-        if(rs.next()) labelprimo.setText(rs.getString(1)+"  "+rs.getString(2));
-        if(rs.next()) labelsec.setText(rs.getString(1)+"  "+rs.getString(2));
-        if(rs.next())labelterz.setText(rs.getString(1)+"  "+rs.getString(2));
+        ArrayList<String> list = new ArrayList<>();
 
-        //gli if servono nel caso in cui non ci siano meno stringhe
+      while (rs.next())
+      {
+          list.add(rs.getString(1));
+          list.add(rs.getString(2));
+      }
 
         rs.close();
         ps.close();
         C.Closeall();
 
-        return null;
+        return list;
     }
 
     @Override

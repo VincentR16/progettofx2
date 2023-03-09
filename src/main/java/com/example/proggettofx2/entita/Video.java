@@ -23,7 +23,8 @@ public class Video
         this.setVideo();
     }
 
-    public void setVideo() throws SQLException, IOException {
+    public void setVideo() throws SQLException, IOException
+    {
         //imposta una lista d' images, di dispositivi(string),di citta(string),di soggetti(string)che poi verranno utlizzate all'internon del video
 
         Connection C= new Connection();

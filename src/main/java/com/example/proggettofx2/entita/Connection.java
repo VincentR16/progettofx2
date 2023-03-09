@@ -31,7 +31,8 @@ public class Connection {
 
 
 
-    public java.sql.Connection getConnention() {
+    public java.sql.Connection getConnention()
+    {
 
         //staabilisce connessione col db
         //si sarebbe potuto creare un ulteriore pagina che prima dell'apertura dell'applicazione, chiede

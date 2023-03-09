@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.AdminDao;
 import com.example.proggettofx2.DAO.FotografieDAO;
 import com.example.proggettofx2.entita.*;
 import javafx.event.ActionEvent;
@@ -106,11 +107,11 @@ public class HelloController
 
             }catch(SQLException e){throw new RuntimeException(e);}
         }
-
     }
 
     @FXML
-    void BottonAd(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException {
+    void BottonAd(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException
+    {
 
         TextInputDialog Dialog =new TextInputDialog("AMMINISTRATORE");
         Dialog.setTitle("ACCEDI COME AMMINISTRATORE");
@@ -120,8 +121,10 @@ public class HelloController
         // variabile string che si riferisce alla password inserita dall'utente all' interno dell' alert
 
 
-
+        AdminDao Admindao= new AdminDao();
         Admin admin = new Admin();
+
+        Admindao.initialize(admin);
 
         try {
 

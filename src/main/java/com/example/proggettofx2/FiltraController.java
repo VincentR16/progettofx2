@@ -1,7 +1,7 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.DAO.FotografieDAO;
-import com.example.proggettofx2.entita.Fotofiltrate;
+
 
 import com.example.proggettofx2.entita.Fotografie;
 import javafx.fxml.FXML;
@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 
@@ -32,7 +33,8 @@ public class FiltraController extends MenuController implements Initializable
     @FXML
     private TextField textfiled;
 
-
+    private Fotografie fotografie;
+    private FotografieDAO fotografieDAO;
 
     @FXML
     void Bcerca() throws SQLException, IOException {
@@ -54,13 +56,11 @@ public class FiltraController extends MenuController implements Initializable
                 //scelta viene impostata, come il nome della funzione del db,
 
 
-            Fotografie fotografie = Fotografie.getInstance();
 
-            FotografieDAO fotografieDAO = new FotografieDAO();
+
             fotografieDAO.search(fotografie,scelta,textfiled.getText());
 
-            Fotofiltrate fotofiltrate = new Fotofiltrate();
-            pannel.setContent(fotofiltrate.setGridpane());
+            pannel.setContent(setGridpane());
         }
     }
 
@@ -71,16 +71,19 @@ public class FiltraController extends MenuController implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
 
-
         combobox.getItems().add("Luogo");
         combobox.getItems().add("Soggetto");
         combobox.setPromptText("Scegliere qui");
 
 
-        try {
+        try
+        {
 
-            Fotofiltrate fotofiltrate = new Fotofiltrate();
-            fotofiltrate.top3(labelprimo,labelsec,labelterz);
+            fotografie=Fotografie.getInstance();
+            fotografieDAO= new FotografieDAO();
+
+
+            top_3(labelprimo,labelsec,labelterz);
 
         } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
@@ -90,8 +93,9 @@ public class FiltraController extends MenuController implements Initializable
 
 
 
-    public GridPane setGridpane()
+    public GridPane setGridpane() throws SQLException, IOException
     {
+
         GridPane gridPane = new GridPane();// creo una griglia e ne imposto il gap in altezza e in orizzontale
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -100,7 +104,8 @@ public class FiltraController extends MenuController implements Initializable
         int i=0;
         int j=0;
 
-        for (ImageView view : fotofiltrate) {
+        for (ImageView view : fotografie.getFotofiltrate())
+        {
 
             gridPane.add(view, j, i);
 
@@ -116,10 +121,12 @@ public class FiltraController extends MenuController implements Initializable
         return gridPane;
     }
 
+    public void top_3(Label labelprimo,Label labelsec ,Label labelterz) throws SQLException, IOException
+    {
+        Iterator<String> it =fotografieDAO.search(fotografie,"cerca","top3").listIterator();
 
-
-
-
-
-
+        if(it.hasNext()){labelprimo.setText(it.next()+" "+(it.next())); }
+        if(it.hasNext()){labelsec.setText(it.next()+" "+(it.next())); }
+        if(it.hasNext()){labelterz.setText(it.next()+" "+(it.next())); }
+    }
 }

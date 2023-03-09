@@ -2,9 +2,7 @@ package com.example.proggettofx2;
 
 
 import com.example.proggettofx2.DAO.FotografieDAO;
-import com.example.proggettofx2.entita.Connection;
 import com.example.proggettofx2.entita.Fotografie;
-import com.example.proggettofx2.entita.Home;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
