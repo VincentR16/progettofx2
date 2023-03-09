@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollezioniDao implements Dao<Collezioni,String>
+public class CollezioniDao implements Dao<Collezioni>
 {
     @Override
     public void initialize(Collezioni collezioni) throws SQLException, IOException
@@ -48,17 +48,17 @@ public class CollezioniDao implements Dao<Collezioni,String>
             fotografie.getNonincollezione().add(imageView);
         }
 
+        collezioni.Setlistnotused(fotografie.getNonincollezione());
+        collezioni.setListused(fotografie.getCollezione());
+
 
         C.Closeall();
 
     }
 
-    @Override
-    public void insert(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException {
 
-    }
     @Override
-    public void insert(String s) throws SQLException
+    public void insert(Collezioni collezioni) throws SQLException
     {
         Connection C= new Connection();
 
@@ -66,17 +66,17 @@ public class CollezioniDao implements Dao<Collezioni,String>
         PreparedStatement pst1 = C.DoPrepared("call inserisci_fotografie_in_collezione_condivisa(?,?)");
         //inserimento di tutte le foto
         pst1.setInt(1,Utente.getUtente().getIdutente());
-        pst1.setString(2,s);
+        pst1.setString(2, collezioni.getNuovoutente());
 
         pst1.execute();
 
         C.Closeall();
         pst1.close();
-
     }
 
     @Override
-    public void delete(Collezioni collezioni, int value) throws SQLException {
+    public void delete(Collezioni collezioni, int value) throws SQLException
+    {
 
         Connection C= new Connection();
 
@@ -94,7 +94,8 @@ public class CollezioniDao implements Dao<Collezioni,String>
     }
 
     @Override
-    public List<String> search(Collezioni collezioni, String s, String testo) throws SQLException {
+    public List<String> search(Collezioni collezioni) throws SQLException
+    {
 
         Connection C= new Connection();
 
@@ -118,7 +119,7 @@ public class CollezioniDao implements Dao<Collezioni,String>
     }
 
     @Override
-    public void collection(Collezioni collezioni,String utente,String nomecollezione) throws SQLException
+    public void collection(Collezioni collezioni) throws SQLException
     {
 
         Connection C= new Connection();
@@ -126,8 +127,9 @@ public class CollezioniDao implements Dao<Collezioni,String>
 
         PreparedStatement pst = C.DoPrepared("call crea_collezione_condivisa(?,?,?)");
         pst.setInt(1, Utente.getUtente().getIdutente());
-        pst.setString(2,utente);
-        pst.setString(3,nomecollezione);
+
+        pst.setString(2, collezioni.getNuovoutente());
+        pst.setString(3, collezioni.getNomeCollezione());
 
         pst.execute();
 

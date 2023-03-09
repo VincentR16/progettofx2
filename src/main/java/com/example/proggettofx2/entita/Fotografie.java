@@ -24,6 +24,12 @@ public class Fotografie
     private ImageView imageView = new ImageView();
     private static Fotografie instanza =null;
     private String scelta;
+    private List<String> informazioni;
+    private List<String> utentiscelti;
+    private String ricerca;
+    private String sceltaricerca;
+
+
 
     private Fotografie()
     {
@@ -41,10 +47,36 @@ public class Fotografie
             return instanza;
     }
 
+    public void reset()
+    {
+        listafoto=new ArrayList<>();
+        listafotoeliminate= new ArrayList<>();
+    }
 
+    public void resetfiltra(){fotofiltrate= new ArrayList<>();}
 
+    public void setScelta(String S)
+    {
+        collezione= new ArrayList<>();
+        nonincollezione = new ArrayList<>();
+        scelta=S;
+    }
 
-    public void setScelta(String S){scelta=S;}
+    public void setRicerca(String ricerca) {this.ricerca = ricerca;}
+
+    public void setSceltaricerca(String sceltaricerca) {this.sceltaricerca = sceltaricerca;}
+
+    public String getRicerca() {return ricerca;}
+
+    public String getSceltaricerca() {return sceltaricerca;}
+
+    public void setInformazioni(List<String> informazioni) {this.informazioni = informazioni;}
+    public List<String> getInformazioni() {return informazioni;}
+
+    public void setUtentiscelti(List<String> utentiscelti) {this.utentiscelti = utentiscelti;}
+
+    public List<String> getUtentiscelti() {return utentiscelti;}
+
     public String getScelta() {return scelta;}
     public List<ImageView> getListafoto() {return listafoto;}
     public List<ImageView> getListafotoeliminate() {return listafotoeliminate;}

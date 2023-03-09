@@ -10,12 +10,14 @@ import java.sql.*;
 import java.util.Iterator;
 import java.util.List;
 
-public class FotografieDAO implements Dao<Fotografie,String>{
+public class FotografieDAO implements Dao<Fotografie>{
 
     private Connection Con;
     @Override
     public void initialize(Fotografie fotografie) throws SQLException, IOException
     {
+        fotografie.reset();
+
         this.Con=new Connection();
 
         ResultSet rs = this.getImages(0);
@@ -45,7 +47,7 @@ public class FotografieDAO implements Dao<Fotografie,String>{
 
 
     @Override
-    public void insert(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException
+    public void insert(Fotografie fotografie) throws SQLException
     {
         this.Con=new Connection();
 
@@ -53,9 +55,9 @@ public class FotografieDAO implements Dao<Fotografie,String>{
         pst= Con.DoPrepared("call aggiungi_fotografia(pg_read_binary_file(?),?,?,?)");
         //viene aggiunta la foto
 
-        pst.setString(1,lista1.get(0));
-        pst.setString(2, lista1.get(1));
-        pst.setString(3,lista1.get(2));
+        pst.setString(1,fotografie.getInformazioni().get(0));
+        pst.setString(2, fotografie.getInformazioni().get(1));
+        pst.setString(3,fotografie.getInformazioni().get(2));
         pst.setInt(4, Utente.getUtente().getIdutente());
 
         pst.execute();
@@ -77,14 +79,14 @@ public class FotografieDAO implements Dao<Fotografie,String>{
 
         pst= Con.DoPrepared("call inserisci_in_foto_raffigura_soggetto(?,?)");
         pst.setInt(1, id_foto);
-        pst.setString(2,lista1.get(4));
+        pst.setString(2,fotografie.getInformazioni().get(4));
 
         pst.execute();
         pst.close();
 
 
 
-        Iterator<String> it= list.listIterator();
+        Iterator<String> it= fotografie.getUtentiscelti().listIterator();
 
         pst=Con.DoPrepared("call inserisci_in_foto_raffigura_utente(?,?)");
 
@@ -102,8 +104,6 @@ public class FotografieDAO implements Dao<Fotografie,String>{
         Con.Closeall();
     }
 
-    @Override
-    public void insert(String s) throws SQLException {}
 
     @Override
     public void delete(Fotografie fotografie, int value) throws SQLException
@@ -124,16 +124,16 @@ public class FotografieDAO implements Dao<Fotografie,String>{
     }
 
     @Override
-    public List<String> search(Fotografie fotografie, String scelta, String testo) throws SQLException, IOException {
+    public List<String> search(Fotografie fotografie) throws SQLException, IOException {
 
 
         this.Con=new Connection();
 
-        PreparedStatement ps= Con.DoPrepared("Select * from "+scelta+"(?,?)");
+        PreparedStatement ps= Con.DoPrepared("Select * from "+fotografie.getSceltaricerca()+"(?,?)");
         //la funzione nel db restituisce le foto con quei criteri
 
         ps.setInt(1, Utente.getUtente().getIdutente());
-        ps.setString(2,testo);
+        ps.setString(2, fotografie.getRicerca());
 
 
         ResultSet rs = ps.executeQuery();
@@ -150,10 +150,7 @@ public class FotografieDAO implements Dao<Fotografie,String>{
     }
 
     @Override
-    public void collection(Fotografie fotografie,String S, String S1) throws SQLException, IOException {
-
-
-    }
+    public void collection(Fotografie fotografie) {}
 
     @Override
     public void update(Fotografie fotografie, int value) throws SQLException

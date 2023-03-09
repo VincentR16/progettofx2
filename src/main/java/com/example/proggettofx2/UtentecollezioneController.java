@@ -1,6 +1,7 @@
 
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.Utentedao;
 import com.example.proggettofx2.entita.Collezioni;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
@@ -35,7 +36,16 @@ public class UtentecollezioneController extends MenuController implements Initia
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Utente.getUtente().vistautente(VistaUtente);
+
+        Utentedao utentedao = new Utentedao();
+        Utente utente = Utente.getUtente();
+
+        try
+        {
+
+            utente.vistautente(VistaUtente,utentedao.search(utente));
+
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
 
         VistaUtente.setOnMouseClicked(event ->

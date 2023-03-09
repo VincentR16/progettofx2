@@ -5,6 +5,7 @@ import javafx.scene.control.ListView;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Utente {
     //classe utente
@@ -16,21 +17,24 @@ public class Utente {
     private String Nazionalita;
     private String Email;
     private String Password;
-
-
+    private ResultSet users;
     private Utente(){}
 
 
-   private void setUtente(String N,String C,String Na,String E,String P,int id)
+   private void setUtente(String N,String C,String Na,String E,String P)
    {
        Nome=N;
        Cognome=C;
        Nazionalita=Na;
        Email=E;
        Password=P;
-       idutente=id;
    }
 
+    public void setIdutente(int idutente) {this.idutente = idutente;}
+
+    public void setUsers(ResultSet users) {this.users = users;}
+
+    public ResultSet getUsers() {return users;}
 
     public  static Utente getUtente()
     {
@@ -40,35 +44,14 @@ public class Utente {
 
     public  void setdefault() {istanza=null;}
 
-    public void Modifica(String N,String Co,String Na,String E,String P)throws SQLException
+    public void Modifica(String N,String Co,String Na,String E,String P)
     {
-
-        Connection C= new Connection();
-
-        PreparedStatement pst= C.DoPrepared("update utente set nome= ?,cognome= ?,email= ?,nazionalità= ?,password= ? where id_utente= ?");
-// nel caso di modifica, viene modificato anche il db
-
         Nome=N;
         Cognome=Co;
         Nazionalita=Na;
         Email=E;
         Password=P;
-
-
-        pst.setString(1,N);
-        pst.setString(2,Co);
-        pst.setString(3,E);
-        pst.setString(4,Na);
-        pst.setString(5,P);
-        pst.setInt(6,idutente);
-
-        pst.execute();
-        pst.close();
-
-        C.Closeall();
     }
-
-
 
     public String getNome() {return Nome;}
     public String getCognome() {return Cognome;}
@@ -78,84 +61,21 @@ public class Utente {
     public int getIdutente(){return idutente;}
 
 
-    public void vistautente(ListView<String> VistaUtente)
+    public void vistautente(ListView<String>VistaUtente,List<String> lista)
     {
-
         //viene creata una listview con tutte le email di tutti gli utenti presenti nel db
-
-        ArrayList<String> lista = new ArrayList<>();
-
-        Connection C= new Connection();
-
-        ResultSet rs = C.DoQuery("select email from utente");
-
-        try {
-
-            while (rs.next()) {
-                lista.add(rs.getString("email"));
-            }
-
-            rs.close();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
         VistaUtente.getItems().addAll(lista);
 
     }
 
     public void Creautente(String n,String c, String e,String na,String P) throws SQLException
     {
-        Connection C  = new Connection();
-
-            PreparedStatement stmt;
-            stmt=C.DoPrepared("call crea_utente(?,?,?,?,?)");
-
-            //viene creato un utente all' interno del db
-
-            stmt.setString(1,n);
-            stmt.setString(2,c);
-            stmt.setString(3,e);
-            stmt.setString(4,na);
-            stmt.setString(5,P);
-
-            stmt.execute();
-
-
-
-            this.setUtente(n,c,na,e,P,this.RecuperaId(e));
+        this.setUtente(n,c,na,e,P);
     }
 
-    private int RecuperaId(String E) throws SQLException
+    public void CreaUtente(String N,String C,String E, String Na, String P,int id)
     {
-
-        Connection C = new Connection();
-
-        CallableStatement cst=C.Callprocedure("{?=call recupera_id_utente(?)}");
-        // viene recuperato l'id dell 'utente cche si è appena registrato
-
-        cst.registerOutParameter(1, Types.INTEGER);
-        cst.setString(2,E);
-
-        cst.execute();
-
-
-
-       return cst.getInt(1);
+        this.setUtente(N,C,Na,E,P);
+        setIdutente(id);
     }
-
-
-    public void CreaUtente(String N,String C,String E, String Na, String P, int id)
-    {
-        this.setUtente(N,C,Na,E,P,id);
-    }
-
-
-
-
-
-
-
 }

@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -28,6 +27,11 @@ public class CollezioniController extends MenuController implements Initializabl
     public ScrollPane pannel;
     @FXML
     private ComboBox<String> combobox;
+
+    private Collezioni collezioni;
+    private Fotografie fotografie;
+    private CollezioniDao collezioniDao;
+
 
 
     @FXML
@@ -85,24 +89,23 @@ public class CollezioniController extends MenuController implements Initializabl
    @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
    {
-       Collezioni collezioni;
-       Fotografie fotografie;
-
        try {
             collezioni= new Collezioni();
             fotografie = Fotografie.getInstance();
+           collezioniDao= new CollezioniDao();
 
        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
 
 
         combobox.setPromptText("Scegli la libreria");
-        CollezioniDao collezioniDao= new CollezioniDao();
 
-       try {
 
-           collezioni.setNomi(collezioniDao.search(collezioni,"ricerca","nomicollezioni"));
-           SetCombo(combobox);
+       try
+       {
+
+           collezioni.setNomi(collezioniDao.search(collezioni));
+           SetCombo(combobox,collezioni);
 
        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
 
@@ -110,17 +113,12 @@ public class CollezioniController extends MenuController implements Initializabl
        combobox.setOnAction((ActionEvent er)->
             {
 
-                try {
-
-                     fotografie.setScelta(combobox.getSelectionModel().getSelectedItem());
-                     collezioniDao.initialize(collezioni);
-
-
-                } catch (SQLException | IOException e) {throw new RuntimeException(e);}
-
-                // collezioni.Setscelta(combobox.getSelectionModel().getSelectedItem());
 
                 try {
+
+
+                    fotografie.setScelta(combobox.getSelectionModel().getSelectedItem());
+                    collezioniDao.initialize(collezioni); //todo trovare modo per passare fotografia come parametro
                     pannel.setContent(setAction());
 
                 // imposto la griglia come contenuto dello scroll pane
@@ -130,15 +128,10 @@ public class CollezioniController extends MenuController implements Initializabl
    }
 
 
-    public void SetCombo(ComboBox<String> comboBox) throws SQLException, IOException
+    public void SetCombo(ComboBox<String> comboBox,Collezioni collezioni) throws SQLException, IOException
     {
-        Collezioni collezioni = new Collezioni();
-
-        Iterator it = collezioni.getNomicollezione().listIterator();
-
-        while (it.hasNext())
-        {
-            comboBox.getItems().add((String) it.next());
+        for (String s : collezioni.getNomicollezione()) {
+            comboBox.getItems().add(s);
         }
     }
 
@@ -149,7 +142,6 @@ public class CollezioniController extends MenuController implements Initializabl
 
         ImageView imageView;
 
-        Collezioni collezioni = new Collezioni();
 
 
         GridPane gridPane = new GridPane();
@@ -210,13 +202,9 @@ public class CollezioniController extends MenuController implements Initializabl
         int value = (int) ((Node) er.getSource()).getUserData();
         Node node = (Node) er.getSource();
 
-        Collezioni collezioni= new Collezioni();
-
-        CollezioniDao collezioniDao = new CollezioniDao();
         collezioniDao.delete(collezioni,value);
 
-        Fotografie.getInstance().rimuoviCollezione(value);
-
+        fotografie.rimuoviCollezione(value);
 
         return node;
     }

@@ -1,6 +1,7 @@
 
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.Utentedao;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -29,9 +31,14 @@ public class ProfiloController extends MenuController implements Initializable {
 
 
     @FXML
-    void Bmodifica(@SuppressWarnings("UnusedParameters")ActionEvent event)throws SQLException
+    void Bmodifica(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException
     {
-        Utente.getUtente().Modifica(Nome.getText(),Cognome.getText(),Nazionalita.getText(),Email.getText(),Password.getText());
+        Utente utente = Utente.getUtente();
+        Utentedao utentedao = new Utentedao();
+
+        utente.Modifica(Nome.getText(),Cognome.getText(),Nazionalita.getText(),Email.getText(),Password.getText());
+
+        utentedao.update(utente,1);
 
         Alert alert =new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Attenzione");

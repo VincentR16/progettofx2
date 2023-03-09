@@ -1,6 +1,7 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.DAO.AdminDao;
+import com.example.proggettofx2.DAO.Utentedao;
 import com.example.proggettofx2.entita.Admin;
 import com.example.proggettofx2.entita.Utente;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Optional;
@@ -37,14 +39,23 @@ public class AdminController implements Initializable
 
         try
         {
-            adminDao.search(admin,"cerca","label");}
+            adminDao.search(admin);}
 
 
 
         catch (SQLException e) {throw new RuntimeException(e);}
 
 
-        Utente.getUtente().vistautente(VistaUtente);
+
+        Utentedao utentedao = new Utentedao();
+        Utente utente = Utente.getUtente();
+
+        try
+        {
+
+            utente.vistautente(VistaUtente,utentedao.search(utente));
+
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
         //imposta vistautente(listview)
 
 
@@ -68,7 +79,8 @@ public class AdminController implements Initializable
 
                     try
                     {
-                        adminDao.insert(item);
+                        admin.setSelectedusers(item);
+                        adminDao.insert(admin);
 
                     } catch (SQLException e) {throw new RuntimeException(e);}
 

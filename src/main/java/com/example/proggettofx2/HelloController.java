@@ -2,6 +2,7 @@ package com.example.proggettofx2;
 
 import com.example.proggettofx2.DAO.AdminDao;
 import com.example.proggettofx2.DAO.FotografieDAO;
+import com.example.proggettofx2.DAO.Utentedao;
 import com.example.proggettofx2.entita.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,8 +27,7 @@ public class HelloController
     private TextField txtFIELD;
 
     @FXML
-    void BottonAccedi(ActionEvent event) throws IOException
-    {
+    void BottonAccedi(ActionEvent event) throws IOException, SQLException {
 
         boolean controllo=true;
         // serve a verificare che tutti sono stati inseriti
@@ -56,8 +56,15 @@ public class HelloController
             String E=txtFIELD.getText();
             String P=assfield1.getText();
 
-            Connection C= new Connection();
-            ResultSet rs =C.find_users();
+
+            Utentedao utentedao = new Utentedao();
+            Utente utente = Utente.getUtente();
+            Fotografie fotografie = Fotografie.getInstance();
+            FotografieDAO fotografieDAO = new FotografieDAO();
+
+
+            utentedao.search(utente);
+            ResultSet rs =utente.getUsers();
 
             //find_users prende tutte le email e tutte le password dal database
 
@@ -75,9 +82,7 @@ public class HelloController
 
                         Utente.getUtente().CreaUtente(rs.getString("nome"),rs.getString("cognome"),rs.getString("nazionalità"),rs.getString("email"),rs.getString("password"),rs.getInt("id_utente"));
 
-                        Fotografie fotografie = Fotografie.getInstance();
 
-                        FotografieDAO fotografieDAO = new FotografieDAO();
                         fotografieDAO.initialize(fotografie);
 
 
@@ -91,10 +96,9 @@ public class HelloController
                         // viene creato un altro stage
 
                     }
-
                 }
                 rs.close();
-                C.Closeall();
+
 
                 if(controllo2)
                 {

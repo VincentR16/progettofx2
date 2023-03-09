@@ -1,5 +1,6 @@
 package com.example.proggettofx2;
 
+import com.example.proggettofx2.DAO.Utentedao;
 import com.example.proggettofx2.entita.Connection;
 import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
@@ -37,6 +38,10 @@ public class SecondController {
 
          boolean controllo=true;
          // controlla l'inserimento di tutti i campi
+
+
+        Utente utente = Utente.getUtente();
+        Utentedao utentedao = new Utentedao();
 
 
         if(NomeField.getText().equals(""))
@@ -89,7 +94,11 @@ public class SecondController {
 
             try
             {
-               Utente.getUtente().Creautente(NomeField.getText(),CognomeField.getText(),EField.getText(),NaField.getText(),PassField.getText());
+               utente.Creautente(NomeField.getText(),CognomeField.getText(),EField.getText(),NaField.getText(),PassField.getText());
+               utentedao.initialize(utente);
+
+               utentedao.insert(utente);
+
             }
             catch (SQLException e)
             {

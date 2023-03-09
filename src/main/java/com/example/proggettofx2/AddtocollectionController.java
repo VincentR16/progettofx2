@@ -26,11 +26,15 @@ public class AddtocollectionController extends MenuController implements Initial
     //gestisce l'aggiunta della foto nella collezione
     @FXML
     public ScrollPane pannel;
+    private CollezioniDao collezioniDao;
+    private Fotografie fotografie;
+    private Collezioni collezioni;
 
 
 
     @FXML
-    void Back(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException {
+    void Back(@SuppressWarnings("UnusedParameters") ActionEvent event) throws IOException
+    {
 
         Stage stage= (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
@@ -44,7 +48,6 @@ public class AddtocollectionController extends MenuController implements Initial
     {
         try
         {
-
             pannel.setContent(aggiungifoto());
 
         } catch (SQLException | IOException e) {throw new RuntimeException(e);}
@@ -57,11 +60,11 @@ public class AddtocollectionController extends MenuController implements Initial
     public GridPane aggiungifoto() throws SQLException, IOException
     {
 
+         collezioniDao=new CollezioniDao();
+         fotografie=Fotografie.getInstance();
+         collezioni= new Collezioni();
 
-        Fotografie foto=Fotografie.getInstance();
-        Collezioni collezioni= new Collezioni();
-
-        collezioni.Setlistnotused(foto.getNonincollezione());
+         collezioni.Setlistnotused(fotografie.getNonincollezione());
 
         GridPane gridPane = new GridPane();                                                                                                      // creo una griglia e ne imposto il gap in altezza e in orizzontale
         gridPane.setHgap(10);
@@ -125,10 +128,10 @@ public class AddtocollectionController extends MenuController implements Initial
         int value = (int) ((Node)e.getSource()).getUserData();
         Node node = (Node) e.getSource();
 
-        CollezioniDao collezioniDao = new CollezioniDao();
+
         collezioniDao.update(collezioni,value);
 
-        Fotografie fotografie = Fotografie.getInstance();
+        fotografie = Fotografie.getInstance();
         fotografie.rimuoviCollezione(value);
         fotografie.AggiungiCollezione(value);
 

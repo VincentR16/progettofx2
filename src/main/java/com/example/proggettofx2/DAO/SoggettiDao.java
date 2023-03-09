@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoggettiDao implements Dao<SoggettieLuoghi,String>
+public class SoggettiDao implements Dao<SoggettieLuoghi>
 {
 
 
@@ -37,14 +37,10 @@ public class SoggettiDao implements Dao<SoggettieLuoghi,String>
     }
 
     @Override
-    public void insert(Fotografie fotografie, List<String> lista1, List<String> list) throws SQLException {
+    public void insert(SoggettieLuoghi soggettieLuoghi) throws SQLException {
 
     }
 
-    @Override
-    public void insert(String s) throws SQLException {
-
-    }
 
     @Override
     public void delete(SoggettieLuoghi soggettieLuoghi, int value) throws SQLException {
@@ -52,7 +48,7 @@ public class SoggettiDao implements Dao<SoggettieLuoghi,String>
     }
 
     @Override
-    public List<String> search(SoggettieLuoghi soggettieLuoghi, String s, String testo) throws SQLException, IOException
+    public List<String> search(SoggettieLuoghi soggettieLuoghi) throws SQLException
     {
 
         Connection C= new Connection();
@@ -80,7 +76,7 @@ public class SoggettiDao implements Dao<SoggettieLuoghi,String>
     }
 
     @Override
-    public void collection(SoggettieLuoghi soggettieLuoghi, String S, String S1) throws SQLException, IOException {
+    public void collection(SoggettieLuoghi soggettieLuoghi) throws SQLException, IOException {
 
     }
 

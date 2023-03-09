@@ -1,6 +1,7 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.DAO.CollezioniDao;
+import com.example.proggettofx2.DAO.Utentedao;
 import com.example.proggettofx2.entita.Collezioni;
 import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
@@ -28,10 +29,14 @@ public class CreacollezioneController extends MenuController implements Initiali
     @FXML
     private ListView<String> VistaUtente;
 
+    private  Collezioni collezioni;
+    private  CollezioniDao collezioniDao;
+
 
 
     @FXML
-    void BnewCollection(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException, SQLException {
+    void BnewCollection(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException, SQLException
+    {
 
         if(utente == null)
         {
@@ -42,9 +47,8 @@ public class CreacollezioneController extends MenuController implements Initiali
         }
         else {
 
-            String nomecollezione=label.getText();
 
-            if(nomecollezione==null)
+            if(label.getText()==null)
             {
                 Alert alert =new Alert(Alert.AlertType.INFORMATION);
 
@@ -53,17 +57,12 @@ public class CreacollezioneController extends MenuController implements Initiali
             }
              else{
 
-                Collezioni collection = new Collezioni();
+                collezioni.setNomeCollezione(label.getText());
+                collezioni.setNuovoutente(utente);
 
-                CollezioniDao collezioniDao = new CollezioniDao();
+                collezioniDao.collection(collezioni);
 
-                collezioniDao.collection(collection,utente,nomecollezione);
-
-                collection.getNomicollezione().add(nomecollezione);
-
-
-
-
+                collezioni.getNomicollezione().add(label.getText());
 
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -77,7 +76,7 @@ public class CreacollezioneController extends MenuController implements Initiali
 
                 if(result.get()==ButtonType.OK)
                 {
-                    collezioniDao.insert(utente);
+                    collezioniDao.insert(collezioni);
                 }
 
 
@@ -98,8 +97,26 @@ public class CreacollezioneController extends MenuController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        try
+        {
+            collezioni= new Collezioni();
 
-        Utente.getUtente().vistautente(VistaUtente);
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+
+
+        collezioniDao = new CollezioniDao();
+
+
+        Utentedao utentedao = new Utentedao();
+        Utente users = Utente.getUtente();
+
+        try
+        {
+
+            users.vistautente(VistaUtente,utentedao.search(users));
+
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+
 
         VistaUtente.setOnMouseClicked(event ->
         {

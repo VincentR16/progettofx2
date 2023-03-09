@@ -11,30 +11,35 @@ public class Collezioni
 {
     private List<ImageView> listused;
     private List<ImageView> listnotused;
-    private List<String>nomicollezione;
+    private static List<String>nomicollezione;
     private  int id_Collezioni;
+    private String nomeCollezione;
+    private String nuovoutente;
 
 
 
 
     public Collezioni() throws SQLException, IOException
-    {
-        Fotografie foto= Fotografie.getInstance();
+    {}
 
-        listused=foto.getCollezione();
-        listnotused=foto.getNonincollezione();
-    }
+    public void setNuovoutente(String nuovoutente) {this.nuovoutente = nuovoutente;}
 
+    public String getNuovoutente() {return nuovoutente;}
+
+    public void setNomeCollezione(String nomeCollezione) {this.nomeCollezione = nomeCollezione;}
+    public String getNomeCollezione() {return nomeCollezione;}
 
     public void setNomi(List<String>nomi)
     {
         nomicollezione=nomi;
     }
-    public List<String> getNomicollezione() {return nomicollezione;}
+    public  List<String> getNomicollezione() {return nomicollezione;}
     public List<ImageView> getListused() {return listused;}
     public List<ImageView> getListnotused() {return listnotused;}
     public void setID(int S) {id_Collezioni=S;}
     public void Setlistnotused(List<ImageView> list){listnotused=list;}
+    public void setListused(List<ImageView> listused) {this.listused = listused;}
+
     public void aggiungiutente(){}
 
 }

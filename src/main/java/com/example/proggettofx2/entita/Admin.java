@@ -9,6 +9,7 @@ public class Admin
     private String Password;
     private Label labelfoto;
     private Label labelutenti;
+    private String selectedusers;
 
     public Admin(){}
     public Admin(Label labelfoto1,Label labelutent1i )
@@ -16,6 +17,10 @@ public class Admin
         labelfoto = labelfoto1;
         labelutenti = labelutent1i;
     }
+
+    public String getSelectedusers() {return selectedusers;}
+
+    public void setSelectedusers(String selectedusers) {this.selectedusers = selectedusers;}
 
     public Label getLabelfoto() {return labelfoto;}
     public Label getLabelutenti() {return labelutenti;}

@@ -2,6 +2,7 @@ package com.example.proggettofx2;
 
 import com.example.proggettofx2.DAO.FotografieDAO;
 import com.example.proggettofx2.DAO.SoggettiDao;
+import com.example.proggettofx2.DAO.Utentedao;
 import com.example.proggettofx2.entita.Collezioni;
 import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.SoggettieLuoghi;
@@ -141,8 +142,17 @@ public class AddController extends  MenuController implements Initializable {
 
         soggettieLuoghi.setBox(Subjectbox);
 
+        Utentedao utentedao = new Utentedao();
+        Utente utente = Utente.getUtente();
 
-        Utente.getUtente().vistautente(VistaUtente);
+        try
+        {
+
+            utente.vistautente(VistaUtente,utentedao.search(utente));
+
+        } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+
+
         //viene impostata vistautente(listview)
 
 
@@ -170,7 +180,7 @@ public class AddController extends  MenuController implements Initializable {
     }
 
 
-    public void Addphoto(String path, String citta,String soggetto, String dispositivo, List<String> list) throws SQLException
+    public void Addphoto(String path, String citta,String soggetto, String dispositivo, List<String> list) throws SQLException, IOException
     {
         List<String> list1 = new ArrayList<>();
 
@@ -181,9 +191,12 @@ public class AddController extends  MenuController implements Initializable {
         list1.add(dispositivo);
         list1.add(soggetto);
 
+        fotografie.setInformazioni(list1);
+        fotografie.setUtentiscelti(list);
 
         fotografie.AggiungiFoto(path);
-        fotografieDAO.insert(fotografie, list1, list);
+        fotografieDAO.insert(fotografie);
+        fotografieDAO.initialize(fotografie);
     }
 
 }

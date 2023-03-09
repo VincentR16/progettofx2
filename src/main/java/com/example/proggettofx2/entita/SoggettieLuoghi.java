@@ -2,6 +2,7 @@ package com.example.proggettofx2.entita;
 
 import javafx.scene.control.ComboBox;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,7 +12,11 @@ public class SoggettieLuoghi
     private List<String> soggetti;
     private List<String> categorie;
 
-    public SoggettieLuoghi(){}
+    public SoggettieLuoghi()
+    {
+        soggetti= new ArrayList<>();
+        categorie= new ArrayList<>();
+    }
 
     public List<String> getCategorie() {
         return categorie;
@@ -31,11 +36,9 @@ public class SoggettieLuoghi
 
     public void setBox(ComboBox<String> comboBox)
     {
-        Iterator it = categorie.listIterator();
-
-        while (it.hasNext())
+        for (String s : categorie)
         {
-            comboBox.getItems().add((String) it.next());
+            comboBox.getItems().add(s);
         }
     }
 }

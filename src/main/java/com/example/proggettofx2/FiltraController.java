@@ -3,7 +3,9 @@ package com.example.proggettofx2;
 import com.example.proggettofx2.DAO.FotografieDAO;
 
 
+import com.example.proggettofx2.DAO.SoggettiDao;
 import com.example.proggettofx2.entita.Fotografie;
+import com.example.proggettofx2.entita.SoggettieLuoghi;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -35,11 +37,13 @@ public class FiltraController extends MenuController implements Initializable
 
     private Fotografie fotografie;
     private FotografieDAO fotografieDAO;
+    private SoggettiDao soggettiDao;
 
     @FXML
     void Bcerca() throws SQLException, IOException {
 
         String scelta;
+        fotografie.resetfiltra();
 
         if(combobox.getSelectionModel().getSelectedItem()==null)
         {
@@ -57,8 +61,9 @@ public class FiltraController extends MenuController implements Initializable
 
 
 
-
-            fotografieDAO.search(fotografie,scelta,textfiled.getText());
+            fotografie.setSceltaricerca(scelta);
+            fotografie.setRicerca(textfiled.getText());
+            fotografieDAO.search(fotografie);
 
             pannel.setContent(setGridpane());
         }
@@ -81,6 +86,7 @@ public class FiltraController extends MenuController implements Initializable
 
             fotografie=Fotografie.getInstance();
             fotografieDAO= new FotografieDAO();
+            soggettiDao= new SoggettiDao();
 
 
             top_3(labelprimo,labelsec,labelterz);
@@ -93,7 +99,7 @@ public class FiltraController extends MenuController implements Initializable
 
 
 
-    public GridPane setGridpane() throws SQLException, IOException
+    public GridPane setGridpane()
     {
 
         GridPane gridPane = new GridPane();// creo una griglia e ne imposto il gap in altezza e in orizzontale
@@ -123,7 +129,8 @@ public class FiltraController extends MenuController implements Initializable
 
     public void top_3(Label labelprimo,Label labelsec ,Label labelterz) throws SQLException, IOException
     {
-        Iterator<String> it =fotografieDAO.search(fotografie,"cerca","top3").listIterator();
+        SoggettieLuoghi soggettieLuoghi = new SoggettieLuoghi();
+        Iterator<String> it = soggettiDao.search(soggettieLuoghi).listIterator();
 
         if(it.hasNext()){labelprimo.setText(it.next()+" "+(it.next())); }
         if(it.hasNext()){labelsec.setText(it.next()+" "+(it.next())); }

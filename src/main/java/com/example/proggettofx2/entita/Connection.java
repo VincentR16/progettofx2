@@ -3,11 +3,6 @@ package com.example.proggettofx2.entita;
 import java.sql.*;
 
 
-
-
-// todo andare poi a scorporare tutte le query e andare a creare un metodo per ogni query che gestisce la connessione e che restituisce solo cio che è
-// todo realmente utile
-
 public class Connection {
 
     //gestisce il collegamento col db,
@@ -28,8 +23,6 @@ public class Connection {
         this.Closeprepared();
         this.CloseCallable();
     }
-
-
 
     public java.sql.Connection getConnention()
     {
@@ -110,16 +103,6 @@ public class Connection {
         if (con != null) {
             con.close();
         }
-    }
-
-    public ResultSet find_users() {
-        //query per ricevere tutte le informazione di tutti gli utenti
-        return this.DoQuery("Select * from utente");
-    }
-
-    public ResultSet find_Admin() {
-        //query per ricervere la pass dell admin
-        return this.DoQuery("Select password from amministratore");
     }
 
 }
