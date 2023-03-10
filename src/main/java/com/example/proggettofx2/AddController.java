@@ -3,7 +3,6 @@ package com.example.proggettofx2;
 import com.example.proggettofx2.DAO.FotografieDAO;
 import com.example.proggettofx2.DAO.SoggettiDao;
 import com.example.proggettofx2.DAO.Utentedao;
-import com.example.proggettofx2.entita.Collezioni;
 import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.SoggettieLuoghi;
 import com.example.proggettofx2.entita.Utente;

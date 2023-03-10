@@ -1,8 +1,6 @@
 package com.example.proggettofx2;
 
 import com.example.proggettofx2.DAO.Utentedao;
-import com.example.proggettofx2.entita.Connection;
-import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +32,7 @@ public class SecondController {
 
 
     @FXML
-    void Clickcrea(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException, SQLException {
+    void Clickcrea(@SuppressWarnings("UnusedParameters")ActionEvent event) throws IOException {
 
          boolean controllo=true;
          // controlla l'inserimento di tutti i campi

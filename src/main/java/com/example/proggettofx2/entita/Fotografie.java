@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +27,7 @@ public class Fotografie
     private List<String> utentiscelti;
     private String ricerca;
     private String sceltaricerca;
+    private  Iterator<ImageView> it;
 
 
 
@@ -40,7 +40,7 @@ public class Fotografie
         fotofiltrate=new ArrayList<>();
     }
 
-    public static Fotografie getInstance() throws SQLException, IOException
+    public static Fotografie getInstance()
     {
         if (instanza == null) {instanza = new Fotografie();}
 
@@ -63,20 +63,13 @@ public class Fotografie
     }
 
     public void setRicerca(String ricerca) {this.ricerca = ricerca;}
-
     public void setSceltaricerca(String sceltaricerca) {this.sceltaricerca = sceltaricerca;}
-
     public String getRicerca() {return ricerca;}
-
     public String getSceltaricerca() {return sceltaricerca;}
-
     public void setInformazioni(List<String> informazioni) {this.informazioni = informazioni;}
     public List<String> getInformazioni() {return informazioni;}
-
     public void setUtentiscelti(List<String> utentiscelti) {this.utentiscelti = utentiscelti;}
-
     public List<String> getUtentiscelti() {return utentiscelti;}
-
     public String getScelta() {return scelta;}
     public List<ImageView> getListafoto() {return listafoto;}
     public List<ImageView> getListafotoeliminate() {return listafotoeliminate;}
@@ -94,11 +87,11 @@ public class Fotografie
 
    public void AggiungiCollezione(int id)
     {
-        Iterator it = nonincollezione.listIterator();
+        it = nonincollezione.listIterator();
 
          while (it.hasNext())
          {
-             imageView = (ImageView) it.next();
+             imageView = it.next();
              int value= (int) imageView.getUserData();
 
             if(value==id){collezione.add(imageView);it.remove();}
@@ -107,11 +100,11 @@ public class Fotografie
 
    public void rimuoviCollezione(int id)
     {
-        Iterator it = collezione.listIterator();
+       it = collezione.listIterator();
 
         while (it.hasNext())
         {
-            imageView = (ImageView) it.next();
+            imageView = it.next();
             int value= (int) imageView.getUserData();
 
             if(value==id){nonincollezione.add(imageView);it.remove();}
@@ -121,11 +114,11 @@ public class Fotografie
 
     public void eliminafoto(int id)
     {
-        Iterator it = listafoto.listIterator();
+        it = listafoto.listIterator();
 
         while (it.hasNext())
         {
-            imageView = (ImageView) it.next();
+            imageView =  it.next();
             int value= (int) imageView.getUserData();
 
             if(value==id){listafotoeliminate.add(imageView);it.remove();}
@@ -134,11 +127,11 @@ public class Fotografie
 
     public void deletecestino(int id)
     {
-        Iterator it = listafotoeliminate.listIterator();
+        it = listafotoeliminate.listIterator();
 
         while (it.hasNext())
         {
-            imageView = (ImageView) it.next();
+            imageView =  it.next();
             int value= (int) imageView.getUserData();
 
             if(value==id){it.remove();}

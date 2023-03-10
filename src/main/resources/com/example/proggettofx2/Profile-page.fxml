@@ -93,7 +93,7 @@
                         <Image url="@icons/witusrs.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="Mycursor" alignment="CENTER" layoutX="-9.0" layoutY="238.0" mnemonicParsing="false" onAction="#Bcollezioni" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="45.0" prefWidth="175.0" style="-fx-background-color: #183669;" text="    COLLEZIONI" textFill="WHITE">
+                  <Button fx:id="Mycursor" alignment="CENTER" layoutX="-9.0" layoutY="238.0" mnemonicParsing="false" onAction="#BCollezioni" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="45.0" prefWidth="175.0" style="-fx-background-color: #183669;" text="    COLLEZIONI" textFill="WHITE">
                      <font>
                         <Font name="Verdana" size="11.0" />
                      </font>
@@ -103,7 +103,7 @@
                         <Image url="@icons/gallery.png" />
                      </image>
                   </ImageView>
-                  <Button alignment="CENTER" layoutX="-9.0" layoutY="283.0" mnemonicParsing="false" onAction="#Baggiungifoto" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="175.0" style="-fx-background-color: #183669;" text="      AGGIUNGI FOTO" textFill="WHITE">
+                  <Button alignment="CENTER" layoutX="-9.0" layoutY="283.0" mnemonicParsing="false" onAction="#BAggiungifoto" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="175.0" style="-fx-background-color: #183669;" text="      AGGIUNGI FOTO" textFill="WHITE">
                      <font>
                         <Font name="Verdana" size="11.0" />
                      </font>
@@ -123,7 +123,7 @@
                         <Image url="@icons/video2.png" />
                      </image>
                   </ImageView>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-10.0" layoutY="365.0" mnemonicParsing="false" onAction="#Bcestino" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="CESTINO" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="-10.0" layoutY="365.0" mnemonicParsing="false" onAction="#BCestino" onMouseEntered="#MouseEntered" onMouseExited="#MouseExited" prefHeight="38.0" prefWidth="181.0" style="-fx-background-color: #183669;" text="CESTINO" textFill="WHITE">
                      <font>
                         <Font name="Verdana" size="11.0" />
                      </font>

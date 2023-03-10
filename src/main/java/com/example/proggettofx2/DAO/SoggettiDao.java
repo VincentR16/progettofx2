@@ -1,7 +1,6 @@
 package com.example.proggettofx2.DAO;
 
 import com.example.proggettofx2.entita.Connection;
-import com.example.proggettofx2.entita.Fotografie;
 import com.example.proggettofx2.entita.SoggettieLuoghi;
 import com.example.proggettofx2.entita.Utente;
 
@@ -43,7 +42,7 @@ public class SoggettiDao implements Dao<SoggettieLuoghi>
 
 
     @Override
-    public void delete(SoggettieLuoghi soggettieLuoghi, int value) throws SQLException {
+    public void delete(SoggettieLuoghi soggettieLuoghi, int value)  {
 
     }
 
@@ -76,7 +75,7 @@ public class SoggettiDao implements Dao<SoggettieLuoghi>
     }
 
     @Override
-    public void collection(SoggettieLuoghi soggettieLuoghi) throws SQLException, IOException {
+    public void collection(SoggettieLuoghi soggettieLuoghi)  {
 
     }
 

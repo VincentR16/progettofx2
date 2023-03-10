@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MyStage
 {
@@ -18,7 +19,7 @@ public class MyStage
         //crea un nuovo stage partendo dal file fxml
         //riceve come input il nome del file, presente nella cartella resources/com.examples..
 
-        Parent root = FXMLLoader.load(getClass().getResource(S));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(S)));
         stage = new Stage();
 
         stage.setScene(new Scene(root, 500, 500));

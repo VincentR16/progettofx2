@@ -31,7 +31,7 @@ public class ProfiloController extends MenuController implements Initializable {
 
 
     @FXML
-    void Bmodifica(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException, IOException
+    void Bmodifica(@SuppressWarnings("UnusedParameters")ActionEvent event) throws SQLException
     {
         Utente utente = Utente.getUtente();
         Utentedao utentedao = new Utentedao();

@@ -4,7 +4,6 @@ package com.example.proggettofx2.entita;
 import javafx.scene.control.ListView;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Utente {

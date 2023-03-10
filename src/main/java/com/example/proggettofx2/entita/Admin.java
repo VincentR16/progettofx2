@@ -2,7 +2,6 @@ package com.example.proggettofx2.entita;
 
 import javafx.scene.control.Label;
 
-import java.sql.*;
 
 public class Admin
 {

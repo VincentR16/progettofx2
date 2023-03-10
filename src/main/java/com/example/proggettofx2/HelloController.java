@@ -27,7 +27,7 @@ public class HelloController
     private TextField txtFIELD;
 
     @FXML
-    void BottonAccedi(ActionEvent event) throws IOException, SQLException {
+    void BottonAccedi(ActionEvent event) throws IOException {
 
         boolean controllo=true;
         // serve a verificare che tutti sono stati inseriti
@@ -63,7 +63,7 @@ public class HelloController
             FotografieDAO fotografieDAO = new FotografieDAO();
 
 
-            utentedao.search(utente);
+            utentedao.collection(utente);
             ResultSet rs =utente.getUsers();
 
             //find_users prende tutte le email e tutte le password dal database

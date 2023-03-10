@@ -62,10 +62,13 @@ public class UtentecollezioneController extends MenuController implements Initia
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK)
                 {
-                    Collezioni collezioni= null;
-                    try {
+                    Collezioni collezioni;
+                    try
+                    {
                         collezioni = new Collezioni();
+
                     } catch (SQLException | IOException e) {throw new RuntimeException(e);}
+
                     collezioni.aggiungiutente();
 
                     VistaUtente.getItems().remove(item);

@@ -158,7 +158,7 @@ public class CollezioniDao implements Dao<Collezioni>
     }
 
 
-    public  void Setid(Collezioni collezioni) throws SQLException, IOException
+    public  void Setid(Collezioni collezioni) throws SQLException
     {
         Fotografie fotografie = Fotografie.getInstance();
 
