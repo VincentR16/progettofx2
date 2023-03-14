@@ -42,7 +42,7 @@ il modello del progetto su base *BCE* è quindi organizzato in questo modo ***fi
 
 In particolar modo abbiamo deciso di non utilizzare un singolo Controller genrale, ma di mantenere tutte le singole classi *controller*.
 classe chiamata *MenuController* estende tutti i Controller e si occupa del passaggio di controllo tra un controllo e l'altro tramite la classe *Mystage*.
-Il modello finale del progetto è ispirato al modello *MVC*
+
 
 ### Il Codice 
 
