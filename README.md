@@ -24,19 +24,12 @@ a mantenere un design semplice e intuitivo così da risultare **user friendly**.
 
 ### Il Modello 
 
-Il software è suddiviso in classi, delle quali solo due non sono accompagnate dalla scritta di *Controller*.
-La scelta d'inserire all'interno dei nomi questa *qualifica* è dovuta al fatto che questi file non si possono definire,
-in termini stretti, come delle semplici classi in java.
-I controller infatti sono dei veri e propri punti d' ingresso rispetto alle azioni che l'utente svolge
-in quello **specifico momento**.
+Il software è suddiviso in package, package DAO,Controller,Entita,Gui.
 
-Il software è stato originariamente pensato sul modello *BCE*, ci si è però imbattuti in diverse difficoltà, la principale
-è stata la sovrabbondaza di file ridondanti.  
-Ciò poichè, se in java-swing il file della classe del corrispettivo *stage* aggiunge informazioni essenziali riguardanti
-la composizione stessa,
-in javafx tutte le informazioni necessarie sono contenunte all'interno dei *file.xml*, il quale comunica per costruzione
+Il software è stato organizzato  sul modello *BCED*,
+Tutte le informazioni della GUI  sono contenunte all'interno dei *file.xml*, i quali comunicano per costruzione
 solamente con il corrispettivo *Controller*.
-Inoltre in FX le componenti, come ad esempio 
+Inoltre FX le componenti, come ad esempio 
  
     @FXML
     private TextField textfiled;
@@ -45,13 +38,10 @@ sono legate all 'url stesso della pagina, per questo se si prova a definirli in 
 fatte tramite SceneBuilder.
 
 
-In precedenza, il modello del progetto su base *BCE* era organizzato in questo modo ***file.xml --> Controller_del_file--> Classe_entità***.
+il modello del progetto su base *BCE* è quindi organizzato in questo modo ***file.xml --> Controller_del_file--> Classe_entità***.
 
-Questo sistema però non era adatto a Javafx, e dopo un'attenta documentazione, è stato deciso, di semplificare il codice adattandolo a questo modello ***file.xml--> Controller_del_file_--> ClasseController_principale***. 
-
-In particolar modo abbiamo deciso di eliminare tutte le singole classi *entità*, che si riferivano al rispettivo controller, e di aggiungere, un'unica 
-classe chiamata *MainController* che svolge tutte le operazioni di calcolo principali, e tutte le operazioni identiche nei controller.
-
+In particolar modo abbiamo deciso di non utilizzare un singolo Controller genrale, ma di mantenere tutte le singole classi *controller*.
+classe chiamata *MenuController* estende tutti i Controller e si occupa del passaggio di controllo tra un controllo e l'altro tramite la classe *Mystage*.
 Il modello finale del progetto è ispirato al modello *MVC*
 
 ### Il Codice 
